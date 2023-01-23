@@ -1,4 +1,4 @@
-package control;
+package control.console;
 
 import model.Player;
 import model.Statistic;

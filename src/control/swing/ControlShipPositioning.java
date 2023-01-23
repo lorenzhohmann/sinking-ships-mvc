@@ -1,23 +1,25 @@
-package control;
+package control.swing;
 
 import java.io.IOException;
 
 import model.AI;
 import model.Human;
 import model.Player;
-import view.console.ConsoleGUI;
-import view.console.GameHandler;
-import view.console.Playground;
-import view.console.ShipPositioning;
-import view.console.ShipPositioningHandler;
+import view.swing.FrameGUI;
+import view.swing.GameHandler;
+import view.swing.Playground;
+import view.swing.ShipPositioning;
+import view.swing.ShipPositioningHandler;
 
 public class ControlShipPositioning implements ShipPositioningHandler {
 
 	private ShipPositioning shipPositioning;
+	private FrameGUI gui;
 	private Player human;
 	private Player enemy;
 
-	public ControlShipPositioning(AI enemy) {
+	public ControlShipPositioning(AI enemy, FrameGUI gui) {
+		this.gui = gui;
 		this.enemy = enemy;
 		this.human = new Human();
 	}
@@ -78,7 +80,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 			} catch (InterruptedException | IOException e) {
 			}
-			ConsoleGUI.print("Deine Flotte wurde neu positioniert!");
+			this.shipPositioning.showShipsNewSet();
 
 			this.resetPlayersShips();
 			this.placePlayersShipsRandomly();
@@ -96,7 +98,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 			returnCode = 2;
 		}
 
-		ConsoleGUI.print("Ungueltige Eingabe, waehle [S], [Z] oder [M]!", "error");
+		this.shipPositioning.showInvalidInput();
 		this.shipPositioning.showShipPositioning(true);
 
 		return returnCode;

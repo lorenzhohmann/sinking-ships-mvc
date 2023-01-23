@@ -1,4 +1,4 @@
-package control;
+package control.swing;
 
 import java.awt.Toolkit;
 
@@ -6,11 +6,11 @@ import model.AI;
 import model.Coordinate;
 import model.Matchfield;
 import model.Player;
-import view.console.ConsoleGUI;
-import view.console.GameHandler;
-import view.console.GameOverHandler;
-import view.console.GameView;
-import view.console.Playground;
+import view.swing.FrameGUI;
+import view.swing.GameHandler;
+import view.swing.GameOverHandler;
+import view.swing.GameView;
+import view.swing.Playground;
 
 public class ControlGame implements GameHandler {
 
@@ -76,7 +76,7 @@ public class ControlGame implements GameHandler {
 
 			// wait before second shot
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}
@@ -88,7 +88,7 @@ public class ControlGame implements GameHandler {
 
 			// wait on player change
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}
@@ -127,7 +127,7 @@ public class ControlGame implements GameHandler {
 
 			// wait after successfull shot
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}
@@ -138,7 +138,7 @@ public class ControlGame implements GameHandler {
 
 			// wait on player change
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}
@@ -189,7 +189,7 @@ public class ControlGame implements GameHandler {
 																														// on
 																														// 23.01.23,
 																														// 15:27
-			ConsoleGUI.showHelp();
+			FrameGUI.showHelp();
 		} else {
 			this.game.showInvalidInput();
 		}

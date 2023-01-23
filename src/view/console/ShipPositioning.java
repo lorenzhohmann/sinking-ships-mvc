@@ -109,4 +109,18 @@ public class ShipPositioning {
 		ConsoleGUI.print("Beispiel: A1-G5-F3-A8");
 	}
 
+	/**
+	 * Shows a message that the input data was invalid
+	 */
+	public void showInvalidInput() {
+		ConsoleGUI.print("Ungueltige Eingabe, waehle [S], [Z] oder [M]!", "error");
+	}
+
+	/**
+	 * Shows a message that all ships were set new
+	 */
+	public void showShipsNewSet() {
+		ConsoleGUI.print("Deine Flotte wurde neu positioniert!");
+	}
+
 }
