@@ -1,15 +1,21 @@
-package view;
+package view.console;
 
 import java.io.IOException;
 
 public class ShipPositioning {
 
+	/**
+	 * Handler for all ship positioning actions
+	 */
 	private ShipPositioningHandler shipPositioningHandler;
 
 	public ShipPositioning(ShipPositioningHandler handler) {
 		this.shipPositioningHandler = handler;
 	}
 
+	/**
+	 * Shows the menu to choose between the positioning type of the ships
+	 */
 	public void showShipPositioningMenu() {
 		System.out.println("//=============================================================\\\\");
 		System.out.println("||                                                             ||");
@@ -23,6 +29,10 @@ public class ShipPositioning {
 		System.out.println("\\\\=============================================================//");
 	}
 
+	/**
+	 * 
+	 * @param hasManualPosition
+	 */
 	public void showShipPositioning(boolean hasManualPosition) {
 
 		// clear console
@@ -32,13 +42,6 @@ public class ShipPositioning {
 		}
 
 		if (!hasManualPosition) { // if this function call does not come from manual positioning
-
-			// update game status
-			if (this.shipPositioningHandler.isNotWaitingStatus()) {
-				return;
-			}
-
-			this.shipPositioningHandler.setStatusWarmup();
 
 			// place enemys ships randomly
 			this.shipPositioningHandler.placeEnemiesShipsRandomly();
@@ -56,38 +59,22 @@ public class ShipPositioning {
 		while (ConsoleGUI.scanner.hasNext()) {
 
 			String input = ConsoleGUI.scanner.next();
+			int handlerResponse = this.shipPositioningHandler.handlePositioningInput(input);
 
-			if (input.equalsIgnoreCase("z")) { // generate new random ship positions
-
-				// clear console
-				try {
-					new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				} catch (InterruptedException | IOException e) {
-				}
-				ConsoleGUI.print("Deine Flotte wurde neu positioniert!");
-
-				this.shipPositioningHandler.resetPlayersShips();
-				this.shipPositioningHandler.placePlayersShipsRandomly();
-				this.shipPositioningHandler.showPlayersMatchfield();
-
-				this.showShipPositioningMenu();
-
+			if (handlerResponse == 1) {
 				continue;
-			} else if (input.equalsIgnoreCase("m")) {
-				this.showManualShipPositioning();
-				break;
-
-			} else if (input.equalsIgnoreCase("s")) { // start game
-				this.shipPositioningHandler.startGame();
+			}
+			if (handlerResponse == 2) {
 				break;
 			}
-
-			ConsoleGUI.print("Ungueltige Eingabe, waehle [S], [Z] oder [M]!", "error");
-			this.showShipPositioning(true);
 		}
+
 	}
 
-	private void showManualShipPositioning() {
+	/**
+	 * Shows and reads the manual positioning of ships
+	 */
+	public void showManualShipPositioning() {
 
 		// clear console
 		try {
@@ -112,6 +99,9 @@ public class ShipPositioning {
 		this.showShipPositioning(true);
 	}
 
+	/**
+	 * Shows a short instruction of how to create a ship positioning string
+	 */
 	private void showManualShipPositioningInstruction() {
 		ConsoleGUI.print("Bitte gebe nun die Positionerung Deiner Schiffe manuell ein!\nNutze dazu folgendes Format:");
 		ConsoleGUI.print(

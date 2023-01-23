@@ -1,17 +1,12 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import view.Difficulty;
-
-public class KI extends Player {
+public class AI extends Player {
 
 	private Difficulty difficulty;
-
-	public KI() {
-		super();
-	}
 
 	public void setDifficulty(Difficulty difficulty) {
 		this.difficulty = difficulty;
@@ -21,7 +16,7 @@ public class KI extends Player {
 		return difficulty;
 	}
 
-	public Coordinate getKICoordinate(Matchfield field) {
+	public Coordinate chooseCoordinateByDifficulty(Matchfield field) {
 
 		Coordinate choosenCoordinate = null;
 		ArrayList<Coordinate> coordinatesWithoutHits = this.getCoordinatesWithoutHits(field.getCoordinates());

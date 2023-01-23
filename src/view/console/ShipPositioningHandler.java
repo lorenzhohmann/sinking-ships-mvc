@@ -1,4 +1,4 @@
-package view;
+package view.console;
 
 public interface ShipPositioningHandler {
 
@@ -12,12 +12,10 @@ public interface ShipPositioningHandler {
 
 	public void resetPlayersShips();
 
-	public boolean isNotWaitingStatus();
-
-	public void setStatusWarmup();
-
 	public boolean setShipPositionsManual(String positionString, int length);
 
 	public void startGame();
+
+	public int handlePositioningInput(String input);
 
 }

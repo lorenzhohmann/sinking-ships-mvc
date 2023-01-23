@@ -1,15 +1,23 @@
-package view;
+package view.console;
 
 import java.io.IOException;
 
+import model.Difficulty;
+
 public class Menu {
 
+	/**
+	 * Handler for all menu actions
+	 */
 	private MenuHandler menuHandler;
 
 	public Menu(MenuHandler handler) {
 		this.menuHandler = handler;
 	}
 
+	/**
+	 * Shows the gamemode menu and reads the users console input
+	 */
 	public void showGameModeMenu() {
 		System.out.println("//=============================================================\\\\");
 		System.out.println("||                                                             ||");
@@ -28,19 +36,21 @@ public class Menu {
 			if (input.equalsIgnoreCase("e")) { // start singleplayer session
 
 				this.menuHandler.chooseSinglePlayer();
-				ConsoleGUI.scanner.close();
 				return;
 			} else if (input.equalsIgnoreCase("m")) { // start multiplayer session
-
+				System.out.println("MULTIPLAYER IS NOT WORKING");
 				// TODO multiplayer
-
 			}
 
 			ConsoleGUI.print("Ungueltige Eingabe!", "error");
 		}
 	}
 
-	public void showSettings() {
+	/**
+	 * Shows the options to choose the AIs difficulty. It also reads the users
+	 * console input
+	 */
+	public void showAIDifficultyMenu() {
 		try {
 			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		} catch (InterruptedException | IOException e) {
@@ -71,25 +81,7 @@ public class Menu {
 			}
 
 			ConsoleGUI.print("Ungueltige Eingabe!", "error");
-			this.showSettings();
+			this.showAIDifficultyMenu();
 		}
 	}
-
-	public void showHelp() {
-		System.out.println();
-		System.out.println("//=============================================================\\\\");
-		System.out.println("||                                                             ||");
-		System.out.println("||                     Du brauchst Hilfe?!                     ||");
-		System.out.println("||    --------------------------------------------------       ||");
-		System.out.println("||    ~ ==>> Kein Treffer, du hast ins Wasser geschossen       ||");
-		System.out.println("||                                                             ||");
-		System.out.println("||    o ==>> Hier befindet sich dein eigenes Schiff            ||");
-		System.out.println("||                                                             ||");
-		System.out.println("||    x ==>> Du hast einen Teil des Schiffes getroffen         ||");
-		System.out.println("||                                                             ||");
-		System.out.println("||    X ==>> Schiff komplett versenkt                          ||");
-		System.out.println("||                                                             ||");
-		System.out.println("\\\\=============================================================//");
-	}
-
 }

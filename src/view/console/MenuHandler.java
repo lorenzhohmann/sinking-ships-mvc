@@ -1,4 +1,6 @@
-package view;
+package view.console;
+
+import model.Difficulty;
 
 public interface MenuHandler {
 

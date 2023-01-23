@@ -1,7 +1,15 @@
 package model;
 
-public class Player extends Entity {
+public abstract class Player {
+
+	/**
+	 * Wheter the player is ready to start the game
+	 */
 	private boolean ready;
+
+	/**
+	 * 
+	 */
 	private Matchfield matchfield;
 
 	public Player() {

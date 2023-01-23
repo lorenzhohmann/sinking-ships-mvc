@@ -1,12 +1,26 @@
-package view;
+package view.console;
 
 import java.util.Scanner;
 
 public class ConsoleGUI {
 
+	/**
+	 * The console reader object (needs to be global) Java can't handle multiple
+	 * scanners in one program, so it needs to be global
+	 */
 	public static Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * Time between a game instruction and the following action (in ms)
+	 */
 	public static final int GAME_INTERRUPTION = 2000;
 
+	/**
+	 * Shows a notification on the console
+	 * 
+	 * @param msg   - the message to appear
+	 * @param style - adds a suffix and prefix for the message
+	 */
 	public static void print(String msg, String style) {
 		switch (style) {
 		case "error":
@@ -24,10 +38,18 @@ public class ConsoleGUI {
 		}
 	}
 
+	/**
+	 * Shows a notification on the console with the style 'normal'
+	 * 
+	 * @param msg - the message to appear
+	 */
 	public static void print(String msg) {
 		ConsoleGUI.print(msg, "normal");
 	}
 
+	/**
+	 * Prints the help menu to the console
+	 */
 	public static void showHelp() {
 		System.out.println();
 		System.out.println("//=============================================================\\\\");

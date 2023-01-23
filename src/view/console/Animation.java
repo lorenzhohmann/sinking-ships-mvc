@@ -1,14 +1,13 @@
-package view;
+package view.console;
 
 public class Animation {
 
-	private int animationDuration;
-
-	public Animation(int animationDuration) {
-		this.animationDuration = animationDuration;
-	}
-
-	public void playAnimation() throws Exception {
+	/**
+	 * Shows an ship animation for the game start
+	 * 
+	 * @throws Exception
+	 */
+	public void showIntro() throws Exception {
 
 		System.out.println("                                                          ");
 		System.out.println("                                                          ");
@@ -75,7 +74,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -109,7 +108,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -143,7 +142,7 @@ public class Animation {
 		System.out.println("                                  @@@ @   @ @@@@@@@@@@    ");
 		System.out.println("                                   @#@@@@ @    @@         ");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                               		  ");
@@ -177,7 +176,7 @@ public class Animation {
 		System.out.println("                                  @@@ @   @ @@@@@@@@@@    ");
 		System.out.println("                                   @#@@@@ @    @@         ");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                                          ");
@@ -211,7 +210,7 @@ public class Animation {
 		System.out.println("                                  @@@ @   @ @@@@@@@@@@    ");
 		System.out.println("                                   @#@@@@ @    @@         ");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                                          ");
@@ -417,7 +416,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -451,7 +450,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -553,7 +552,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                                          ");
@@ -587,7 +586,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                               		  ");
@@ -621,7 +620,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -655,7 +654,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -689,7 +688,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -723,7 +722,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -757,7 +756,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -791,7 +790,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                              			  ");
@@ -825,7 +824,7 @@ public class Animation {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		Thread.sleep(this.animationDuration);
+		Thread.sleep(300);
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		System.out.println("                                                          ");

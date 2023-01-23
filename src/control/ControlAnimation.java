@@ -1,18 +1,15 @@
 package control;
 
-import view.Animation;
-import view.AnimationHandler;
-import view.MenuHandler;
+import view.console.Animation;
+import view.console.MenuHandler;
 
-public class ControlAnimation implements AnimationHandler {
+public class ControlAnimation {
 
-	@Override
-	public void initControl() {
-
+	public void startApp() {
 		// Animation animation = new Animation(300);
-		Animation animation = new Animation(0);
+		Animation animation = new Animation();
 		try {
-			animation.playAnimation();
+			animation.showIntro();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

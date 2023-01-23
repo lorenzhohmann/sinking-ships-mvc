@@ -2,47 +2,37 @@ package control;
 
 import java.awt.Toolkit;
 
+import model.AI;
 import model.Coordinate;
-import model.KI;
 import model.Player;
-import model.Status;
-import view.ConsoleGUI;
-import view.Game;
-import view.GameHandler;
-import view.GameOverHandler;
-import view.Matchfield;
+import view.console.ConsoleGUI;
+import view.console.GameHandler;
+import view.console.GameOverHandler;
+import view.console.GameView;
+import view.console.Matchfield;
 
 public class ControlGame implements GameHandler {
 
-	private Game game;
-	private Status status;
+	private GameView game;
 	private Player player;
-	private KI enemy;
+	private Player enemy;
 	private boolean ownTurn;
-	private int run;
+	private int showInARow;
 	private Coordinate lastChosenCoordinate;
 	private boolean lastShotHit = false;
 
 	@Override
-	public void initControl(Player player, KI enemy, Status status) {
+	public void initControl(Player player, Player enemy) {
 		this.player = player;
 		this.enemy = enemy;
-		this.status = status;
 		this.ownTurn = true;
-		this.run = 1;
+		this.showInARow = 1;
 
-		this.game = new Game(this, enemy.getDifficulty().getName());
+		this.game = new GameView(this, ((AI) enemy).getDifficulty().getName());
 	}
 
 	@Override
 	public void startGame() {
-
-		if (this.status != Status.WARMUP) {
-			return;
-		}
-
-		this.status = Status.RUNNING;
-
 		this.player.setReady(true);
 		this.enemy.setReady(true);
 
@@ -51,7 +41,7 @@ public class ControlGame implements GameHandler {
 
 	private void nextRound() {
 
-		this.game.printHead();
+		this.game.showHead();
 
 		// show players field
 		if (this.ownTurn) {
@@ -67,7 +57,7 @@ public class ControlGame implements GameHandler {
 	private void nextPlayerRound() {
 
 		// show enemys matchfield without ship positions (only hitted ships)
-		this.game.printPlayerRound(this.run);
+		this.game.showPlayerRound(this.showInARow);
 
 		// check for win
 		if (this.enemy.getMatchfield().isGameOver()) {
@@ -79,13 +69,13 @@ public class ControlGame implements GameHandler {
 		if (this.lastShotHit) {
 
 			// show enemys matchfield without ship positions (only hitted ships)
-			this.game.printShotEvaluation(run);
+			this.game.showPlayerShotEvaluation(showInARow);
 
 			Toolkit.getDefaultToolkit().beep();
-			this.run++;
+			this.showInARow++;
 
 			boolean fullShipDown = this.enemy.getMatchfield().isShipDown(this.lastChosenCoordinate);
-			this.game.printAfterShotMessage(fullShipDown);
+			this.game.showShotResultMessage(fullShipDown);
 
 			// wait before second shot
 			try {
@@ -95,9 +85,9 @@ public class ControlGame implements GameHandler {
 			}
 
 		} else {
-			this.game.printNoShipHit();
+			this.game.showNoShipHit();
 			this.ownTurn = false;
-			this.run = 1;
+			this.showInARow = 1;
 
 			// wait on player change
 			try {
@@ -113,7 +103,7 @@ public class ControlGame implements GameHandler {
 		boolean hit = false;
 
 		// show enemys matchfield without ship positions (only hitted ships)
-		this.game.printEnemiesRound(this.run);
+		this.game.showEnemiesRound(this.showInARow);
 
 		// wait before shot
 		try {
@@ -124,11 +114,11 @@ public class ControlGame implements GameHandler {
 
 		// do KI shot
 		model.Matchfield matchfield = this.player.getMatchfield();
-		Coordinate kiCoordinate = ((KI) this.enemy).getKICoordinate(matchfield);
+		Coordinate kiCoordinate = ((AI) this.enemy).chooseCoordinateByDifficulty(matchfield);
 		hit = this.player.getMatchfield().shoot(kiCoordinate);
 
 		// show players matchfield with all ships and states
-		this.game.printEnemiesMatchfield(run);
+		this.game.showEnemiesMatchfield(showInARow);
 
 		// check for KI win
 		if (this.player.getMatchfield().isGameOver()) {
@@ -137,26 +127,25 @@ public class ControlGame implements GameHandler {
 		}
 
 		// hit evalutation
+		this.game.enemyShotEvaluation(hit);
 		if (hit) {
 			Toolkit.getDefaultToolkit().beep();
-			this.game.printYourGameWasHit();
-			this.run++;
+			this.showInARow++;
 
 			// wait after successfull shot
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
 		} else {
-			this.game.printEnemyMadeNoHit();
 			this.ownTurn = true;
-			this.run = 1;
+			this.showInARow = 1;
 
 			// wait on player change
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -166,27 +155,24 @@ public class ControlGame implements GameHandler {
 	}
 
 	private void endGame(boolean winner) {
-		if (this.status != Status.RUNNING) {
-			return;
-		}
-		this.status = Status.ENDING;
-
 		GameOverHandler gameOverHandler = new ControlGameOver();
 		gameOverHandler.initControl(winner, this.enemy);
 	}
 
 	@Override
 	public void showPlayersMatchfield() {
-		Matchfield matchfield = new Matchfield(player.getMatchfield().getFieldsize());
-		String[][] status = player.getMatchfield().getStatus(true);
-		matchfield.show(status);
+		this.createMatchfield(player, true);
 	}
 
 	@Override
 	public void showEnemiesMatchfield() {
-		Matchfield matchfield = new Matchfield(enemy.getMatchfield().getFieldsize());
-		String[][] status = enemy.getMatchfield().getStatus(true);
-		matchfield.show(status);
+		this.createMatchfield(enemy, false);
+	}
+
+	private void createMatchfield(Player player, boolean showShips) {
+		Matchfield matchfield = new Matchfield();
+		String[][] status = player.getMatchfield().getStatus(showShips);
+		matchfield.print(status);
 	}
 
 	@Override
@@ -204,7 +190,7 @@ public class ControlGame implements GameHandler {
 		} else if (input.equalsIgnoreCase("?") || input.equalsIgnoreCase("--help") || input.equalsIgnoreCase("help")) {
 			ConsoleGUI.showHelp();
 		} else {
-			this.game.printInvalidInput();
+			this.game.showInvalidInput();
 		}
 
 		return false;

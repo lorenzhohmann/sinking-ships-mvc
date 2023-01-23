@@ -1,34 +1,31 @@
 package control;
 
-import model.KI;
-import model.Status;
-import view.Difficulty;
-import view.Menu;
-import view.MenuHandler;
-import view.ShipPositioningHandler;
+import model.AI;
+import model.Difficulty;
+import view.console.Menu;
+import view.console.MenuHandler;
+import view.console.ShipPositioningHandler;
 
 public class ControlMenu implements MenuHandler {
 
 	private Menu menu;
-	private Status status;
-	private KI enemy;
+	private AI enemy;
 
 	@Override
 	public void initControl() {
 		this.menu = new Menu(this);
 
-		this.enemy = new KI();
+		this.enemy = new AI();
 		this.showGameModeMenu();
 	}
 
 	private void showGameModeMenu() {
-		this.status = Status.WAITING;
 		this.menu.showGameModeMenu();
 	}
 
 	private void showSettingsMenu() {
 
-		menu.showSettings();
+		menu.showAIDifficultyMenu();
 
 		ShipPositioningHandler handler = new ControlShipPositioning(enemy);
 		handler.initControl();

@@ -1,15 +1,17 @@
 package model;
+
 import java.io.Serializable;
 
 public class Coordinate implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
+
 	private int x;
 	private int y;
 	private boolean hit;
 	private boolean hasShip;
 	private int shipIndex;
-	
+
 	public Coordinate(int x, int y, boolean hasShip) {
 		this.x = x;
 		this.y = y;
@@ -31,11 +33,11 @@ public class Coordinate implements Serializable {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public int getShipIndex() {
 		return shipIndex;
 	}
-	
+
 	public void setShipIndex(int shipIndex) {
 		this.shipIndex = shipIndex;
 	}

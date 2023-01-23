@@ -1,19 +1,18 @@
-package view;
+package view.console;
 
 public class Matchfield {
 
-	private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private int fieldsize;
-
-	public Matchfield(int fieldsize) {
-		this.fieldsize = fieldsize;
-	}
-
-	public void show(String[][] status) {
+	/**
+	 * Shows a matchfield in the console
+	 * 
+	 * @param fieldsize - the size of the match
+	 * @param status
+	 */
+	public void print(String[][] status) {
 
 		// Function for writing the matchfield on the console
-		int a = this.fieldsize; // X-coordinate
-		int b = this.fieldsize; // Y-coordinate
+		int a = status[0].length; // X-coordinate
+		int b = a; // Y-coordinate
 
 		String rand = "   ";// distance from the left edge to the top row of a field
 		String x = "     "; // distance from the left edge to A
@@ -21,7 +20,7 @@ public class Matchfield {
 
 		// Formating the Output as String
 		for (int i = 0; i < a; i++) { // alphabet of the X-coordinates
-			x = x + " " + alphabet.charAt(i) + "    ";
+			x = x + " " + "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(i) + "    ";
 		}
 		System.out.println(x);
 
