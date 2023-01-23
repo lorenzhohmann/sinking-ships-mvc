@@ -31,38 +31,40 @@ public class Game {
 		ConsoleGUI.print("||                      " + run + ". Schuss in Folge                     ||");
 	}
 
+	public void printPlayersHeadline(int run) {
+		ConsoleGUI.print("||                         Eigenes Feld                        ||");
+		ConsoleGUI.print("||                      " + run + ". Schuss in Folge                     ||");
+	}
+
 	public void showShotInstruction() {
 		ConsoleGUI.print("Welche Position moechtest Du angreifen? (Bsp.: A4)", "highlight");
 	}
 
-	public boolean printPlayerRound(int run) {
-		boolean hasHit = false;
+	public void printPlayerRound(int run) {
 		this.printEnemyHeadline(run);
-		this.gameHandler.showPlayersMatchfield();
+		this.gameHandler.showEnemiesMatchfield();
 		this.showShotInstruction();
 
 		// loops for own shot
 		while (ConsoleGUI.scanner.hasNext()) {
 
 			String input = ConsoleGUI.scanner.next();
+			boolean moveSuccessfull = this.gameHandler.doMove(input);
 
-			// check if coordinate has correct syntax => shoot on this position
-			if (input.matches("[A-Ja-j](1|2|3|4|5|6|7|8|9|10)")) {
-				hasHit = this.gameHandler.chooseCoordinate(input);
-
-				// check if already hitted
-				if (hasHit) {
-					break;
-				}
-			} else if (input.equalsIgnoreCase("?") || input.equalsIgnoreCase("--help")
-					|| input.equalsIgnoreCase("help")) {
-				ConsoleGUI.showHelp();
-			} else {
-				ConsoleGUI.print("Ungueltige Eingabe! (Bsp.: A4)", "error");
+			if (moveSuccessfull) {
+				break;
 			}
 		}
+	}
 
-		return hasHit;
+	public void printEnemiesRound(int run) {
+		this.printEnemiesMatchfield(run);
+		this.showWaitingForEnemy();
+	}
+
+	public void printEnemiesMatchfield(int run) {
+		this.printPlayersHeadline(run);
+		this.gameHandler.showPlayersMatchfield();
 	}
 
 	public void printFieldAlreadyShot() {
@@ -85,6 +87,22 @@ public class Game {
 
 	public void printNoShipHit() {
 		ConsoleGUI.print("Kein Schiff getroffen! Dein Gegner ist am Zug!");
+	}
+
+	public void printInvalidInput() {
+		ConsoleGUI.print("Ungueltige Eingabe! (Bsp.: A4)", "error");
+	}
+
+	private void showWaitingForEnemy() {
+		ConsoleGUI.print("Dein Gegner ist am Zug!", "waiting");
+	}
+
+	public void printYourGameWasHit() {
+		ConsoleGUI.print("Eines Deiner Schiffe wurde getroffen! Dein Gegner ist noch einmal am Zug!");
+	}
+
+	public void printEnemyMadeNoHit() {
+		ConsoleGUI.print("Dein Gegner hat keines Deiner Schiffe getroffen! Du bist dran!");
 	}
 
 }

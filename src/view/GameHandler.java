@@ -14,6 +14,6 @@ public interface GameHandler {
 
 	public void showEnemiesMatchfield();
 
-	public boolean chooseCoordinate(String input);
+	public boolean doMove(String input);
 
 }

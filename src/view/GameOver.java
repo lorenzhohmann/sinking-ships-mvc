@@ -4,12 +4,12 @@ import java.awt.Toolkit;
 
 public class GameOver {
 
-	public void showEndScreen(boolean winner) {
+	public void showEndScreen(boolean playerIsWinner) {
 		System.out.println("//=============================================================\\\\");
 		System.out.println("||                                                             ||");
 
-		if (winner) {
-			System.out.println("||                Glueckwunsch! Sie haben gewonnen!            ||");
+		if (playerIsWinner) {
+			System.out.println("||                Glueckwunsch! Du hast gewonnen!              ||");
 			System.out.println("||                                                             ||");
 			System.out.println("\\\\=============================================================//");
 			Toolkit.getDefaultToolkit().beep();

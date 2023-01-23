@@ -1,10 +1,12 @@
 package control;
 
+import view.AnimationHandler;
+
 public class Main {
 
 	public static void main(String[] args) {
 
-		ControlApp controlApp = new ControlApp();
-		controlApp.startApp();
+		AnimationHandler animationHandler = new ControlAnimation();
+		animationHandler.initControl();
 	}
 }

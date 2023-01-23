@@ -398,22 +398,38 @@ public class Matchfield extends Entity implements Serializable {
 		return shipsWithSameIndex == shipHitsWithSameIndex;
 	}
 
-	public void calculateAndPrintStatistics(Screen screen) {
-		int hit = 0;
-		double statistic = 0.0;
-		int totalHits = 0;
+//	public void calculateAndPrintStatistics(Screen screen) {
+//		int hit = 0;
+//		double statistic = 0.0;
+//		int totalHits = 0;
+//		for (Coordinate c : this.coordinates) {
+//			if (c.hasHit() && c.hasShip()) {
+//				totalHits++;
+//				hit++;
+//			} else if (c.hasHit()) {
+//				totalHits++;
+//			}
+//
+//		}
+//		if (totalHits > 0)
+//			statistic = (100 * hit / totalHits);
+//		screen.showStatistic(totalHits, hit, (totalHits - hit), statistic);
+//	}
+
+	public Statistic getStatistic() {
+		int hits = 0;
+		int totalShots = 0;
+
 		for (Coordinate c : this.coordinates) {
 			if (c.hasHit() && c.hasShip()) {
-				totalHits++;
-				hit++;
+				totalShots++;
+				hits++;
 			} else if (c.hasHit()) {
-				totalHits++;
+				totalShots++;
 			}
 
 		}
-		if (totalHits > 0)
-			statistic = (100 * hit / totalHits);
-		screen.showStatistic(totalHits, hit, (totalHits - hit), statistic);
+		return new Statistic(totalShots, hits);
 	}
 
 }

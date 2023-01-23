@@ -1,6 +1,6 @@
 package view;
 
-public class Statistics {
+public class StatisticsWindow {
 
 	public void showStatistic(int totalShots, int hits, int noHits, double successRate) {
 		System.out.println();
