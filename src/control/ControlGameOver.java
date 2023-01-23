@@ -19,15 +19,7 @@ public class ControlGameOver implements GameOverHandler {
 		statistics.showStatistic(statistic.getTotalShots(), statistic.getHits(), statistic.getNoHits(),
 				statistic.getSuccessRate());
 
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		ConsoleGUI.scanner.close();
-
-		System.exit(0);
 	}
 
 }

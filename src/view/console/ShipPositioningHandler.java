@@ -2,20 +2,20 @@ package view.console;
 
 public interface ShipPositioningHandler {
 
-	public void initControl();
+	void initControl();
 
-	public void placeEnemiesShipsRandomly();
+	void placeEnemiesShipsRandomly();
 
-	public void placePlayersShipsRandomly();
+	void placePlayersShipsRandomly();
 
-	public void showPlayersMatchfield();
+	void showPlayersMatchfield();
 
-	public void resetPlayersShips();
+	void resetPlayersShips();
 
-	public boolean setShipPositionsManual(String positionString, int length);
+	boolean setShipPositionsManual(String positionString, int length);
 
-	public void startGame();
+	void startGame();
 
-	public int handlePositioningInput(String input);
+	int handlePositioningInput(String input);
 
 }

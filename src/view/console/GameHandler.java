@@ -4,14 +4,14 @@ import model.Player;
 
 public interface GameHandler {
 
-	public void initControl(Player player, Player enemy);
+	void initControl(Player player, Player enemy);
 
-	public void startGame();
+	void startGame();
 
-	public void showPlayersMatchfield();
+	void showPlayersMatchfield();
 
-	public void showEnemiesMatchfield();
+	void showEnemiesMatchfield();
 
-	public boolean doMove(String input);
+	boolean doMove(String input);
 
 }

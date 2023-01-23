@@ -4,6 +4,6 @@ import model.Player;
 
 public interface GameOverHandler {
 
-	public void initControl(boolean playerIsWinner, Player Enemy);
+	void initControl(boolean playerIsWinner, Player Enemy);
 
 }

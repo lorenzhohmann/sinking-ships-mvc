@@ -7,10 +7,10 @@ public class ShipPositioning {
 	/**
 	 * Handler for all ship positioning actions
 	 */
-	private ShipPositioningHandler shipPositioningHandler;
+	private ShipPositioningHandler shipPosHandler;
 
 	public ShipPositioning(ShipPositioningHandler handler) {
-		this.shipPositioningHandler = handler;
+		this.shipPosHandler = handler;
 	}
 
 	/**
@@ -44,14 +44,14 @@ public class ShipPositioning {
 		if (!hasManualPosition) { // if this function call does not come from manual positioning
 
 			// place enemys ships randomly
-			this.shipPositioningHandler.placeEnemiesShipsRandomly();
+			this.shipPosHandler.placeEnemiesShipsRandomly();
 
 			// place players ships randomly
-			this.shipPositioningHandler.placePlayersShipsRandomly();
+			this.shipPosHandler.placePlayersShipsRandomly();
 		}
 
 		// place players ships randomly
-		this.shipPositioningHandler.showPlayersMatchfield();
+		this.shipPosHandler.showPlayersMatchfield();
 
 		// position of ships page
 		this.showShipPositioningMenu();
@@ -59,7 +59,7 @@ public class ShipPositioning {
 		while (ConsoleGUI.scanner.hasNext()) {
 
 			String input = ConsoleGUI.scanner.next();
-			int handlerResponse = this.shipPositioningHandler.handlePositioningInput(input);
+			int handlerResponse = this.shipPosHandler.handlePositioningInput(input);
 
 			if (handlerResponse == 1) {
 				continue;
@@ -85,9 +85,9 @@ public class ShipPositioning {
 		this.showManualShipPositioningInstruction();
 
 		while (ConsoleGUI.scanner.hasNext()) {
-			String manualPositioningString = ConsoleGUI.scanner.next();
+			String manualPosString = ConsoleGUI.scanner.next();
 
-			boolean success = this.shipPositioningHandler.setShipPositionsManual(manualPositioningString, 4);
+			boolean success = this.shipPosHandler.setShipPositionsManual(manualPosString, 4);
 			if (success) {
 				break;
 			}

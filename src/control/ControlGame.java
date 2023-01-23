@@ -4,12 +4,13 @@ import java.awt.Toolkit;
 
 import model.AI;
 import model.Coordinate;
+import model.Matchfield;
 import model.Player;
 import view.console.ConsoleGUI;
 import view.console.GameHandler;
 import view.console.GameOverHandler;
 import view.console.GameView;
-import view.console.Matchfield;
+import view.console.Playground;
 
 public class ControlGame implements GameHandler {
 
@@ -18,8 +19,6 @@ public class ControlGame implements GameHandler {
 	private Player enemy;
 	private boolean ownTurn;
 	private int showInARow;
-	private Coordinate lastChosenCoordinate;
-	private boolean lastShotHit = false;
 
 	@Override
 	public void initControl(Player player, Player enemy) {
@@ -33,9 +32,6 @@ public class ControlGame implements GameHandler {
 
 	@Override
 	public void startGame() {
-		this.player.setReady(true);
-		this.enemy.setReady(true);
-
 		this.nextRound();
 	}
 
@@ -55,18 +51,19 @@ public class ControlGame implements GameHandler {
 	}
 
 	private void nextPlayerRound() {
+		Matchfield enemiesMatchfield = this.enemy.getMatchfield();
 
 		// show enemys matchfield without ship positions (only hitted ships)
 		this.game.showPlayerRound(this.showInARow);
 
 		// check for win
-		if (this.enemy.getMatchfield().isGameOver()) {
+		if (enemiesMatchfield.isGameOver()) {
 			this.endGame(true);
 			return;
 		}
 
 		// hit evalutation
-		if (this.lastShotHit) {
+		if (enemiesMatchfield.isLastShotHit()) {
 
 			// show enemys matchfield without ship positions (only hitted ships)
 			this.game.showPlayerShotEvaluation(showInARow);
@@ -74,14 +71,14 @@ public class ControlGame implements GameHandler {
 			Toolkit.getDefaultToolkit().beep();
 			this.showInARow++;
 
-			boolean fullShipDown = this.enemy.getMatchfield().isShipDown(this.lastChosenCoordinate);
+			boolean fullShipDown = enemiesMatchfield.isShipDown(enemiesMatchfield.getLastChoose());
 			this.game.showShotResultMessage(fullShipDown);
 
 			// wait before second shot
 			try {
 				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// no action.
 			}
 
 		} else {
@@ -93,15 +90,13 @@ public class ControlGame implements GameHandler {
 			try {
 				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// no action.
 			}
 
 		}
 	}
 
 	private void nextAIRound() {
-		boolean hit = false;
-
 		// show enemys matchfield without ship positions (only hitted ships)
 		this.game.showEnemiesRound(this.showInARow);
 
@@ -109,13 +104,8 @@ public class ControlGame implements GameHandler {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			// no action.
 		}
-
-		// do KI shot
-		model.Matchfield matchfield = this.player.getMatchfield();
-		Coordinate kiCoordinate = ((AI) this.enemy).chooseCoordinateByDifficulty(matchfield);
-		hit = this.player.getMatchfield().shoot(kiCoordinate);
 
 		// show players matchfield with all ships and states
 		this.game.showEnemiesMatchfield(showInARow);
@@ -126,7 +116,10 @@ public class ControlGame implements GameHandler {
 			return;
 		}
 
-		// hit evalutation
+		// do AI shot & hit evalutation
+		Matchfield matchfield = this.player.getMatchfield();
+		Coordinate kiCoordinate = ((AI) this.enemy).chooseCoordinateByDifficulty(matchfield);
+		boolean hit = this.player.getMatchfield().shoot(kiCoordinate);
 		this.game.enemyShotEvaluation(hit);
 		if (hit) {
 			Toolkit.getDefaultToolkit().beep();
@@ -136,7 +129,7 @@ public class ControlGame implements GameHandler {
 			try {
 				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// no action.
 			}
 
 		} else {
@@ -147,7 +140,7 @@ public class ControlGame implements GameHandler {
 			try {
 				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// no action.
 			}
 
 		}
@@ -170,30 +163,38 @@ public class ControlGame implements GameHandler {
 	}
 
 	private void createMatchfield(Player player, boolean showShips) {
-		Matchfield matchfield = new Matchfield();
+		Playground matchfield = new Playground();
 		String[][] status = player.getMatchfield().getStatus(showShips);
 		matchfield.print(status);
 	}
 
 	@Override
 	public boolean doMove(String input) {
-		// check if coordinate has correct syntax => shoot on this position
-		if (input.matches("[A-Ja-j](1|2|3|4|5|6|7|8|9|10)")) {
-			this.lastChosenCoordinate = this.enemy.getMatchfield().getCoordinateByString(input);
+		boolean breakLoop = false;
 
-			if (this.lastChosenCoordinate.hasHit()) {
+		// check if coordinate has correct syntax => shoot on this position
+		if (input.matches("[a-j](1|2|3|4|5|6|7|8|9|10)")) {
+			Matchfield enemiesMatchfield = this.enemy.getMatchfield();
+			enemiesMatchfield.getCoordinateByString(input);
+
+			if (enemiesMatchfield.getLastChoose().hasHit()) {
 				this.game.printFieldAlreadyShot();
 			} else {
-				this.lastShotHit = this.enemy.getMatchfield().shoot(this.lastChosenCoordinate);
-				return true;
+				this.enemy.getMatchfield().shoot(enemiesMatchfield.getLastChoose());
+				breakLoop = true;
 			}
-		} else if (input.equalsIgnoreCase("?") || input.equalsIgnoreCase("--help") || input.equalsIgnoreCase("help")) {
+		} else if ("--help".equalsIgnoreCase(input) || "help".equalsIgnoreCase(input) || "?".equalsIgnoreCase(input)) { // NOPMD
+																														// by
+																														// Lorenz
+																														// on
+																														// 23.01.23,
+																														// 15:27
 			ConsoleGUI.showHelp();
 		} else {
 			this.game.showInvalidInput();
 		}
 
-		return false;
+		return breakLoop;
 	}
 
 }

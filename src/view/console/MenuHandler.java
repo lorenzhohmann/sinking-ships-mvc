@@ -4,10 +4,10 @@ import model.Difficulty;
 
 public interface MenuHandler {
 
-	public void initControl();
+	void initControl();
 
-	public void setDifficulty(Difficulty difficulty);
+	void setDifficulty(Difficulty difficulty);
 
-	public void chooseSinglePlayer();
+	void chooseSinglePlayer();
 
 }

@@ -7,7 +7,7 @@ import model.Human;
 import model.Player;
 import view.console.ConsoleGUI;
 import view.console.GameHandler;
-import view.console.Matchfield;
+import view.console.Playground;
 import view.console.ShipPositioning;
 import view.console.ShipPositioningHandler;
 
@@ -26,10 +26,10 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	public void initControl() {
 		shipPositioning = new ShipPositioning(this);
 
-		this.showShipPositioningMenu(enemy);
+		this.showShipPositioningMenu();
 	}
 
-	private void showShipPositioningMenu(Player enemy) {
+	private void showShipPositioningMenu() {
 		this.shipPositioning.showShipPositioning(false);
 	}
 
@@ -45,7 +45,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void showPlayersMatchfield() {
-		Matchfield matchfield = new Matchfield();
+		Playground matchfield = new Playground();
 		String[][] status = this.human.getMatchfield().getStatus(true);
 		matchfield.print(status);
 	}
@@ -69,7 +69,9 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public int handlePositioningInput(String input) {
-		if (input.equalsIgnoreCase("z")) { // generate new random ship positions
+		int returnCode = 0;
+
+		if ("z".equalsIgnoreCase(input)) { // generate new random ship positions
 
 			// clear console
 			try {
@@ -84,20 +86,20 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 			this.shipPositioning.showShipPositioningMenu();
 
-			return 1;
-		} else if (input.equalsIgnoreCase("m")) {
+			returnCode = 1;
+		} else if ("m".equalsIgnoreCase(input)) {
 			this.shipPositioning.showManualShipPositioning();
-			return 2;
+			returnCode = 2;
 
-		} else if (input.equalsIgnoreCase("s")) { // start game
+		} else if ("s".equalsIgnoreCase(input)) { // start game
 			this.startGame();
-			return 2;
+			returnCode = 2;
 		}
 
 		ConsoleGUI.print("Ungueltige Eingabe, waehle [S], [Z] oder [M]!", "error");
 		this.shipPositioning.showShipPositioning(true);
 
-		return 0;
+		return returnCode;
 	}
 
 }

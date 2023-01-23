@@ -1,13 +1,18 @@
 package view.console;
 
+import java.io.IOException;
+
 public class Animation {
 
 	/**
 	 * Shows an ship animation for the game start
 	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * 
 	 * @throws Exception
 	 */
-	public void showIntro() throws Exception {
+	public void showIntro() throws InterruptedException, IOException { // NOPMD by Lorenz on 23.01.23, 15:27
 
 		System.out.println("                                                          ");
 		System.out.println("                                                          ");

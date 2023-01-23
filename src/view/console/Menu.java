@@ -1,6 +1,7 @@
 package view.console;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import model.Difficulty;
 
@@ -33,7 +34,7 @@ public class Menu {
 
 			String input = ConsoleGUI.scanner.next();
 
-			if (input.equalsIgnoreCase("e")) { // start singleplayer session
+			if ("e".equalsIgnoreCase(input)) { // start singleplayer session
 
 				this.menuHandler.chooseSinglePlayer();
 				return;
@@ -67,15 +68,15 @@ public class Menu {
 
 		String chosenDifficulty;
 		while (ConsoleGUI.scanner.hasNext()) {
-			chosenDifficulty = ConsoleGUI.scanner.next().toLowerCase();
+			chosenDifficulty = ConsoleGUI.scanner.next().toLowerCase(Locale.GERMAN);
 
-			if (chosenDifficulty.equalsIgnoreCase("e")) {
+			if ("e".equalsIgnoreCase(chosenDifficulty)) {
 				menuHandler.setDifficulty(Difficulty.EASY);
 				break;
-			} else if (chosenDifficulty.equalsIgnoreCase("s")) {
+			} else if ("s".equalsIgnoreCase(chosenDifficulty)) {
 				menuHandler.setDifficulty(Difficulty.HARD);
 				break;
-			} else if (chosenDifficulty.equalsIgnoreCase("x")) {
+			} else if ("x".equalsIgnoreCase(chosenDifficulty)) {
 				menuHandler.setDifficulty(Difficulty.EXTREM);
 				break;
 			}

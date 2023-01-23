@@ -3,14 +3,15 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Matchfield extends Entity implements Serializable {
+public class Matchfield implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int fieldsize;
 	private ArrayList<Coordinate> coordinates;
 	private Coordinate lastShot;
 	private Coordinate lastHit;
-	private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private Coordinate lastChoose;
+	private boolean lastShotHit;
 	private int shipIndexCounter;
 
 	public Matchfield() {
@@ -18,13 +19,11 @@ public class Matchfield extends Entity implements Serializable {
 		this.coordinates = new ArrayList<Coordinate>();
 		this.lastShot = null;
 		this.lastHit = null;
+		this.lastChoose = null;
+		this.lastShotHit = false;
 		this.shipIndexCounter = 1;
 
 		this.fillCoordinates();
-	}
-
-	public String getAlphabet() {
-		return this.alphabet;
 	}
 
 	public int getShipIndexCounter() {
@@ -290,13 +289,14 @@ public class Matchfield extends Entity implements Serializable {
 		if (coordinate.hasShip())
 			this.lastHit = coordinate;
 
-		return coordinate.hasShip();
+		this.lastShotHit = coordinate.hasShip();
+		return this.lastShotHit;
 	}
 
 	public Coordinate getCoordinateByString(String coordinate) {
 		String[] split = coordinate.split("");
 
-		int alphabetIndex = this.alphabet.indexOf(split[0].toUpperCase());
+		int alphabetIndex = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(split[0].toUpperCase());
 
 		int numberIndex = 0;
 		if (split.length == 2) {
@@ -306,7 +306,8 @@ public class Matchfield extends Entity implements Serializable {
 		}
 		int chosenCoordinateIndex = numberIndex + alphabetIndex;
 
-		return this.coordinates.get(chosenCoordinateIndex);
+		this.lastChoose = this.coordinates.get(chosenCoordinateIndex);
+		return this.lastChoose;
 	}
 
 	public boolean positionShipsByString(String manualPositioning, int maxShips) {
@@ -398,24 +399,6 @@ public class Matchfield extends Entity implements Serializable {
 		return shipsWithSameIndex == shipHitsWithSameIndex;
 	}
 
-//	public void calculateAndPrintStatistics(Screen screen) {
-//		int hit = 0;
-//		double statistic = 0.0;
-//		int totalHits = 0;
-//		for (Coordinate c : this.coordinates) {
-//			if (c.hasHit() && c.hasShip()) {
-//				totalHits++;
-//				hit++;
-//			} else if (c.hasHit()) {
-//				totalHits++;
-//			}
-//
-//		}
-//		if (totalHits > 0)
-//			statistic = (100 * hit / totalHits);
-//		screen.showStatistic(totalHits, hit, (totalHits - hit), statistic);
-//	}
-
 	public Statistic getStatistic() {
 		int hits = 0;
 		int totalShots = 0;
@@ -430,6 +413,14 @@ public class Matchfield extends Entity implements Serializable {
 
 		}
 		return new Statistic(totalShots, hits);
+	}
+
+	public Coordinate getLastChoose() {
+		return lastChoose;
+	}
+
+	public boolean isLastShotHit() {
+		return lastShotHit;
 	}
 
 }

@@ -1,5 +1,7 @@
 package control;
 
+import java.io.IOException;
+
 import view.console.Animation;
 import view.console.MenuHandler;
 
@@ -10,8 +12,8 @@ public class ControlAnimation {
 		Animation animation = new Animation();
 		try {
 			animation.showIntro();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (InterruptedException | IOException e) {
+			// no action.
 		}
 
 		MenuHandler menuHandler = new ControlMenu();
