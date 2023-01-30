@@ -10,14 +10,14 @@ public class Playground {
 	 */
 	public void print(String[][] status) {
 
-		StringBuffer buffer = new StringBuffer();
+		StringBuffer buffer = new StringBuffer(43);
 		buffer.append("   ");
 
 		int aDir = status[0].length; // X-coordinate
 		int bDir = aDir; // Y-coordinate
 
-		StringBuffer distToChar = new StringBuffer("    ");
-		String yCoordNumber = ""; // string for the numbers of the Y-coordinates
+		StringBuffer distToChar = new StringBuffer(35);
+		distToChar.append("     ");
 
 		// Formating the Output as String
 		for (int i = 0; i < aDir; i++) { // alphabet of the X-coordinates
@@ -25,14 +25,10 @@ public class Playground {
 		}
 		System.out.println(distToChar.toString());
 
-		for (int i = 0; i < bDir; i++) { // sting to generate the numbers of the Y-coordinates
-			yCoordNumber = yCoordNumber + Integer.toString(i);
-		}
-
 		for (int i = 0; i < aDir; i++) { // top row
 			buffer.append(" _____");
 		}
-		buffer.append("\n"); // NOPMD by Lorenz on 23.01.23, 15:36
+		buffer.append("\n");
 
 		for (int i = 0; i < bDir; i++) {
 			buffer.append("   "); // structure of the fields
@@ -53,7 +49,9 @@ public class Playground {
 			}
 
 			for (int j = 0; j < aDir; j++) { // 2/3 of a field
-				buffer.append("|  " + status[i][j] + "  "); // symbol if a ship was hit,...
+				buffer.append("|  ");
+				buffer.append(status[i][j]); // symbol if a ship was hit,...
+				buffer.append("  ");
 			}
 			buffer.append("|" + "\n" + "   ");
 

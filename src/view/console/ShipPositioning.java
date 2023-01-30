@@ -87,7 +87,7 @@ public class ShipPositioning {
 		while (ConsoleGUI.scanner.hasNext()) {
 			String manualPosString = ConsoleGUI.scanner.next();
 
-			boolean success = this.shipPosHandler.setShipPositionsManual(manualPosString, 4);
+			boolean success = this.shipPosHandler.positionShipManual(manualPosString, 4);
 			if (success) {
 				break;
 			}

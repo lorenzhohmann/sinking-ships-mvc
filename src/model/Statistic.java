@@ -29,10 +29,11 @@ public class Statistic {
 	 *         made
 	 */
 	public float getHitRate() {
+		float hitRate = 0;
 		if (totalShots > 0) {
-			return (100 * this.hits / this.totalShots);
+			hitRate = (100 * this.hits / this.totalShots);
 		}
-		return 0;
+		return hitRate;
 	}
 
 }

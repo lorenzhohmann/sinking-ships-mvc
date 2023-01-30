@@ -38,7 +38,7 @@ public class Menu {
 
 				this.menuHandler.chooseSinglePlayer();
 				return;
-			} else if (input.equalsIgnoreCase("m")) { // start multiplayer session
+			} else if ("m".equalsIgnoreCase(input)) { // start multiplayer session
 				System.out.println("MULTIPLAYER IS NOT WORKING");
 				// TODO multiplayer
 			}

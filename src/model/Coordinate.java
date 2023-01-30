@@ -9,8 +9,8 @@ public class Coordinate implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int x;
-	private int y;
+	private int x; // NOPMD
+	private int y; // NOPMD
 
 	/**
 	 * Whether the coordinate is shot (NOT depending of the ship state of the
@@ -30,7 +30,7 @@ public class Coordinate implements Serializable {
 	 */
 	private int shipNumber;
 
-	public Coordinate(int x, int y, boolean hasShip) {
+	public Coordinate(int x, int y, boolean hasShip) { // NOPMD
 		this.x = x;
 		this.y = y;
 		this.hasShip = hasShip;
@@ -40,7 +40,7 @@ public class Coordinate implements Serializable {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(int x) { // NOPMD
 		this.x = x;
 	}
 
@@ -48,7 +48,7 @@ public class Coordinate implements Serializable {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(int y) { // NOPMD
 		this.y = y;
 	}
 
@@ -68,7 +68,7 @@ public class Coordinate implements Serializable {
 		this.hit = hit;
 	}
 
-	public boolean hasShip() {
+	public boolean isHasShip() {
 		return hasShip;
 	}
 

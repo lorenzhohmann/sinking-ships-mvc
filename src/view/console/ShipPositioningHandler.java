@@ -12,7 +12,7 @@ public interface ShipPositioningHandler {
 
 	void resetPlayersShips();
 
-	boolean setShipPositionsManual(String positionString, int length);
+	boolean positionShipManual(String positionString, int length);
 
 	void startGame();
 

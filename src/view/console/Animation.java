@@ -12,7 +12,7 @@ public class Animation {
 	 * 
 	 * @throws Exception
 	 */
-	public void showIntro() throws InterruptedException, IOException { // NOPMD by Lorenz on 23.01.23, 15:27
+	public void showIntro() throws InterruptedException, IOException { // NOPMD
 
 		System.out.println("                                                          ");
 		System.out.println("                                                          ");

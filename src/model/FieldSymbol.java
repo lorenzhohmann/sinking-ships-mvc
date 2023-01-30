@@ -6,7 +6,7 @@ public enum FieldSymbol {
 
 	String symbol;
 
-	private FieldSymbol(String smybol) {
+	FieldSymbol(String smybol) {
 		this.symbol = smybol;
 	}
 

@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class Matchfield implements Serializable {
 
@@ -18,7 +20,7 @@ public class Matchfield implements Serializable {
 	/**
 	 * Contains all coordinate objects of the matchfield
 	 */
-	private ArrayList<Coordinate> coordinates;
+	private List<Coordinate> coordinates;
 
 	/**
 	 * The coordinate that was fires at last
@@ -47,10 +49,7 @@ public class Matchfield implements Serializable {
 
 	public Matchfield() {
 		this.fieldsize = 10;
-		this.coordinates = new ArrayList<Coordinate>();
-		this.lastShot = null;
-		this.lastHit = null;
-		this.lastChoose = null;
+		this.coordinates = new ArrayList<>();
 		this.lastShotHit = false;
 		this.shipNumberCounter = 1;
 
@@ -73,11 +72,11 @@ public class Matchfield implements Serializable {
 		this.fieldsize = fieldsize;
 	}
 
-	public ArrayList<Coordinate> getCoordinates() {
+	public List<Coordinate> getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCoordinates(ArrayList<Coordinate> coordinates) {
+	public void setCoordinates(List<Coordinate> coordinates) {
 		this.coordinates = coordinates;
 	}
 
@@ -98,7 +97,7 @@ public class Matchfield implements Serializable {
 		// Game Logic for Output of certain Characters
 		if (showShips) {
 			for (Coordinate c : coordinates) {
-				if (c.hasShip()) {
+				if (c.isHasShip()) {
 					if (c.hasHit()) {
 						if (this.isShipSunken(c)) {
 							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
@@ -117,7 +116,7 @@ public class Matchfield implements Serializable {
 		} else {
 			for (Coordinate c : coordinates) {
 				if (c.hasHit()) {
-					if (c.hasShip()) {
+					if (c.isHasShip()) {
 						if (this.isShipSunken(c)) {
 							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
 						} else {
@@ -137,25 +136,26 @@ public class Matchfield implements Serializable {
 	 * Checks if the ship on the passed coordinate is sunken. A ship is sunken if
 	 * all coordinates of the ship were hit
 	 * 
-	 * @param oneCoordinateOfShip - coordinate of the ship that should be checked
+	 * @param aCoordOfShip - coordinate of the ship that should be checked
 	 * @return whether the ship is sunken
 	 */
-	public boolean isShipSunken(Coordinate oneCoordinateOfShip) {
+	public boolean isShipSunken(Coordinate aCoordOfShip) {
 
-		int shipNumber = oneCoordinateOfShip.getShipNumber();
-		int shipHitsWithSameIndex = 0;
-		int shipsWithSameIndex = 0;
+		int shipNumber = aCoordOfShip.getShipNumber();
+		int shipHitsSameNr = 0;
+		int shipsSameIndex = 0;
 
 		for (Coordinate coordinate : this.coordinates) {
 			if (coordinate.getShipNumber() == shipNumber) {
-				shipsWithSameIndex++;
+				shipsSameIndex++;
 
-				if (coordinate.hasHit())
-					shipHitsWithSameIndex++;
+				if (coordinate.hasHit()) {
+					shipHitsSameNr++;
+				}
 			}
 		}
 
-		return shipsWithSameIndex == shipHitsWithSameIndex;
+		return shipsSameIndex == shipHitsSameNr;
 	}
 
 	public Coordinate getLastShot() {
@@ -184,7 +184,7 @@ public class Matchfield implements Serializable {
 	private void createDefaultCoordinates() {
 		for (int x = 0; x < this.fieldsize; x++) {
 			for (int y = 0; y < this.fieldsize; y++) {
-				Coordinate coordinate = new Coordinate(x, y, false);
+				Coordinate coordinate = new Coordinate(x, y, false); // NOPMD
 				this.coordinates.add(coordinate);
 			}
 		}
@@ -200,7 +200,7 @@ public class Matchfield implements Serializable {
 		int totalShots = 0;
 
 		for (Coordinate c : this.coordinates) {
-			if (c.hasHit() && c.hasShip()) {
+			if (c.hasHit() && c.isHasShip()) {
 				totalShots++;
 				hits++;
 			} else if (c.hasHit()) {
@@ -228,24 +228,27 @@ public class Matchfield implements Serializable {
 	 * (e.g. A1 returns the first top left coordinate) from the matchfield
 	 * 
 	 * @param coordinateString - the human-readable string of the coordinate
-	 *                         position
-	 * @return the coordinate on the specific human-readable position from the
-	 *         matchfield
+	 * @return the coordinate on the specific human-readable position
 	 */
 	public Coordinate getCoordinateByString(String coordinateString) {
 		String[] split = coordinateString.split("");
 
-		int alphabetIndex = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(split[0].toUpperCase());
+		int alphabetIndex = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(split[0].toUpperCase(Locale.GERMAN));
 
+		int stringUnderTen = 2;
+		int stringOverTen = 3;
 		int numberIndex = 0;
-		if (split.length == 2) {
-			numberIndex = 10 * (Integer.parseInt(split[1]) - 1);
-		} else if (split.length == 3) {
-			numberIndex = 10 * (Integer.parseInt(split[1] + split[2]) - 1);
-		}
-		int chosenCoordinateIndex = numberIndex + alphabetIndex;
 
-		this.lastChoose = this.coordinates.get(chosenCoordinateIndex);
+		if (split.length == stringUnderTen) {
+			numberIndex = 10 * (Integer.parseInt(split[1]) - 1);
+		} else {
+			if (split.length == stringOverTen) {
+				numberIndex = 10 * (Integer.parseInt(split[1] + split[stringUnderTen]) - 1);
+			}
+		}
+		int chosenCoordIndex = numberIndex + alphabetIndex;
+
+		this.lastChoose = this.coordinates.get(chosenCoordIndex);
 		return this.lastChoose;
 	}
 
@@ -257,13 +260,15 @@ public class Matchfield implements Serializable {
 	 * @return the found coordinate object or null when x and y positions not in
 	 *         matchfield
 	 */
-	public Coordinate getCoordinate(int x, int y) {
+	public Coordinate getCoordinate(int x, int y) { // NOPMD
+		Coordinate coord = null;
 		for (int i = 0; i < this.coordinates.size(); i++) {
 			if (this.coordinates.get(i).getX() == x && this.coordinates.get(i).getY() == y) {
-				return this.coordinates.get(i);
+				coord = this.coordinates.get(i);
+				break;
 			}
 		}
-		return null;
+		return coord;
 	}
 
 	/**
@@ -272,15 +277,15 @@ public class Matchfield implements Serializable {
 	 * @return ArrayList<Coordinate> with all coordinates that have no hit state.
 	 *         Empty ArrayList when there is no coordinate without a hit
 	 */
-	public ArrayList<Coordinate> getCoordinatesWithoutHits() {
-		ArrayList<Coordinate> coordinatesWithoutHits = new ArrayList<Coordinate>();
+	public List<Coordinate> getCoordinatesWithoutHits() {
+		List<Coordinate> coordsWithoutHit = new ArrayList<>();
 		for (Coordinate coordinate : this.coordinates) {
 			if (!coordinate.hasHit()) {
-				coordinatesWithoutHits.add(coordinate);
+				coordsWithoutHit.add(coordinate);
 			}
 		}
 
-		return coordinatesWithoutHits;
+		return coordsWithoutHit;
 	}
 
 }
