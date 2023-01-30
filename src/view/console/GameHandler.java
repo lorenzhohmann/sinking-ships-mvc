@@ -12,6 +12,13 @@ public interface GameHandler {
 
 	void showEnemiesMatchfield();
 
-	boolean doMove(String input);
+	/**
+	 * Performs a player move and handles it coordinate input string
+	 * 
+	 * @param coordinateString - the human-readable coordinate the player has chosen
+	 *                         (e.g. B3)
+	 * @return Whether the move was successfull
+	 */
+	boolean doMove(String coordinateString);
 
 }

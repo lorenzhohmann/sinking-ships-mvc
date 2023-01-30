@@ -13,9 +13,6 @@ public class ShipPositioning {
 		this.shipPosHandler = handler;
 	}
 
-	/**
-	 * Shows the menu to choose between the positioning type of the ships
-	 */
 	public void showShipPositioningMenu() {
 		System.out.println("//=============================================================\\\\");
 		System.out.println("||                                                             ||");
@@ -30,8 +27,11 @@ public class ShipPositioning {
 	}
 
 	/**
+	 * Shows the ship positioning and reads the user console input to call the
+	 * controller
 	 * 
-	 * @param hasManualPosition
+	 * @param hasManualPosition - whether the function call from the users input or
+	 *                          another method
 	 */
 	public void showShipPositioning(boolean hasManualPosition) {
 
@@ -99,9 +99,6 @@ public class ShipPositioning {
 		this.showShipPositioning(true);
 	}
 
-	/**
-	 * Shows a short instruction of how to create a ship positioning string
-	 */
 	private void showManualShipPositioningInstruction() {
 		ConsoleGUI.print("Bitte gebe nun die Positionerung Deiner Schiffe manuell ein!\nNutze dazu folgendes Format:");
 		ConsoleGUI.print(
@@ -109,9 +106,6 @@ public class ShipPositioning {
 		ConsoleGUI.print("Beispiel: A1-G5-F3-A8");
 	}
 
-	/**
-	 * Shows a message that all ships were set new
-	 */
 	public void showShipsNewSet() {
 		ConsoleGUI.print("Deine Flotte wurde neu positioniert!");
 	}

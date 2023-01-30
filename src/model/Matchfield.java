@@ -5,14 +5,45 @@ import java.util.ArrayList;
 
 public class Matchfield implements Serializable {
 
+	/**
+	 * Unique ID to identify version of the class for the Serializable interface
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The size of the matchfield in one direction (horizontal or vertical)
+	 */
 	private int fieldsize;
+
+	/**
+	 * Contains all coordinate objects of the matchfield
+	 */
 	private ArrayList<Coordinate> coordinates;
+
+	/**
+	 * The coordinate that was fires at last
+	 */
 	private Coordinate lastShot;
+
+	/**
+	 * The coordinate that was last fires AND hitted a ship
+	 */
 	private Coordinate lastHit;
+
+	/**
+	 * The coordinate that last choosen by a Player
+	 */
 	private Coordinate lastChoose;
+
+	/**
+	 * Whether the last shot hitted a ship
+	 */
 	private boolean lastShotHit;
-	private int shipIndexCounter;
+
+	/**
+	 * An index counter of how man ships already placed on the matchfield
+	 */
+	private int shipNumberCounter;
 
 	public Matchfield() {
 		this.fieldsize = 10;
@@ -21,17 +52,17 @@ public class Matchfield implements Serializable {
 		this.lastHit = null;
 		this.lastChoose = null;
 		this.lastShotHit = false;
-		this.shipIndexCounter = 1;
+		this.shipNumberCounter = 1;
 
 		this.createDefaultCoordinates();
 	}
 
-	public int getShipIndexCounter() {
-		return this.shipIndexCounter;
+	public int getShipNumberCounter() {
+		return this.shipNumberCounter;
 	}
 
-	public void setShipIndexCounter(int shipIndexCounter) {
-		this.shipIndexCounter = shipIndexCounter;
+	public void setShipNumberCounter(int shipNumberCounter) {
+		this.shipNumberCounter = shipNumberCounter;
 	}
 
 	public int getFieldsize() {
@@ -50,7 +81,14 @@ public class Matchfield implements Serializable {
 		this.coordinates = coordinates;
 	}
 
-	public String[][] getStatus(boolean showShips) {
+	/**
+	 * Creates a 2D list with different symbols for the different states of the
+	 * ship. Needed to visualize a matchfield
+	 * 
+	 * @param showShips - Whether the ship positions should be visible
+	 * @return - A 2D array with field symbols for the individual coordinates
+	 */
+	public String[][] getStatusArray(boolean showShips) {
 		String[][] status = new String[this.fieldsize][this.fieldsize]; // Test für Feld mit der Größe 3x
 		for (int i = 0; i < status.length; i++) {
 			for (int j = 0; j < status.length; j++) {
@@ -62,17 +100,17 @@ public class Matchfield implements Serializable {
 			for (Coordinate c : coordinates) {
 				if (c.hasShip()) {
 					if (c.hasHit()) {
-						if (this.isShipDown(c)) {
-							status[c.getX()][c.getY()] = "X";
+						if (this.isShipSunken(c)) {
+							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
 						} else {
-							status[c.getX()][c.getY()] = "x";
+							status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
 						}
 					} else {
-						status[c.getX()][c.getY()] = "o";
+						status[c.getX()][c.getY()] = FieldSymbol.SHIP.getSymbol();
 					}
 				} else {
 					if (c.hasHit()) {
-						status[c.getX()][c.getY()] = "~";
+						status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
 					}
 				}
 			}
@@ -80,13 +118,13 @@ public class Matchfield implements Serializable {
 			for (Coordinate c : coordinates) {
 				if (c.hasHit()) {
 					if (c.hasShip()) {
-						if (this.isShipDown(c)) {
-							status[c.getX()][c.getY()] = "X";
+						if (this.isShipSunken(c)) {
+							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
 						} else {
-							status[c.getX()][c.getY()] = "x";
+							status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
 						}
 					} else {
-						status[c.getX()][c.getY()] = "~";
+						status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
 					}
 				}
 			}
@@ -95,14 +133,21 @@ public class Matchfield implements Serializable {
 		return status;
 	}
 
-	public boolean isShipDown(Coordinate oneCoordinateOfShip) {
+	/**
+	 * Checks if the ship on the passed coordinate is sunken. A ship is sunken if
+	 * all coordinates of the ship were hit
+	 * 
+	 * @param oneCoordinateOfShip - coordinate of the ship that should be checked
+	 * @return whether the ship is sunken
+	 */
+	public boolean isShipSunken(Coordinate oneCoordinateOfShip) {
 
-		int shipIndex = oneCoordinateOfShip.getShipIndex();
+		int shipNumber = oneCoordinateOfShip.getShipNumber();
 		int shipHitsWithSameIndex = 0;
 		int shipsWithSameIndex = 0;
 
 		for (Coordinate coordinate : this.coordinates) {
-			if (coordinate.getShipIndex() == shipIndex) {
+			if (coordinate.getShipNumber() == shipNumber) {
 				shipsWithSameIndex++;
 
 				if (coordinate.hasHit())
@@ -145,6 +190,11 @@ public class Matchfield implements Serializable {
 		}
 	}
 
+	/**
+	 * Builds an object of the Statistic with data from the matchfield
+	 * 
+	 * @return the Statistic object the data of the matchfield
+	 */
 	public Statistic getStatisticsObject() {
 		int hits = 0;
 		int totalShots = 0;

@@ -16,7 +16,7 @@ public class Playground {
 		int aDir = status[0].length; // X-coordinate
 		int bDir = aDir; // Y-coordinate
 
-		StringBuffer distToChar = new StringBuffer();
+		StringBuffer distToChar = new StringBuffer("    ");
 		String yCoordNumber = ""; // string for the numbers of the Y-coordinates
 
 		// Formating the Output as String

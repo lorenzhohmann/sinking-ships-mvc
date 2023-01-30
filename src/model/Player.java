@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Player {
+public class Player {
 
 	private Matchfield matchfield;
 

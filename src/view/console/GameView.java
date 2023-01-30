@@ -6,10 +6,6 @@ public class GameView {
 	 * Difficulty level of the humans enemy (doesn't change while playing)
 	 */
 	private String enemyDifficulty;
-
-	/**
-	 * The game controller of this view
-	 */
 	private GameHandler gameHandler;
 
 	public GameView(GameHandler gameHandler, String enemyDifficulty) {
@@ -29,12 +25,12 @@ public class GameView {
 
 	/**
 	 * Shows the players round information and reads the users input from the
-	 * console
+	 * console and passes it to the controller
 	 * 
-	 * @param shotInARow - the amount of shots in a row
+	 * @param shotsInARow - the amount of shots in a row
 	 */
-	public void showPlayerRound(int shotInARow) {
-		this.showEnemyHeadline(shotInARow);
+	public void showPlayerRound(int shotsInARow) {
+		this.showEnemyHeadline(shotsInARow);
 		this.gameHandler.showEnemiesMatchfield();
 		this.showShotInstruction();
 
@@ -60,11 +56,6 @@ public class GameView {
 		this.showEnemiesTurn();
 	}
 
-	/**
-	 * Shows the enemies matchfield
-	 * 
-	 * @param shotInARow - the amount of shots in a row
-	 */
 	public void showEnemiesMatchfield(int shotInARow) {
 		this.showPlayersHeadline(shotInARow);
 		this.gameHandler.showPlayersMatchfield();
@@ -82,41 +73,38 @@ public class GameView {
 	/**
 	 * Shows the information with a label
 	 * 
-	 * @param shotInARow - the amount of shots in a row
+	 * @param shotsInARow - the amount of shots in a row
 	 */
-	private void showshotInARow(int shotInARow) {
-		ConsoleGUI.print("||                      " + shotInARow + ". Schuss in Folge                     ||");
+	private void showshotInARow(int shotsInARow) {
+		ConsoleGUI.print("||                      " + shotsInARow + ". Schuss in Folge                     ||");
 	}
 
 	/**
 	 * Shows the headline for enemies round
 	 * 
-	 * @param shotInARow - the amount of shots in a row
+	 * @param shotsInARow - the amount of shots in a row
 	 */
-	private void showEnemyHeadline(int shotInARow) {
+	private void showEnemyHeadline(int shotsInARow) {
 		ConsoleGUI.print("||                      Gegnerisches Feld                      ||");
-		this.showshotInARow(shotInARow);
+		this.showshotInARow(shotsInARow);
 	}
 
 	/**
 	 * Shows the headline for players round
 	 * 
-	 * @param shotInARow - the amount of shots in a row
+	 * @param shotsInARow - the amount of shots in a row
 	 */
-	private void showPlayersHeadline(int shotInARow) {
+	private void showPlayersHeadline(int shotsInARow) {
 		ConsoleGUI.print("||                         Eigenes Feld                        ||");
-		this.showshotInARow(shotInARow);
+		this.showshotInARow(shotsInARow);
 	}
 
-	/**
-	 * Shows an error message
-	 */
 	public void printFieldAlreadyShot() {
 		ConsoleGUI.print("Dieses Feld wurde bereits beschossen! Bitte waehle ein anderes aus! (Bsp.: A4)", "error");
 	}
 
 	/**
-	 * Shows a message wheter a full ship was hit
+	 * Shows a message whether a full ship was hit
 	 * 
 	 * @param fullShipDown - if the full ship was hit. Conditions the output
 	 */
@@ -128,44 +116,26 @@ public class GameView {
 		}
 	}
 
-	/**
-	 * Shows a instruction for the player how to play
-	 */
 	public void showShotInstruction() {
 		ConsoleGUI.print("Welche Position moechtest Du angreifen? (Bsp.: A4)", "highlight");
 	}
 
-	/**
-	 * Shows a message to wait
-	 */
 	public void showWaitingForSecondPlayer() {
 		ConsoleGUI.print("Warte auf zweiten Spieler...");
 	}
 
-	/**
-	 * Shows a message that a second player has connected
-	 */
 	public void showSecondPlayerConnected() {
 		ConsoleGUI.print("Ein zweiter Spieler ist dem Spiel beigetreten!");
 	}
 
-	/**
-	 * Shows a message that no ship was hit and it's the enemies turn
-	 */
 	public void showNoShipHit() {
 		ConsoleGUI.print("Kein Schiff getroffen! Dein Gegner ist am Zug!");
 	}
 
-	/**
-	 * Shows an error message becuase of wrong input data
-	 */
 	public void showInvalidInput() {
 		ConsoleGUI.print("Ungueltige Eingabe! (Bsp.: A4)", "error");
 	}
 
-	/**
-	 * Shows a message that it's now enemies turn
-	 */
 	private void showEnemiesTurn() {
 		ConsoleGUI.print("Dein Gegner ist am Zug!", "waiting");
 	}

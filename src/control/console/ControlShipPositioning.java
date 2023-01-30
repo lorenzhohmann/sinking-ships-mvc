@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import model.AI;
 import model.Coordinate;
-import model.Human;
 import model.Matchfield;
 import model.Player;
 import view.console.GameHandler;
@@ -21,7 +20,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	public ControlShipPositioning(AI enemy) {
 		this.enemy = enemy;
-		this.human = new Human();
+		this.human = new Player();
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	@Override
 	public void showPlayersMatchfield() {
 		Playground matchfield = new Playground();
-		String[][] status = this.human.getMatchfield().getStatus(true);
+		String[][] status = this.human.getMatchfield().getStatusArray(true);
 		matchfield.print(status);
 	}
 
@@ -104,7 +103,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	}
 
 	private void resetShips(Matchfield matchfield) {
-		matchfield.setShipIndexCounter(1);
+		matchfield.setShipNumberCounter(1);
 		ArrayList<Coordinate> coordinates = matchfield.getCoordinates();
 
 		for (Coordinate c : coordinates) {
@@ -124,7 +123,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
 		ArrayList<Coordinate> coordinates = matchfield.getCoordinates();
-		int shipIndexCounter = matchfield.getShipIndexCounter();
+		int shipNumberIndex = matchfield.getShipNumberCounter();
 
 		while (count < verticalShipsAmount) {
 			int random = this.getRandomIndexOfMatchfield(fieldsize);
@@ -149,11 +148,11 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 				c3.setHasShip(true);
 				c4.setHasShip(true);
 
-				c1.setShipIndex(shipIndexCounter);
-				c2.setShipIndex(shipIndexCounter);
-				c3.setShipIndex(shipIndexCounter);
-				c4.setShipIndex(shipIndexCounter);
-				shipIndexCounter++;
+				c1.setShipNumber(shipNumberIndex);
+				c2.setShipNumber(shipNumberIndex);
+				c3.setShipNumber(shipNumberIndex);
+				c4.setShipNumber(shipNumberIndex);
+				matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
 
 				count++;
 
@@ -167,7 +166,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
 		ArrayList<Coordinate> coordinates = matchfield.getCoordinates();
-		int shipIndexCounter = matchfield.getShipIndexCounter();
+		int shipNumberCounter = matchfield.getShipNumberCounter();
 
 		while (count < horizontalShipsAmount) {
 			int random = this.getRandomIndexOfMatchfield(fieldsize);
@@ -187,11 +186,11 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 				c3.setHasShip(true);
 				c4.setHasShip(true);
 
-				c1.setShipIndex(shipIndexCounter);
-				c2.setShipIndex(shipIndexCounter);
-				c3.setShipIndex(shipIndexCounter);
-				c4.setShipIndex(shipIndexCounter);
-				matchfield.setShipIndexCounter(matchfield.getShipIndexCounter() + 1);
+				c1.setShipNumber(shipNumberCounter);
+				c2.setShipNumber(shipNumberCounter);
+				c3.setShipNumber(shipNumberCounter);
+				c4.setShipNumber(shipNumberCounter);
+				matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
 
 				count++;
 			} else {
@@ -265,7 +264,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		int yMulFieldsize = y * matchfield.getFieldsize();
 		int z = yMulFieldsize + x;
 		ArrayList<Coordinate> coordinates = matchfield.getCoordinates();
-		int shipIndexCounter = matchfield.getShipIndexCounter();
+		int shipNumberCounter = matchfield.getShipNumberCounter();
 
 		Coordinate c1 = null;
 		Coordinate c2 = null;
@@ -287,11 +286,11 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 			c3.setHasShip(true);
 			c4.setHasShip(true);
 
-			c1.setShipIndex(shipIndexCounter);
-			c2.setShipIndex(shipIndexCounter);
-			c3.setShipIndex(shipIndexCounter);
-			c4.setShipIndex(shipIndexCounter);
-			matchfield.setShipIndexCounter(matchfield.getShipIndexCounter() + 1);
+			c1.setShipNumber(shipNumberCounter);
+			c2.setShipNumber(shipNumberCounter);
+			c3.setShipNumber(shipNumberCounter);
+			c4.setShipNumber(shipNumberCounter);
+			matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
 			return true;
 		}
 		return false;
@@ -302,7 +301,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		boolean set = false;
 		int fieldsize = matchfield.getFieldsize();
 		ArrayList<Coordinate> coordinates = matchfield.getCoordinates();
-		int shipIndexCounter = matchfield.getShipIndexCounter();
+		int shipNumberCounter = matchfield.getShipNumberCounter();
 
 		int z = yMulTen + x;
 		if (z % fieldsize >= 0 && z % fieldsize != fieldsize - 3 && z % fieldsize != fieldsize - 2
@@ -320,11 +319,11 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 			c3.setHasShip(true);
 			c4.setHasShip(true);
 
-			c1.setShipIndex(shipIndexCounter);
-			c2.setShipIndex(shipIndexCounter);
-			c3.setShipIndex(shipIndexCounter);
-			c4.setShipIndex(shipIndexCounter);
-			matchfield.setShipIndexCounter(matchfield.getShipIndexCounter() + 1);
+			c1.setShipNumber(shipNumberCounter);
+			c2.setShipNumber(shipNumberCounter);
+			c3.setShipNumber(shipNumberCounter);
+			c4.setShipNumber(shipNumberCounter);
+			matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
 
 			set = true;
 		} else {

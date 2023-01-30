@@ -7,6 +7,10 @@ import view.console.MenuHandler;
 
 public class ControlAnimation {
 
+	/**
+	 * Start point of the application. Displays the intro and inits the menu
+	 * handler.
+	 */
 	public void startApp() {
 		Animation animation = new Animation();
 		try {

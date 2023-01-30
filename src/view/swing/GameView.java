@@ -149,7 +149,7 @@ public class GameView extends JPanel {
 	}
 
 	/**
-	 * Shows a message wheter a full ship was hit
+	 * Shows a message whether a full ship was hit
 	 * 
 	 * @param fullShipDown - if the full ship was hit. Conditions the output
 	 */

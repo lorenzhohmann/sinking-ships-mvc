@@ -4,13 +4,31 @@ import java.io.Serializable;
 
 public class Coordinate implements Serializable {
 
+	/**
+	 * Unique ID to identify version of the class for the Serializable interface
+	 */
 	private static final long serialVersionUID = 1L;
 
 	private int x;
 	private int y;
+
+	/**
+	 * Whether the coordinate is shot (NOT depending of the ship state of the
+	 * coordinate)
+	 */
 	private boolean hit;
+
+	/**
+	 * Whether the coordinate has a ship on its position (a ship consists of more
+	 * than one coordinate)
+	 */
 	private boolean hasShip;
-	private int shipIndex;
+
+	/**
+	 * When the hasShip is true, than shipNumber is > 0. Multiple coordinates have
+	 * the same shipNumber to identify a whole ship
+	 */
+	private int shipNumber;
 
 	public Coordinate(int x, int y, boolean hasShip) {
 		this.x = x;
@@ -34,12 +52,12 @@ public class Coordinate implements Serializable {
 		this.y = y;
 	}
 
-	public int getShipIndex() {
-		return shipIndex;
+	public int getShipNumber() {
+		return shipNumber;
 	}
 
-	public void setShipIndex(int shipIndex) {
-		this.shipIndex = shipIndex;
+	public void setShipNumber(int shipNumber) {
+		this.shipNumber = shipNumber;
 	}
 
 	public boolean hasHit() {
