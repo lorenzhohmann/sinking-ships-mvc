@@ -110,13 +110,6 @@ public class ShipPositioning {
 	}
 
 	/**
-	 * Shows a message that the input data was invalid
-	 */
-	public void showInvalidInput() {
-		ConsoleGUI.print("Ungueltige Eingabe, waehle [S], [Z] oder [M]!", "error");
-	}
-
-	/**
 	 * Shows a message that all ships were set new
 	 */
 	public void showShipsNewSet() {

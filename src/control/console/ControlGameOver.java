@@ -15,9 +15,9 @@ public class ControlGameOver implements GameOverHandler {
 		gameOver.showEndScreen(playerIsWinner);
 
 		StatisticsWindow statistics = new StatisticsWindow();
-		Statistic statistic = enemy.getMatchfield().getStatistic();
+		Statistic statistic = enemy.getMatchfield().getStatisticsObject();
 		statistics.showStatistic(statistic.getTotalShots(), statistic.getHits(), statistic.getNoHits(),
-				statistic.getSuccessRate());
+				statistic.getHitRate());
 
 		ConsoleGUI.scanner.close();
 	}

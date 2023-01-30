@@ -19,15 +19,17 @@ public class ControlGame implements GameHandler {
 	private Player enemy;
 	private boolean ownTurn;
 	private int showInARow;
+	private FrameGUI gui;
 
 	@Override
-	public void initControl(Player player, Player enemy) {
+	public void initControl(Player player, Player enemy, FrameGUI gui) {
 		this.player = player;
 		this.enemy = enemy;
+		this.gui = gui;
 		this.ownTurn = true;
 		this.showInARow = 1;
 
-		this.game = new GameView(this, ((AI) enemy).getDifficulty().getName());
+		this.game = new GameView(this, ((AI) enemy).getDifficulty().getName(), gui);
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class ControlGame implements GameHandler {
 		}
 
 		// begin next round
-		this.nextRound();
+//		this.nextRound();
 	}
 
 	private void nextPlayerRound() {
@@ -57,43 +59,43 @@ public class ControlGame implements GameHandler {
 		this.game.showPlayerRound(this.showInARow);
 
 		// check for win
-		if (enemiesMatchfield.isGameOver()) {
-			this.endGame(true);
-			return;
-		}
-
-		// hit evalutation
-		if (enemiesMatchfield.isLastShotHit()) {
-
-			// show enemys matchfield without ship positions (only hitted ships)
-			this.game.showPlayerShotEvaluation(showInARow);
-
-			Toolkit.getDefaultToolkit().beep();
-			this.showInARow++;
-
-			boolean fullShipDown = enemiesMatchfield.isShipDown(enemiesMatchfield.getLastChoose());
-			this.game.showShotResultMessage(fullShipDown);
-
-			// wait before second shot
-			try {
-				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
-			} catch (InterruptedException e) {
-				// no action.
-			}
-
-		} else {
-			this.game.showNoShipHit();
-			this.ownTurn = false;
-			this.showInARow = 1;
-
-			// wait on player change
-			try {
-				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
-			} catch (InterruptedException e) {
-				// no action.
-			}
-
-		}
+//		if (enemiesMatchfield.isGameOver()) {
+//			this.endGame(true);
+//			return;
+//		}
+//
+//		// hit evalutation
+//		if (enemiesMatchfield.isLastShotHit()) {
+//
+//			// show enemys matchfield without ship positions (only hitted ships)
+//			this.game.showPlayerShotEvaluation(showInARow);
+//
+//			Toolkit.getDefaultToolkit().beep();
+//			this.showInARow++;
+//
+//			boolean fullShipDown = enemiesMatchfield.isShipDown(enemiesMatchfield.getLastChoose());
+//			this.game.showShotResultMessage(fullShipDown);
+//
+//			// wait before second shot
+//			try {
+//				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
+//			} catch (InterruptedException e) {
+//				// no action.
+//			}
+//
+//		} else {
+//			this.game.showNoShipHit();
+//			this.ownTurn = false;
+//			this.showInARow = 1;
+//
+//			// wait on player change
+//			try {
+//				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
+//			} catch (InterruptedException e) {
+//				// no action.
+//			}
+//
+//		}
 	}
 
 	private void nextAIRound() {
@@ -149,7 +151,7 @@ public class ControlGame implements GameHandler {
 
 	private void endGame(boolean winner) {
 		GameOverHandler gameOverHandler = new ControlGameOver();
-		gameOverHandler.initControl(winner, this.enemy);
+		gameOverHandler.initControl(winner, this.enemy, this.gui);
 	}
 
 	@Override
@@ -163,7 +165,7 @@ public class ControlGame implements GameHandler {
 	}
 
 	private void createMatchfield(Player player, boolean showShips) {
-		Playground matchfield = new Playground();
+		Playground matchfield = new Playground(this.gui);
 		String[][] status = player.getMatchfield().getStatus(showShips);
 		matchfield.print(status);
 	}

@@ -4,7 +4,7 @@ import model.Player;
 
 public interface GameHandler {
 
-	void initControl(Player player, Player enemy);
+	void initControl(Player player, Player enemy, FrameGUI gui);
 
 	void startGame();
 

@@ -29,14 +29,14 @@ public class ControlMenu implements MenuHandler {
 
 	private void showSettingsMenu() {
 		menu.showAIDifficultyMenu();
-
-		ShipPositioningHandler handler = new ControlShipPositioning(enemy, this.gui);
-		handler.initControl();
 	}
 
 	@Override
 	public void setDifficulty(Difficulty difficulty) {
 		this.enemy.setDifficulty(difficulty);
+
+		ShipPositioningHandler handler = new ControlShipPositioning(enemy, this.gui);
+		handler.initControl();
 	}
 
 	@Override

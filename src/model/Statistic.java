@@ -22,7 +22,13 @@ public class Statistic {
 		return this.totalShots - hits;
 	}
 
-	public float getSuccessRate() {
+	/**
+	 * Calculates the hit rate
+	 * 
+	 * @return - float value containing the hit rate. Return 0 when no shots are
+	 *         made
+	 */
+	public float getHitRate() {
 		if (totalShots > 0) {
 			return (100 * this.hits / this.totalShots);
 		}

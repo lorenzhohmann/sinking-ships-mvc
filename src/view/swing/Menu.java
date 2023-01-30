@@ -28,7 +28,6 @@ public class Menu extends JPanel {
 		this.createGameModeButtons(handler);
 
 		this.gui.setContentPane(this);
-		this.gui.repaint();
 	}
 
 	private void createGameModeButtons(MenuHandler handler) {

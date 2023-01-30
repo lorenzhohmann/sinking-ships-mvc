@@ -26,7 +26,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void initControl() {
-		shipPositioning = new ShipPositioning(this);
+		shipPositioning = new ShipPositioning(this, this.gui);
 
 		this.showShipPositioningMenu();
 	}
@@ -47,7 +47,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void showPlayersMatchfield() {
-		Playground matchfield = new Playground();
+		Playground matchfield = new Playground(this.gui);
 		String[][] status = this.human.getMatchfield().getStatus(true);
 		matchfield.print(status);
 	}
@@ -65,7 +65,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	@Override
 	public void startGame() {
 		GameHandler gameHandler = new ControlGame();
-		gameHandler.initControl(human, enemy);
+		gameHandler.initControl(human, enemy, this.gui);
 		gameHandler.startGame();
 	}
 
@@ -97,9 +97,6 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 			this.startGame();
 			returnCode = 2;
 		}
-
-		this.shipPositioning.showInvalidInput();
-		this.shipPositioning.showShipPositioning(true);
 
 		return returnCode;
 	}

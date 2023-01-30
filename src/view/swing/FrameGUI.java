@@ -1,8 +1,15 @@
 package view.swing;
 
+import java.awt.Container;
+
 import javax.swing.JFrame;
 
 public class FrameGUI extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Time between a game instruction and the following action (in ms)
@@ -16,10 +23,17 @@ public class FrameGUI extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setVisible(true);
+		this.setResizable(false);
 	}
 
 	public void repaint() {
 		this.setVisible(true);
+	}
+
+	@Override
+	public void setContentPane(Container contentPane) {
+		super.setContentPane(contentPane);
+		this.repaint();
 	}
 
 	/**

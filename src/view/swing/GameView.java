@@ -1,20 +1,47 @@
 package view.swing;
 
-public class GameView {
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class GameView extends JPanel {
 
 	/**
 	 * Difficulty level of the humans enemy (doesn't change while playing)
 	 */
 	private String enemyDifficulty;
+	private FrameGUI gui;
+	private JPanel playgroundPanel;
+	private JPanel bottomPanel;
 
 	/**
 	 * The game controller of this view
 	 */
 	private GameHandler gameHandler;
 
-	public GameView(GameHandler gameHandler, String enemyDifficulty) {
+	public GameView(GameHandler gameHandler, String enemyDifficulty, FrameGUI gui) {
 		this.gameHandler = gameHandler;
 		this.enemyDifficulty = enemyDifficulty;
+		this.gui = gui;
+
+		this.setLayout(new BorderLayout(0, 0));
+
+		this.bottomPanel = new JPanel();
+		this.bottomPanel.setMinimumSize(new Dimension(100, 80));
+		this.bottomPanel.setMaximumSize(new Dimension(100, 80));
+		this.bottomPanel.setPreferredSize(new Dimension(100, 80));
+		this.add(this.bottomPanel, BorderLayout.SOUTH);
+
+		this.playgroundPanel = new JPanel();
+		this.add(this.playgroundPanel, BorderLayout.CENTER);
+
+		this.gui.setSize(566, 700);
+		this.gui.setLocationRelativeTo(null);
+		this.gui.setContentPane(this);
+		this.gui.repaint();
 	}
 
 	/**
@@ -23,7 +50,8 @@ public class GameView {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	public void showPlayerShotEvaluation(int shotInARow) {
-
+		this.showEnemyHeadline(shotInARow);
+		this.gameHandler.showEnemiesMatchfield();
 	}
 
 	/**
@@ -34,6 +62,26 @@ public class GameView {
 	 */
 	public void showPlayerRound(int shotInARow) {
 
+		this.showEnemyHeadline(shotInARow);
+		this.gameHandler.showEnemiesMatchfield();
+		this.showShotInstruction();
+
+		for (Component c : this.gui.getContentPane().getComponents()) {
+			System.out.println(c.getClass().getCanonicalName());
+		}
+
+		// loops for own shot
+//		while (ConsoleGUI.scanner.hasNext()) {
+//
+//			String input = ConsoleGUI.scanner.next();
+//			boolean moveSuccessfull = this.gameHandler.doMove(input);
+//
+//			if (moveSuccessfull) {
+//				break;
+//			}
+//		}
+		this.gui.getContentPane().add(this);
+		this.gui.repaint();
 	}
 
 	/**
@@ -67,7 +115,8 @@ public class GameView {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	private void showshotInARow(int shotInARow) {
-
+		JLabel label = new JLabel(shotInARow + ". Schuss in Folge");
+		this.bottomPanel.add(label);
 	}
 
 	/**
@@ -76,7 +125,9 @@ public class GameView {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	private void showEnemyHeadline(int shotInARow) {
-
+		JLabel label = new JLabel("Gegnerisches Feld");
+		this.bottomPanel.add(label);
+		this.showshotInARow(shotInARow);
 	}
 
 	/**
@@ -85,7 +136,9 @@ public class GameView {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	private void showPlayersHeadline(int shotInARow) {
-
+		JLabel label = new JLabel("Eigenes Feld");
+		this.bottomPanel.add(label);
+		this.showshotInARow(shotInARow);
 	}
 
 	/**

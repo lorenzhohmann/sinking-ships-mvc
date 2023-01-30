@@ -23,11 +23,15 @@ public class Matchfield implements Serializable {
 		this.lastShotHit = false;
 		this.shipIndexCounter = 1;
 
-		this.fillCoordinates();
+		this.createDefaultCoordinates();
 	}
 
 	public int getShipIndexCounter() {
 		return this.shipIndexCounter;
+	}
+
+	public void setShipIndexCounter(int shipIndexCounter) {
+		this.shipIndexCounter = shipIndexCounter;
 	}
 
 	public int getFieldsize() {
@@ -91,296 +95,6 @@ public class Matchfield implements Serializable {
 		return status;
 	}
 
-	public int randomize() {
-		double random = 0;
-		random = Math.random() * 100;
-		if (random > this.fieldsize * this.fieldsize) {
-			random = Math.random() * 100;
-		}
-		return (int) random;
-	}
-
-	public void resetShips() {
-		this.shipIndexCounter = 1;
-
-		for (Coordinate c : this.coordinates) {
-			c.setHasShip(false);
-		}
-	}
-
-	public void placeRandomShipsVertical() {
-		int count = 0;
-		while (count < 2) {
-			int random = randomize();
-			Coordinate c1 = null;
-			Coordinate c2 = null;
-			Coordinate c3 = null;
-			Coordinate c4 = null;
-			try {
-				c1 = coordinates.get(random);
-				c2 = coordinates.get(random + 10);
-				c3 = coordinates.get(random + 20);
-				c4 = coordinates.get(random + 30);
-			} catch (IndexOutOfBoundsException e) {
-				random = randomize();
-				continue;
-			}
-
-			if (c1 != null && !c1.hasShip() && c2 != null && !c2.hasShip() && c3 != null && !c3.hasShip() && c4 != null
-					&& !c4.hasShip()) {
-				c1.setHasShip(true);
-				c2.setHasShip(true);
-				c3.setHasShip(true);
-				c4.setHasShip(true);
-
-				c1.setShipIndex(this.shipIndexCounter);
-				c2.setShipIndex(this.shipIndexCounter);
-				c3.setShipIndex(this.shipIndexCounter);
-				c4.setShipIndex(this.shipIndexCounter);
-				this.shipIndexCounter++;
-
-				count++;
-
-			} else {
-				random = randomize();
-			}
-		}
-	}
-
-	public void placeRandomShipsHorizontal() {
-		int count = 0;
-		while (count < 2) {
-			int random = randomize();
-			if (random % this.fieldsize >= 0 && random % this.fieldsize != this.fieldsize - 3
-					&& random % this.fieldsize != this.fieldsize - 2 && random % this.fieldsize != this.fieldsize - 1
-					&& random + 4 <= 100 && coordinates.get(random).hasShip() == false
-					&& coordinates.get(random + 1).hasShip() == false && coordinates.get(random + 2).hasShip() == false
-					&& coordinates.get(random + 3).hasShip() == false) {
-
-				Coordinate c1 = coordinates.get(random);
-				Coordinate c2 = coordinates.get(random + 1);
-				Coordinate c3 = coordinates.get(random + 2);
-				Coordinate c4 = coordinates.get(random + 3);
-
-				c1.setHasShip(true);
-				c2.setHasShip(true);
-				c3.setHasShip(true);
-				c4.setHasShip(true);
-
-				c1.setShipIndex(this.shipIndexCounter);
-				c2.setShipIndex(this.shipIndexCounter);
-				c3.setShipIndex(this.shipIndexCounter);
-				c4.setShipIndex(this.shipIndexCounter);
-				this.shipIndexCounter++;
-
-				count++;
-			} else {
-				random = randomize();
-			}
-		}
-
-	}
-
-	public void placeRandomShips() {
-		placeRandomShipsHorizontal();
-		placeRandomShipsVertical();
-	}
-
-	public boolean placeShipsVertical(int y, int x) {
-		int yMulFieldsize = y * this.fieldsize;
-		int z = yMulFieldsize + x;
-
-		Coordinate c1 = null;
-		Coordinate c2 = null;
-		Coordinate c3 = null;
-		Coordinate c4 = null;
-		try {
-			c1 = coordinates.get(z);
-			c2 = coordinates.get(z + 10);
-			c3 = coordinates.get(z + 20);
-			c4 = coordinates.get(z + 30);
-		} catch (IndexOutOfBoundsException e) {
-			return false;
-		}
-
-		if (c1 != null && !c1.hasShip() && c2 != null && !c2.hasShip() && c3 != null && !c3.hasShip() && c4 != null
-				&& !c4.hasShip()) {
-			c1.setHasShip(true);
-			c2.setHasShip(true);
-			c3.setHasShip(true);
-			c4.setHasShip(true);
-
-			c1.setShipIndex(this.shipIndexCounter);
-			c2.setShipIndex(this.shipIndexCounter);
-			c3.setShipIndex(this.shipIndexCounter);
-			c4.setShipIndex(this.shipIndexCounter);
-			this.shipIndexCounter++;
-			return true;
-		}
-		return false;
-	}
-
-	public boolean placeShipsHorizontal(int y, int x) {
-		int yMulTen = y * 10;
-		boolean set = false;
-
-		int z = yMulTen + x;
-		if (z % this.fieldsize >= 0 && z % this.fieldsize != this.fieldsize - 3
-				&& z % this.fieldsize != this.fieldsize - 2 && z % this.fieldsize != this.fieldsize - 1 && z + 4 <= 100
-				&& coordinates.get(z).hasShip() == false && coordinates.get(z + 1).hasShip() == false
-				&& coordinates.get(z + 2).hasShip() == false && coordinates.get(z + 3).hasShip() == false) {
-
-			Coordinate c1 = coordinates.get(z);
-			Coordinate c2 = coordinates.get(z + 1);
-			Coordinate c3 = coordinates.get(z + 2);
-			Coordinate c4 = coordinates.get(z + 3);
-
-			c1.setHasShip(true);
-			c2.setHasShip(true);
-			c3.setHasShip(true);
-			c4.setHasShip(true);
-
-			c1.setShipIndex(this.shipIndexCounter);
-			c2.setShipIndex(this.shipIndexCounter);
-			c3.setShipIndex(this.shipIndexCounter);
-			c4.setShipIndex(this.shipIndexCounter);
-			this.shipIndexCounter++;
-
-			set = true;
-		} else {
-			set = false;
-		}
-		return set;
-	}
-
-	public boolean placeShips(int x, int y, boolean vertical) {
-		boolean set = false;
-
-		if (vertical) {
-			set = placeShipsVertical(x, y);
-		} else {
-			set = placeShipsHorizontal(x, y);
-		}
-
-		return set;
-	}
-
-	public boolean isGameOver() {
-		int shipPositionCounter = 0;
-		int totalHittedShipsCounter = 0;
-
-		for (Coordinate coordinate : this.coordinates) {
-			if (coordinate.hasShip()) {
-				shipPositionCounter++;
-
-				if (coordinate.hasHit()) {
-					totalHittedShipsCounter++;
-				}
-			}
-		}
-		return shipPositionCounter == totalHittedShipsCounter;
-	}
-
-	public boolean shoot(Coordinate coordinate) {
-		coordinate.setHit(true);
-		this.lastShot = coordinate;
-
-		// set hit to last successfull hit
-		if (coordinate.hasShip())
-			this.lastHit = coordinate;
-
-		this.lastShotHit = coordinate.hasShip();
-		return this.lastShotHit;
-	}
-
-	public Coordinate getCoordinateByString(String coordinate) {
-		String[] split = coordinate.split("");
-
-		int alphabetIndex = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(split[0].toUpperCase());
-
-		int numberIndex = 0;
-		if (split.length == 2) {
-			numberIndex = 10 * (Integer.parseInt(split[1]) - 1);
-		} else if (split.length == 3) {
-			numberIndex = 10 * (Integer.parseInt(split[1] + split[2]) - 1);
-		}
-		int chosenCoordinateIndex = numberIndex + alphabetIndex;
-
-		this.lastChoose = this.coordinates.get(chosenCoordinateIndex);
-		return this.lastChoose;
-	}
-
-	public boolean positionShipsByString(String manualPositioning, int maxShips) {
-		String[] manualPositions = manualPositioning.split("-");
-
-		// clear matchfield
-		this.resetShips();
-
-		// get coordinates by string and place ships
-		int shipCounter = 1;
-		for (String position : manualPositions) {
-
-			if (shipCounter > maxShips) {
-				break;
-			}
-
-			if (!position.matches("[A-Ja-j](1|2|3|4|5|6|7|8|9|10)")) {
-				return false;
-			}
-
-			Coordinate choosenCoordinate = this.getCoordinateByString(position);
-
-			// horizontal ships for default
-			boolean vertical = true;
-
-			// vertical ships
-			if (shipCounter >= 3)
-				vertical = false;
-
-			// place ships by choosen coordinate
-			boolean success = this.placeShips(choosenCoordinate.getX(), choosenCoordinate.getY(), vertical);
-
-			// error handling
-			if (!success)
-				return false;
-
-			shipCounter++;
-		}
-
-		return true;
-	}
-
-	public Coordinate getLastShot() {
-		return lastShot;
-	}
-
-	public Coordinate getLastHit() {
-		return lastHit;
-	}
-
-	public void setLastHit(Coordinate lastHit) {
-		this.lastHit = lastHit;
-	}
-
-	private void fillCoordinates() {
-		for (int x = 0; x < this.fieldsize; x++) {
-			for (int y = 0; y < this.fieldsize; y++) {
-				Coordinate coordinate = new Coordinate(x, y, false);
-				this.coordinates.add(coordinate);
-			}
-		}
-	}
-
-	public Coordinate getCoordinateByXAndY(int x, int y) {
-		for (Coordinate coordinate : this.coordinates) {
-			if (coordinate.getX() == x && coordinate.getY() == y) {
-				return coordinate;
-			}
-		}
-
-		return null;
-	}
-
 	public boolean isShipDown(Coordinate oneCoordinateOfShip) {
 
 		int shipIndex = oneCoordinateOfShip.getShipIndex();
@@ -399,7 +113,39 @@ public class Matchfield implements Serializable {
 		return shipsWithSameIndex == shipHitsWithSameIndex;
 	}
 
-	public Statistic getStatistic() {
+	public Coordinate getLastShot() {
+		return lastShot;
+	}
+
+	public void setLastShot(Coordinate lastShot) {
+		this.lastShot = lastShot;
+	}
+
+	public void setLastChoose(Coordinate lastChoose) {
+		this.lastChoose = lastChoose;
+	}
+
+	public Coordinate getLastHit() {
+		return lastHit;
+	}
+
+	public void setLastHit(Coordinate lastHit) {
+		this.lastHit = lastHit;
+	}
+
+	/**
+	 * Creates a default coordinate for all positions of this matchfield
+	 */
+	private void createDefaultCoordinates() {
+		for (int x = 0; x < this.fieldsize; x++) {
+			for (int y = 0; y < this.fieldsize; y++) {
+				Coordinate coordinate = new Coordinate(x, y, false);
+				this.coordinates.add(coordinate);
+			}
+		}
+	}
+
+	public Statistic getStatisticsObject() {
 		int hits = 0;
 		int totalShots = 0;
 
@@ -421,6 +167,70 @@ public class Matchfield implements Serializable {
 
 	public boolean isLastShotHit() {
 		return lastShotHit;
+	}
+
+	public void setLastShotHit(boolean lastShotHit) {
+		this.lastShotHit = lastShotHit;
+	}
+
+	/**
+	 * "Translates" a human-readable coordinate string into a coordinate object
+	 * (e.g. A1 returns the first top left coordinate) from the matchfield
+	 * 
+	 * @param coordinateString - the human-readable string of the coordinate
+	 *                         position
+	 * @return the coordinate on the specific human-readable position from the
+	 *         matchfield
+	 */
+	public Coordinate getCoordinateByString(String coordinateString) {
+		String[] split = coordinateString.split("");
+
+		int alphabetIndex = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(split[0].toUpperCase());
+
+		int numberIndex = 0;
+		if (split.length == 2) {
+			numberIndex = 10 * (Integer.parseInt(split[1]) - 1);
+		} else if (split.length == 3) {
+			numberIndex = 10 * (Integer.parseInt(split[1] + split[2]) - 1);
+		}
+		int chosenCoordinateIndex = numberIndex + alphabetIndex;
+
+		this.lastChoose = this.coordinates.get(chosenCoordinateIndex);
+		return this.lastChoose;
+	}
+
+	/**
+	 * Returns the coordinate on the matching x and y coordinate
+	 * 
+	 * @param x - the x value of the coordinate to get
+	 * @param y - the y value of the coordinate to get
+	 * @return the found coordinate object or null when x and y positions not in
+	 *         matchfield
+	 */
+	public Coordinate getCoordinate(int x, int y) {
+		for (int i = 0; i < this.coordinates.size(); i++) {
+			if (this.coordinates.get(i).getX() == x && this.coordinates.get(i).getY() == y) {
+				return this.coordinates.get(i);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns all coordinates that is not hitted
+	 * 
+	 * @return ArrayList<Coordinate> with all coordinates that have no hit state.
+	 *         Empty ArrayList when there is no coordinate without a hit
+	 */
+	public ArrayList<Coordinate> getCoordinatesWithoutHits() {
+		ArrayList<Coordinate> coordinatesWithoutHits = new ArrayList<Coordinate>();
+		for (Coordinate coordinate : this.coordinates) {
+			if (!coordinate.hasHit()) {
+				coordinatesWithoutHits.add(coordinate);
+			}
+		}
+
+		return coordinatesWithoutHits;
 	}
 
 }
