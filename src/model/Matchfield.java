@@ -33,16 +33,6 @@ public class Matchfield implements Serializable {
 	private Coordinate lastHit;
 
 	/**
-	 * The coordinate that last choosen by a Player
-	 */
-	private Coordinate lastChoose;
-
-	/**
-	 * Whether the last shot hitted a ship
-	 */
-	private boolean lastShotHit;
-
-	/**
 	 * An index counter of how man ships already placed on the matchfield
 	 */
 	private int shipNumberCounter;
@@ -50,7 +40,6 @@ public class Matchfield implements Serializable {
 	public Matchfield() {
 		this.fieldsize = 10;
 		this.coordinates = new ArrayList<>();
-		this.lastShotHit = false;
 		this.shipNumberCounter = 1;
 
 		this.createDefaultCoordinates();
@@ -58,10 +47,6 @@ public class Matchfield implements Serializable {
 
 	public int getShipNumberCounter() {
 		return this.shipNumberCounter;
-	}
-
-	public void setShipNumberCounter(int shipNumberCounter) {
-		this.shipNumberCounter = shipNumberCounter;
 	}
 
 	public int getFieldsize() {
@@ -96,7 +81,7 @@ public class Matchfield implements Serializable {
 		}
 		// Game Logic for Output of certain Characters
 		if (showShips) {
-			for (Coordinate c : coordinates) {
+			for (Coordinate c : this.coordinates) {
 				if (c.isHasShip()) {
 					if (c.hasHit()) {
 						if (this.isShipSunken(c)) {
@@ -136,18 +121,18 @@ public class Matchfield implements Serializable {
 	 * Checks if the ship on the passed coordinate is sunken. A ship is sunken if
 	 * all coordinates of the ship were hit
 	 * 
-	 * @param aCoordOfShip - coordinate of the ship that should be checked
+	 * @param aCoordOfAShip - coordinate of the ship that should be checked
 	 * @return whether the ship is sunken
 	 */
-	public boolean isShipSunken(Coordinate aCoordOfShip) {
+	public boolean isShipSunken(Coordinate aCoordOfAShip) {
 
-		int shipNumber = aCoordOfShip.getShipNumber();
+		int shipNumber = aCoordOfAShip.getShipNumber();
 		int shipHitsSameNr = 0;
-		int shipsSameIndex = 0;
+		int shipsSameNr = 0;
 
 		for (Coordinate coordinate : this.coordinates) {
 			if (coordinate.getShipNumber() == shipNumber) {
-				shipsSameIndex++;
+				shipsSameNr++;
 
 				if (coordinate.hasHit()) {
 					shipHitsSameNr++;
@@ -155,19 +140,7 @@ public class Matchfield implements Serializable {
 			}
 		}
 
-		return shipsSameIndex == shipHitsSameNr;
-	}
-
-	public Coordinate getLastShot() {
-		return lastShot;
-	}
-
-	public void setLastShot(Coordinate lastShot) {
-		this.lastShot = lastShot;
-	}
-
-	public void setLastChoose(Coordinate lastChoose) {
-		this.lastChoose = lastChoose;
+		return shipsSameNr == shipHitsSameNr;
 	}
 
 	public Coordinate getLastHit() {
@@ -184,8 +157,8 @@ public class Matchfield implements Serializable {
 	private void createDefaultCoordinates() {
 		for (int x = 0; x < this.fieldsize; x++) {
 			for (int y = 0; y < this.fieldsize; y++) {
-				Coordinate coordinate = new Coordinate(x, y, false); // NOPMD
-				this.coordinates.add(coordinate);
+				Coordinate defaultCoord = Coordinate.createDefaultCoordinate(x, y);
+				this.coordinates.add(defaultCoord);
 			}
 		}
 	}
@@ -211,16 +184,12 @@ public class Matchfield implements Serializable {
 		return new Statistic(totalShots, hits);
 	}
 
-	public Coordinate getLastChoose() {
-		return lastChoose;
+	public Coordinate getLastShot() {
+		return lastShot;
 	}
 
-	public boolean isLastShotHit() {
-		return lastShotHit;
-	}
-
-	public void setLastShotHit(boolean lastShotHit) {
-		this.lastShotHit = lastShotHit;
+	public void setLastShot(Coordinate lastShot) {
+		this.lastShot = lastShot;
 	}
 
 	/**
@@ -248,8 +217,8 @@ public class Matchfield implements Serializable {
 		}
 		int chosenCoordIndex = numberIndex + alphabetIndex;
 
-		this.lastChoose = this.coordinates.get(chosenCoordIndex);
-		return this.lastChoose;
+		this.lastShot = this.coordinates.get(chosenCoordIndex);
+		return this.lastShot;
 	}
 
 	/**
@@ -286,6 +255,46 @@ public class Matchfield implements Serializable {
 		}
 
 		return coordsWithoutHit;
+	}
+
+	/**
+	 * Does a shoot on a specific coordinates and evaluates the shot
+	 * 
+	 * @param matchfield - Matchfield on which the shot should be performed. Null
+	 *                   throws Exception.
+	 * @param coordinate - Coordinate that should be shot. Null throws Exception.
+	 * @return whether the shot was a ship hit
+	 */
+	public boolean shoot(Coordinate coordinate) {
+		coordinate.setHit(true);
+		this.lastShot = coordinate;
+
+		// set hit to last successful hit
+		if (coordinate.isHasShip()) {
+			this.lastHit = coordinate;
+		}
+
+		return this.didLastShotHit();
+	}
+
+	/**
+	 * Checks if the last shot in the matchfield has hitted a ship
+	 * 
+	 * @return whether the last shot made a ship hit
+	 */
+	public boolean didLastShotHit() {
+		return this.lastShot.equals(this.lastHit);
+	}
+
+	public void increaseShipNumberCounter() {
+		this.shipNumberCounter++;
+	}
+
+	/**
+	 * Sets the ship number counter to default constructor value (1)
+	 */
+	public void resetShipNumberCounter() {
+		this.shipNumberCounter = 1;
 	}
 
 }

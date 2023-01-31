@@ -9,6 +9,7 @@ import model.Matchfield;
 import model.Player;
 import view.console.GameHandler;
 import view.console.Playground;
+import view.console.ShipPosReturnCode;
 import view.console.ShipPositioning;
 import view.console.ShipPositioningHandler;
 
@@ -33,10 +34,6 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	public void initControl() {
 		shipPositioning = new ShipPositioning(this);
 
-		this.showShipPositioningMenu();
-	}
-
-	private void showShipPositioningMenu() {
 		this.shipPositioning.showShipPositioning(false);
 	}
 
@@ -75,8 +72,8 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	}
 
 	@Override
-	public int handlePositioningInput(String input) {
-		int returnCode = 0;
+	public ShipPosReturnCode handlePositioningInput(String input) {
+		ShipPosReturnCode returnCode = ShipPosReturnCode.DEFAULT;
 
 		if ("z".equalsIgnoreCase(input)) { // generate new random ship positions
 
@@ -93,21 +90,21 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 			this.shipPositioning.showShipPositioningMenu();
 
-			returnCode = 1;
+			returnCode = ShipPosReturnCode.CONTINUE;
 		} else if ("m".equalsIgnoreCase(input)) {
 			this.shipPositioning.showManualShipPositioning();
-			returnCode = 2;
+			returnCode = ShipPosReturnCode.BREAK;
 
 		} else if ("s".equalsIgnoreCase(input)) { // start game
 			this.startGame();
-			returnCode = 2;
+			returnCode = ShipPosReturnCode.BREAK;
 		}
 
 		return returnCode;
 	}
 
 	private void resetShips(Matchfield matchfield) {
-		matchfield.setShipNumberCounter(1);
+		matchfield.resetShipNumberCounter();
 		List<Coordinate> coordinates = matchfield.getCoordinates();
 
 		for (Coordinate c : coordinates) {

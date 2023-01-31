@@ -8,6 +8,7 @@ import model.Matchfield;
 import model.Player;
 import view.console.ConsoleGUI;
 import view.console.GameHandler;
+import view.console.GameMessages;
 import view.console.GameOverHandler;
 import view.console.GameView;
 import view.console.Playground;
@@ -15,6 +16,7 @@ import view.console.Playground;
 public class ControlGame implements GameHandler {
 
 	private GameView game;
+	private GameMessages messages;
 
 	/**
 	 * The player object of the human player
@@ -25,11 +27,6 @@ public class ControlGame implements GameHandler {
 	 * The player object of the AI
 	 */
 	private Player enemy;
-
-	/**
-	 * Wheter it's the turn of the human player
-	 */
-	private boolean ownTurn;
 
 	/**
 	 * The amount of shots in a row before it's the other players turn
@@ -43,83 +40,23 @@ public class ControlGame implements GameHandler {
 	public void initControl(Player player, Player enemy) {
 		this.player = player;
 		this.enemy = enemy;
-		this.ownTurn = true;
 		this.shotsInARow = 1;
 		this.aiController = new ControlAI();
 		this.actionController = new ControlGameActions();
 
-		this.game = new GameView(this, ((AI) enemy).getDifficulty().getName());
+		this.game = new GameView(this);
+		this.messages = new GameMessages(((AI) enemy).getDifficulty().getName());
 	}
 
 	@Override
 	public void startGame() {
-		this.nextRound();
-	}
-
-	/**
-	 * Starting the next game round. Can be called for human and for AI players
-	 * because the ownTurn class field calls the correct method (nextPlayerRound()
-	 * or nextAIRound())
-	 */
-	private void nextRound() {
-
-		this.game.showHead();
-
-		// show players field
-		if (this.ownTurn) {
-			this.nextPlayerRound();
-		} else { // show enemys field (without ships
-			this.nextAIRound();
-		}
-
-		// begin next round
-		this.nextRound();
+		// start first round with player
+		this.nextPlayerRound();
 	}
 
 	private void nextPlayerRound() {
-		Matchfield enemiesMatchfield = this.enemy.getMatchfield();
-
 		// show enemys matchfield without ship positions (only hitted ships)
 		this.game.showPlayerRound(this.shotsInARow);
-
-		// check for win
-		if (this.actionController.isGameOver(enemiesMatchfield)) {
-			this.endGame(true);
-			return;
-		}
-
-		// hit evalutation
-		if (enemiesMatchfield.isLastShotHit()) {
-
-			// show enemys matchfield without ship positions (only hitted ships)
-			this.game.showPlayerShotEvaluation(shotsInARow);
-
-			Toolkit.getDefaultToolkit().beep();
-			this.shotsInARow++;
-
-			boolean fullShipDown = enemiesMatchfield.isShipSunken(enemiesMatchfield.getLastChoose());
-			this.game.showShotResultMessage(fullShipDown);
-
-			// wait before second shot
-			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
-			} catch (InterruptedException e) {
-				// no action.
-			}
-
-		} else {
-			this.game.showNoShipHit();
-			this.ownTurn = false;
-			this.shotsInARow = 1;
-
-			// wait on player change
-			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
-			} catch (InterruptedException e) {
-				// no action.
-			}
-
-		}
 	}
 
 	private void nextAIRound() {
@@ -146,8 +83,11 @@ public class ControlGame implements GameHandler {
 		Matchfield matchfield = this.player.getMatchfield();
 		Coordinate kiCoordinate = aiController.chooseCoordinateByDifficulty(matchfield,
 				((AI) this.enemy).getDifficulty());
-		boolean hit = this.actionController.shoot(this.player.getMatchfield(), kiCoordinate);
-		this.game.enemyShotEvaluation(hit);
+		boolean hit = this.player.getMatchfield().shoot(kiCoordinate);
+
+		this.game.showEnemiesMatchfield(shotsInARow);
+		this.messages.enemyShotEvaluation(hit);
+
 		if (hit) {
 			Toolkit.getDefaultToolkit().beep();
 			this.shotsInARow++;
@@ -159,8 +99,8 @@ public class ControlGame implements GameHandler {
 				// no action.
 			}
 
+			this.nextAIRound();
 		} else {
-			this.ownTurn = true;
 			this.shotsInARow = 1;
 
 			// wait on player change
@@ -170,6 +110,7 @@ public class ControlGame implements GameHandler {
 				// no action.
 			}
 
+			this.nextPlayerRound();
 		}
 
 	}
@@ -191,7 +132,7 @@ public class ControlGame implements GameHandler {
 
 	@Override
 	public void showEnemiesMatchfield() {
-		this.showMatchfield(this.enemy, false);
+		this.showMatchfield(this.enemy, true);
 	}
 
 	/**
@@ -215,20 +156,65 @@ public class ControlGame implements GameHandler {
 			Matchfield enemiesMatchfield = this.enemy.getMatchfield();
 			enemiesMatchfield.getCoordinateByString(coordinateString);
 
-			if (enemiesMatchfield.getLastChoose().hasHit()) {
-				this.game.printFieldAlreadyShot();
+			if (enemiesMatchfield.getLastShot().hasHit()) {
+				this.messages.printFieldAlreadyShot();
 			} else {
-				this.actionController.shoot(this.enemy.getMatchfield(), enemiesMatchfield.getLastChoose());
+				this.enemy.getMatchfield().shoot(enemiesMatchfield.getLastShot());
+				this.showEnemiesMatchfield();
+				this.evaluatePlayerRound();
 				success = true;
 			}
 		} else if ("--help".equalsIgnoreCase(coordinateString) || "help".equalsIgnoreCase(coordinateString) // NOPMD
 				|| "?".equalsIgnoreCase(coordinateString)) { // NOPMD
 			ConsoleGUI.showHelp();
 		} else {
-			this.game.showInvalidInput();
+			this.messages.showInvalidInput();
 		}
 
 		return success;
+	}
+
+	private void evaluatePlayerRound() {
+		Matchfield enemiesMatchfield = this.enemy.getMatchfield();
+
+		// check for win
+		if (this.actionController.isGameOver(enemiesMatchfield)) {
+			this.endGame(true);
+			return;
+		}
+
+		// hit evaluation
+		if (enemiesMatchfield.didLastShotHit()) {
+
+			// show enemys matchfield without ship positions (only hitted ships)
+			this.game.showPlayerShotEvaluation(shotsInARow);
+
+			Toolkit.getDefaultToolkit().beep();
+			this.shotsInARow++;
+
+			boolean fullShipDown = enemiesMatchfield.isShipSunken(enemiesMatchfield.getLastShot());
+			this.messages.showShotResultMessage(fullShipDown);
+
+			// wait before second shot
+			try {
+				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+			} catch (InterruptedException e) {
+				// no action.
+			}
+
+			this.nextPlayerRound();
+		} else {
+			this.messages.showNoShipHit();
+			this.shotsInARow = 1;
+
+			// wait on player change
+			try {
+				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+			} catch (InterruptedException e) {
+				// no action.
+			}
+			this.nextAIRound();
+		}
 	}
 
 }

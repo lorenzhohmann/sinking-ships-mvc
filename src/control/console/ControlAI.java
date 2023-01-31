@@ -38,6 +38,8 @@ public class ControlAI {
 			}
 		}
 
+		System.out.println(chosenCoordinate.getX() + ":" + chosenCoordinate.getY());
+
 		return chosenCoordinate;
 	}
 
@@ -83,7 +85,7 @@ public class ControlAI {
 	 */
 	protected Coordinate getHardAICoordinate(Matchfield matchfield, List<Coordinate> coordsWithoutHit) {
 
-		Coordinate choosenCoordinate = null;
+		Coordinate chosenCoordinate = null;
 		Random random = new Random();
 		int randCoordIndex = random.nextInt(coordsWithoutHit.size());
 
@@ -112,30 +114,34 @@ public class ControlAI {
 				switch (direction) {
 				case 0: // top
 					if (top != null) {
-						choosenCoordinate = top;
+						chosenCoordinate = top;
+						hasMatch = true;
 					}
 					break;
 				case 1: // right
 					if (right != null) {
-						choosenCoordinate = right;
+						chosenCoordinate = right;
+						hasMatch = true;
 					}
 					break;
 				case 2: // bottom
 					if (bottom != null) {
-						choosenCoordinate = bottom;
+						chosenCoordinate = bottom;
+						hasMatch = true;
 					}
 					break;
 				case 3: // left
 					if (left != null) {
-						choosenCoordinate = left;
+						chosenCoordinate = left;
+						hasMatch = true;
 					}
 					break;
 				default: // fallback => shot on random coordinate:
-					choosenCoordinate = coordsWithoutHit.get(randCoordIndex);
+					chosenCoordinate = coordsWithoutHit.get(randCoordIndex);
+					hasMatch = true;
 					break;
 				}
 
-				hasMatch = true;
 				tries++;
 			}
 
@@ -147,18 +153,18 @@ public class ControlAI {
 			// get even coordinate
 			for (Coordinate coordinate : coordsWithoutHit) {
 				if (coordinate.getX() % 2 == coordinate.getY() % 2) {
-					choosenCoordinate = coordinate;
+					chosenCoordinate = coordinate;
 					break;
 				}
 			}
 
 			// if no match => get random
-			if (choosenCoordinate == null) {
-				choosenCoordinate = coordsWithoutHit.get(randCoordIndex);
+			if (chosenCoordinate == null) {
+				chosenCoordinate = coordsWithoutHit.get(randCoordIndex);
 			}
 
 		}
-		return choosenCoordinate;
+		return chosenCoordinate;
 	}
 
 	private void checkAILastHitIsPossible(Matchfield matchfield) {

@@ -2,7 +2,6 @@ package control.console;
 
 import model.Player;
 import model.Statistic;
-import view.console.ConsoleGUI;
 import view.console.GameOver;
 import view.console.GameOverHandler;
 import view.console.StatisticsWindow;
@@ -18,8 +17,6 @@ public class ControlGameOver implements GameOverHandler {
 		Statistic statistic = enemy.getMatchfield().getStatisticsObject();
 		statistics.showStatistic(statistic.getTotalShots(), statistic.getHits(), statistic.getNoHits(),
 				statistic.getHitRate());
-
-		ConsoleGUI.scanner.close();
 	}
 
 }

@@ -59,12 +59,12 @@ public class ShipPositioning {
 		while (ConsoleGUI.scanner.hasNext()) {
 
 			String input = ConsoleGUI.scanner.next();
-			int handlerResponse = this.shipPosHandler.handlePositioningInput(input);
+			ShipPosReturnCode handlerResponse = this.shipPosHandler.handlePositioningInput(input);
 
-			if (handlerResponse == 1) {
+			if (handlerResponse == ShipPosReturnCode.CONTINUE) {
 				continue;
 			}
-			if (handlerResponse == 2) {
+			if (handlerResponse == ShipPosReturnCode.BREAK) {
 				break;
 			}
 		}

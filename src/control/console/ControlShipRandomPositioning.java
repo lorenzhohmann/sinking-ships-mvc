@@ -24,7 +24,7 @@ public class ControlShipRandomPositioning {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
 		List<Coordinate> coordinates = matchfield.getCoordinates();
-		int shipNumberIndex = matchfield.getShipNumberCounter();
+		int shipNumberCounter = matchfield.getShipNumberCounter();
 
 		while (count < vertShipsAmount) {
 			int random = this.getRandomIndexOfMatchfield(fieldsize);
@@ -50,11 +50,13 @@ public class ControlShipRandomPositioning {
 				thirdCoordinate.setHasShip(true);
 				fourthCoordinate.setHasShip(true);
 
-				firstCoordinate.setShipNumber(shipNumberIndex);
-				secondCoordinate.setShipNumber(shipNumberIndex);
-				thirdCoordinate.setShipNumber(shipNumberIndex);
-				fourthCoordinate.setShipNumber(shipNumberIndex);
-				matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
+				firstCoordinate.setShipNumber(shipNumberCounter);
+				secondCoordinate.setShipNumber(shipNumberCounter);
+				thirdCoordinate.setShipNumber(shipNumberCounter);
+				fourthCoordinate.setShipNumber(shipNumberCounter);
+
+				matchfield.increaseShipNumberCounter();
+				shipNumberCounter = matchfield.getShipNumberCounter();
 
 				count++;
 
@@ -91,7 +93,9 @@ public class ControlShipRandomPositioning {
 				secondCoord.setShipNumber(shipNumberCounter);
 				thirdCoord.setShipNumber(shipNumberCounter);
 				fourthCoord.setShipNumber(shipNumberCounter);
-				matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
+
+				matchfield.increaseShipNumberCounter();
+				shipNumberCounter = matchfield.getShipNumberCounter();
 
 				count++;
 			} else {

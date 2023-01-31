@@ -16,6 +16,6 @@ public interface ShipPositioningHandler {
 
 	void startGame();
 
-	int handlePositioningInput(String input);
+	ShipPosReturnCode handlePositioningInput(String input);
 
 }

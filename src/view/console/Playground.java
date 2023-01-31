@@ -15,8 +15,9 @@ public class Playground {
 
 		int aDir = status[0].length; // X-coordinate
 		int bDir = aDir; // Y-coordinate
+		int fieldsize = aDir;
 
-		StringBuffer distToChar = new StringBuffer(35);
+		StringBuffer distToChar = new StringBuffer(36);
 		distToChar.append("     ");
 
 		// Formating the Output as String
@@ -28,7 +29,7 @@ public class Playground {
 		for (int i = 0; i < aDir; i++) { // top row
 			buffer.append(" _____");
 		}
-		buffer.append("\n");
+		buffer.append('\n');
 
 		for (int i = 0; i < bDir; i++) {
 			buffer.append("   "); // structure of the fields
@@ -40,7 +41,7 @@ public class Playground {
 
 			buffer.append("|" + "\n");
 
-			if (i + 1 < 10) {
+			if (i + 1 < fieldsize) {
 				buffer.append((i + 1) + "  "); // imports the numbers of the Y-coordinate into the String of the
 												// matchfield
 			} else {

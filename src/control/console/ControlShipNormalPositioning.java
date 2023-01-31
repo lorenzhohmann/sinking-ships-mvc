@@ -60,7 +60,8 @@ public class ControlShipNormalPositioning {
 			secondCoord.setShipNumber(shipNumberCounter);
 			thirdCoord.setShipNumber(shipNumberCounter);
 			fourthCoord.setShipNumber(shipNumberCounter);
-			matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
+
+			matchfield.increaseShipNumberCounter();
 
 			setSuccessful = true;
 		}
@@ -105,7 +106,8 @@ public class ControlShipNormalPositioning {
 			secondCoord.setShipNumber(shipNumberCounter);
 			thirdCoord.setShipNumber(shipNumberCounter);
 			fourthCoord.setShipNumber(shipNumberCounter);
-			matchfield.setShipNumberCounter(matchfield.getShipNumberCounter() + 1);
+
+			matchfield.increaseShipNumberCounter();
 
 			setSuccessful = true;
 		} else {

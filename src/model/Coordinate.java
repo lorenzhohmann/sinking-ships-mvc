@@ -76,4 +76,17 @@ public class Coordinate implements Serializable {
 		this.hasShip = hasShip;
 	}
 
+	public static Coordinate createDefaultCoordinate(int x, int y) { // NOPMD
+		return new Coordinate(x, y, false);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Coordinate))
+			return false;
+
+		Coordinate coord = (Coordinate) obj;
+		return this.x == coord.getX() && this.y == coord.getY();
+	}
+
 }
