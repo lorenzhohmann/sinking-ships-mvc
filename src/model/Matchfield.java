@@ -53,16 +53,8 @@ public class Matchfield implements Serializable {
 		return fieldsize;
 	}
 
-	public void setFieldsize(int fieldsize) {
-		this.fieldsize = fieldsize;
-	}
-
 	public List<Coordinate> getCoordinates() {
 		return coordinates;
-	}
-
-	public void setCoordinates(List<Coordinate> coordinates) {
-		this.coordinates = coordinates;
 	}
 
 	/**
@@ -84,7 +76,7 @@ public class Matchfield implements Serializable {
 			for (Coordinate c : this.coordinates) {
 				if (c.isHasShip()) {
 					if (c.hasHit()) {
-						if (this.isShipSunken(c)) {
+						if (c.isShipSunken(this)) {
 							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
 						} else {
 							status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
@@ -102,7 +94,7 @@ public class Matchfield implements Serializable {
 			for (Coordinate c : coordinates) {
 				if (c.hasHit()) {
 					if (c.isHasShip()) {
-						if (this.isShipSunken(c)) {
+						if (c.isShipSunken(this)) {
 							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
 						} else {
 							status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
@@ -115,32 +107,6 @@ public class Matchfield implements Serializable {
 		}
 
 		return status;
-	}
-
-	/**
-	 * Checks if the ship on the passed coordinate is sunken. A ship is sunken if
-	 * all coordinates of the ship were hit
-	 * 
-	 * @param aCoordOfAShip - coordinate of the ship that should be checked
-	 * @return whether the ship is sunken
-	 */
-	public boolean isShipSunken(Coordinate aCoordOfAShip) {
-
-		int shipNumber = aCoordOfAShip.getShipNumber();
-		int shipHitsSameNr = 0;
-		int shipsSameNr = 0;
-
-		for (Coordinate coordinate : this.coordinates) {
-			if (coordinate.getShipNumber() == shipNumber) {
-				shipsSameNr++;
-
-				if (coordinate.hasHit()) {
-					shipHitsSameNr++;
-				}
-			}
-		}
-
-		return shipsSameNr == shipHitsSameNr;
 	}
 
 	public Coordinate getLastHit() {
@@ -255,26 +221,6 @@ public class Matchfield implements Serializable {
 		}
 
 		return coordsWithoutHit;
-	}
-
-	/**
-	 * Does a shoot on a specific coordinates and evaluates the shot
-	 * 
-	 * @param matchfield - Matchfield on which the shot should be performed. Null
-	 *                   throws Exception.
-	 * @param coordinate - Coordinate that should be shot. Null throws Exception.
-	 * @return whether the shot was a ship hit
-	 */
-	public boolean shoot(Coordinate coordinate) {
-		coordinate.setHit(true);
-		this.lastShot = coordinate;
-
-		// set hit to last successful hit
-		if (coordinate.isHasShip()) {
-			this.lastHit = coordinate;
-		}
-
-		return this.didLastShotHit();
 	}
 
 	/**

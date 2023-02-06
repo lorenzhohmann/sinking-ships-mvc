@@ -40,16 +40,8 @@ public class Coordinate implements Serializable {
 		return x;
 	}
 
-	public void setX(int x) { // NOPMD
-		this.x = x;
-	}
-
 	public int getY() {
 		return y;
-	}
-
-	public void setY(int y) { // NOPMD
-		this.y = y;
 	}
 
 	public int getShipNumber() {
@@ -80,13 +72,71 @@ public class Coordinate implements Serializable {
 		return new Coordinate(x, y, false);
 	}
 
+	/**
+	 * Does a shoot on a specific coordinates and evaluates the shot
+	 * 
+	 * @param matchfield - Matchfield on which the shot should be performed. Null
+	 *                   throws Exception.
+	 * @param coordinate - Coordinate that should be shot. Null throws Exception.
+	 * @return whether the shot was a ship hit
+	 */
+	public boolean shoot(Matchfield field) {
+		this.hit = true;
+		field.setLastShot(this);
+
+		// set hit to last successful hit
+		if (this.hasShip) {
+			field.setLastHit(this);
+		}
+
+		return field.didLastShotHit();
+	}
+
+	/**
+	 * 
+	 * @return whether the current coordinate is the first (of the matchfield)
+	 */
+	public boolean isFirstCoordinate() {
+		return this.x == 0 && this.y == 0;
+	}
+
+	/**
+	 * Checks if the ship on the passed coordinate is sunken. A ship is sunken if
+	 * all coordinates of the ship were hit
+	 * 
+	 * @param aCoordOfAShip - coordinate of the ship that should be checked
+	 * @return whether the ship is sunken
+	 */
+	public boolean isShipSunken(Matchfield field) {
+
+		int shipHitsSameNr = 0;
+		int shipsSameNr = 0;
+
+		for (Coordinate coordinate : field.getCoordinates()) {
+			if (coordinate.getShipNumber() == this.shipNumber) {
+				shipsSameNr++;
+
+				if (coordinate.hasHit()) {
+					shipHitsSameNr++;
+				}
+			}
+		}
+
+		return shipsSameNr == shipHitsSameNr;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Coordinate))
-			return false;
+		boolean equals = false;
+		if (!(obj instanceof Coordinate)) {
+			equals = false;
+		}
 
 		Coordinate coord = (Coordinate) obj;
-		return this.x == coord.getX() && this.y == coord.getY();
+		if (this.x == coord.getX() && this.y == coord.getY()) {
+			equals = true;
+		}
+		return equals;
 	}
 
 }

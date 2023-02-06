@@ -83,7 +83,7 @@ public class ControlGame implements GameHandler {
 		Matchfield matchfield = this.player.getMatchfield();
 		Coordinate kiCoordinate = aiController.chooseCoordinateByDifficulty(matchfield,
 				((AI) this.enemy).getDifficulty());
-		boolean hit = this.player.getMatchfield().shoot(kiCoordinate);
+		boolean hit = kiCoordinate.shoot(this.player.getMatchfield());
 
 		this.game.showEnemiesMatchfield(shotsInARow);
 		this.messages.enemyShotEvaluation(hit);
@@ -159,7 +159,7 @@ public class ControlGame implements GameHandler {
 			if (enemiesMatchfield.getLastShot().hasHit()) {
 				this.messages.printFieldAlreadyShot();
 			} else {
-				this.enemy.getMatchfield().shoot(enemiesMatchfield.getLastShot());
+				enemiesMatchfield.getLastShot().shoot(this.enemy.getMatchfield());
 				this.showEnemiesMatchfield();
 				this.evaluatePlayerRound();
 				success = true;
@@ -192,7 +192,7 @@ public class ControlGame implements GameHandler {
 			Toolkit.getDefaultToolkit().beep();
 			this.shotsInARow++;
 
-			boolean fullShipDown = enemiesMatchfield.isShipSunken(enemiesMatchfield.getLastShot());
+			boolean fullShipDown = enemiesMatchfield.getLastShot().isShipSunken(enemiesMatchfield);
 			this.messages.showShotResultMessage(fullShipDown);
 
 			// wait before second shot
