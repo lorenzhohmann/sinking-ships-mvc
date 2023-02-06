@@ -4,7 +4,7 @@ import model.Difficulty;
 
 public interface MenuHandler {
 
-	void initControl(FrameGUI gui);
+	void initControl();
 
 	void setDifficulty(Difficulty difficulty);
 

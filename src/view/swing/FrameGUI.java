@@ -3,6 +3,7 @@ package view.swing;
 import java.awt.Container;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class FrameGUI extends JFrame {
 
@@ -40,10 +41,11 @@ public class FrameGUI extends JFrame {
 	 * Shows a notification on the console
 	 * 
 	 * @param msg   - the message to appear
-	 * @param style - adds a suffix and prefix for the message
+	 * @param style - adds a suffix and prefix for the message (error, waiting,
+	 *              highlight)
 	 */
 	public static void print(String msg, String style) {
-
+		JOptionPane.showMessageDialog(null, msg);
 	}
 
 	/**
@@ -52,14 +54,14 @@ public class FrameGUI extends JFrame {
 	 * @param msg - the message to appear
 	 */
 	public static void print(String msg) {
-
+		FrameGUI.print(msg, "normal");
 	}
 
 	/**
 	 * Prints the help menu to the console
 	 */
 	public static void showHelp() {
-
+		FrameGUI.print("Help not available on Swing GUI");
 	}
 
 }

@@ -1,4 +1,4 @@
-package control.console;
+package control.swing;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,24 +7,27 @@ import model.AI;
 import model.Coordinate;
 import model.Matchfield;
 import model.Player;
-import view.console.GameHandler;
-import view.console.Playground;
-import view.console.ShipPosReturnCode;
-import view.console.ShipPositioning;
-import view.console.ShipPositioningHandler;
+import view.swing.FrameGUI;
+import view.swing.GameHandler;
+import view.swing.Playground;
+import view.swing.ShipPosReturnCode;
+import view.swing.ShipPositioning;
+import view.swing.ShipPositioningHandler;
 
 public class ControlShipPositioning implements ShipPositioningHandler {
 
 	private ShipPositioning shipPositioning;
 	private Player human;
 	private Player enemy;
+	private FrameGUI gui;
 
 	private ControlShipRandomPositioning randPosController;
 	private ControlShipNormalPositioning posController;
 
-	public ControlShipPositioning(AI enemy) {
+	public ControlShipPositioning(AI enemy, FrameGUI gui) {
 		this.enemy = enemy;
 		this.human = new Player();
+		this.gui = gui;
 
 		this.randPosController = new ControlShipRandomPositioning();
 		this.posController = new ControlShipNormalPositioning();
@@ -32,7 +35,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void initControl() {
-		shipPositioning = new ShipPositioning(this);
+		shipPositioning = new ShipPositioning(this, this.gui);
 
 		this.shipPositioning.showShipPositioning(false);
 	}
@@ -49,7 +52,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void showPlayersMatchfield() {
-		Playground matchfield = new Playground();
+		Playground matchfield = new Playground(this.gui);
 		String[][] status = this.human.getMatchfield().getStatusArray(true);
 		matchfield.print(status);
 	}
@@ -66,7 +69,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void startGame() {
-		GameHandler gameHandler = new ControlGame(human, enemy);
+		GameHandler gameHandler = new ControlGame(human, enemy, this.gui);
 		gameHandler.initControl();
 		gameHandler.startGame();
 	}

@@ -1,17 +1,20 @@
-package control.console;
+package control.swing;
 
 import model.Player;
 import model.Statistic;
-import view.console.GameOver;
-import view.console.GameOverHandler;
-import view.console.StatisticsWindow;
+import view.swing.FrameGUI;
+import view.swing.GameOver;
+import view.swing.GameOverHandler;
+import view.swing.StatisticsWindow;
 
 public class ControlGameOver implements GameOverHandler {
 
 	private Player enemy;
+	private FrameGUI gui;
 
-	public ControlGameOver(Player enemy) {
+	public ControlGameOver(Player enemy, FrameGUI gui) {
 		this.enemy = enemy;
+		this.gui = gui;
 	}
 
 	@Override

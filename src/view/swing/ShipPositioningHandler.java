@@ -12,10 +12,10 @@ public interface ShipPositioningHandler {
 
 	void resetPlayersShips();
 
-	boolean setShipPositionsManual(String positionString, int length);
+	boolean positionShipManual(String positionString, int length);
 
 	void startGame();
 
-	int handlePositioningInput(String input);
+	ShipPosReturnCode handlePositioningInput(String input);
 
 }

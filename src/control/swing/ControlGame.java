@@ -1,4 +1,4 @@
-package control.console;
+package control.swing;
 
 import java.awt.Toolkit;
 
@@ -6,17 +6,19 @@ import model.AI;
 import model.Coordinate;
 import model.Matchfield;
 import model.Player;
-import view.console.ConsoleGUI;
-import view.console.GameHandler;
-import view.console.GameMessages;
-import view.console.GameOverHandler;
-import view.console.GameView;
-import view.console.Playground;
+import view.swing.FrameGUI;
+import view.swing.GameHandler;
+import view.swing.GameMessages;
+import view.swing.GameOverHandler;
+import view.swing.GameView;
+import view.swing.Playground;
 
 public class ControlGame implements GameHandler {
 
 	private GameView game;
 	private GameMessages messages;
+
+	private FrameGUI gui;
 
 	/**
 	 * The player object of the human player
@@ -36,9 +38,10 @@ public class ControlGame implements GameHandler {
 	private ControlAI aiController;
 	private ControlGameActions actionController;
 
-	public ControlGame(Player player, Player enemy) {
+	public ControlGame(Player player, Player enemy, FrameGUI gui) {
 		this.player = player;
 		this.enemy = enemy;
+		this.gui = gui;
 
 		this.shotsInARow = 1;
 		this.aiController = new ControlAI();
@@ -47,7 +50,7 @@ public class ControlGame implements GameHandler {
 
 	@Override
 	public void initControl() {
-		this.game = new GameView(this);
+		this.game = new GameView(this, ((AI) enemy).getDifficulty().getName(), this.gui);
 		this.messages = new GameMessages(((AI) enemy).getDifficulty().getName());
 	}
 
@@ -97,7 +100,7 @@ public class ControlGame implements GameHandler {
 
 			// wait after successfull shot
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}
@@ -108,7 +111,7 @@ public class ControlGame implements GameHandler {
 
 			// wait on player change
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}
@@ -124,7 +127,7 @@ public class ControlGame implements GameHandler {
 	 * @param playerIsWinner - Whether the human player has won the game
 	 */
 	private void endGame(boolean playerIsWinner) {
-		GameOverHandler gameOverHandler = new ControlGameOver(this.enemy);
+		GameOverHandler gameOverHandler = new ControlGameOver(this.enemy, this.gui);
 		gameOverHandler.initControl(playerIsWinner);
 	}
 
@@ -145,7 +148,7 @@ public class ControlGame implements GameHandler {
 	 * @param showShips - Whether the ships should be visible on the UI
 	 */
 	private void showMatchfield(Player player, boolean showShips) {
-		Playground playground = new Playground();
+		Playground playground = new Playground(this.gui);
 		String[][] status = player.getMatchfield().getStatusArray(showShips);
 		playground.print(status);
 	}
@@ -169,7 +172,7 @@ public class ControlGame implements GameHandler {
 			}
 		} else if ("--help".equalsIgnoreCase(coordinateString) || "help".equalsIgnoreCase(coordinateString) // NOPMD
 				|| "?".equalsIgnoreCase(coordinateString)) { // NOPMD
-			ConsoleGUI.showHelp();
+			FrameGUI.showHelp();
 		} else {
 			this.messages.showInvalidInput();
 		}
@@ -198,13 +201,6 @@ public class ControlGame implements GameHandler {
 			boolean fullShipDown = enemiesMatchfield.getLastShot().isShipSunken(enemiesMatchfield);
 			this.messages.showShotResultMessage(fullShipDown);
 
-			// wait before second shot
-			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
-			} catch (InterruptedException e) {
-				// no action.
-			}
-
 			this.nextPlayerRound();
 		} else {
 			this.messages.showNoShipHit();
@@ -212,7 +208,7 @@ public class ControlGame implements GameHandler {
 
 			// wait on player change
 			try {
-				Thread.sleep(ConsoleGUI.GAME_INTERRUPTION);
+				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
 			} catch (InterruptedException e) {
 				// no action.
 			}

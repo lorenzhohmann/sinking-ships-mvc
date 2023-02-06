@@ -2,6 +2,7 @@ package control.swing;
 
 import view.swing.FrameGUI;
 import view.swing.FrameGUIHandler;
+import view.swing.MenuHandler;
 
 public class ControlFrameGUI implements FrameGUIHandler {
 
@@ -17,8 +18,8 @@ public class ControlFrameGUI implements FrameGUIHandler {
 	}
 
 	private void showMenu() {
-//		MenuHandler handler = new ControlMenu();
-//		handler.initControl(this.gui);
+		MenuHandler handler = new ControlMenu(this.gui);
+		handler.initControl();
 	}
 
 }

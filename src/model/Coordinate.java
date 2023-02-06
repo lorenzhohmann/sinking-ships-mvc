@@ -128,13 +128,13 @@ public class Coordinate implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		boolean equals = false;
-		if (!(obj instanceof Coordinate)) {
+		if (obj == null || !(obj instanceof Coordinate)) {
 			equals = false;
-		}
-
-		Coordinate coord = (Coordinate) obj;
-		if (this.x == coord.getX() && this.y == coord.getY()) {
-			equals = true;
+		} else {
+			Coordinate coord = (Coordinate) obj;
+			if (this.x == coord.getX() && this.y == coord.getY()) {
+				equals = true;
+			}
 		}
 		return equals;
 	}

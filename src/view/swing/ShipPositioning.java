@@ -144,7 +144,7 @@ public class ShipPositioning extends JPanel {
 		String manualPosString = JOptionPane.showInputDialog(inputDialog);
 
 		if (manualPosString != null) {
-			boolean success = this.shipPosHandler.setShipPositionsManual(manualPosString, 4);
+			boolean success = this.shipPosHandler.positionShipManual(manualPosString, 4);
 
 			if (!success) {
 				this.showManualShipPositioning();

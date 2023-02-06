@@ -31,12 +31,14 @@ public class Playground extends JPanel {
 
 		int width = status[0].length;
 		int height = width;
+		int index = 0;
 
 		for (int x = 0; x <= width; x++) {
 			for (int y = 0; y <= height; y++) {
 				String naming = "";
 				Color background = new Color(0, 0, 0, 0);
 				Border border = null;
+				String panelName = "";
 
 				// clear top left corner
 				if (x == 0 && y == 0) {
@@ -53,12 +55,14 @@ public class Playground extends JPanel {
 				} else {
 					naming = status[x - 1][y - 1];
 					border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY);
+					panelName = String.valueOf("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(y - 1)) + String.valueOf((x));
 				}
 
 				// create fields
 				JLabel label = new JLabel(naming);
 				label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 				JPanel panel = new JPanel();
+				panel.setName(panelName);
 				panel.setBorder(border);
 				panel.setBackground(background);
 				panel.setBounds(x * 50, y * 50, 50, 50);

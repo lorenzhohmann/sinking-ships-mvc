@@ -3,6 +3,8 @@ package view.swing;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -61,25 +63,25 @@ public class GameView extends JPanel {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	public void showPlayerRound(int shotInARow) {
+		this.bottomPanel.removeAll();
 
 		this.showEnemyHeadline(shotInARow);
 		this.gameHandler.showEnemiesMatchfield();
 		this.showShotInstruction();
 
 		for (Component c : this.gui.getContentPane().getComponents()) {
-			System.out.println(c.getClass().getCanonicalName());
+			// TODO: remove mouse listener?
+			c.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					JPanel panel = (JPanel) c;
+					String alphIndex = panel.getName();
+					System.out.println(alphIndex);
+					gameHandler.doMove(alphIndex);
+				}
+			});
 		}
 
-		// loops for own shot
-//		while (ConsoleGUI.scanner.hasNext()) {
-//
-//			String input = ConsoleGUI.scanner.next();
-//			boolean moveSuccessfull = this.gameHandler.doMove(input);
-//
-//			if (moveSuccessfull) {
-//				break;
-//			}
-//		}
 		this.gui.getContentPane().add(this);
 		this.gui.repaint();
 	}
@@ -90,7 +92,13 @@ public class GameView extends JPanel {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	public void showEnemiesRound(int shotInARow) {
+		this.bottomPanel.removeAll();
 
+		this.showEnemiesMatchfield(shotInARow);
+		this.showEnemiesTurn();
+
+		this.gui.getContentPane().add(this);
+		this.gui.repaint();
 	}
 
 	/**
@@ -99,14 +107,8 @@ public class GameView extends JPanel {
 	 * @param shotInARow - the amount of shots in a row
 	 */
 	public void showEnemiesMatchfield(int shotInARow) {
-
-	}
-
-	/**
-	 * Prints global game information
-	 */
-	public void showHead() {
-
+		this.showPlayersHeadline(shotInARow);
+		this.gameHandler.showPlayersMatchfield();
 	}
 
 	/**
@@ -141,75 +143,14 @@ public class GameView extends JPanel {
 		this.showshotInARow(shotInARow);
 	}
 
-	/**
-	 * Shows an error message
-	 */
-	public void printFieldAlreadyShot() {
-
-	}
-
-	/**
-	 * Shows a message whether a full ship was hit
-	 * 
-	 * @param fullShipDown - if the full ship was hit. Conditions the output
-	 */
-	public void showShotResultMessage(boolean fullShipDown) {
-
-	}
-
-	/**
-	 * Shows a instruction for the player how to play
-	 */
-	public void showShotInstruction() {
-
-	}
-
-	/**
-	 * Shows a message to wait
-	 */
-	public void showWaitingForSecondPlayer() {
-
-	}
-
-	/**
-	 * Shows a message that a second player has connected
-	 */
-	public void showSecondPlayerConnected() {
-
-	}
-
-	/**
-	 * Shows a message that no ship was hit and it's the enemies turn
-	 */
-	public void showNoShipHit() {
-
-	}
-
-	/**
-	 * Shows an error message becuase of wrong input data
-	 */
-	public void showInvalidInput() {
-
-	}
-
-	/**
-	 * Shows a message that it's now enemies turn
-	 */
 	private void showEnemiesTurn() {
-		FrameGUI.print("Dein Gegner ist am Zug!", "waiting");
+		// not needed in Swing GUI
+//		FrameGUI.print("Dein Gegner ist am Zug!", "waiting");
 	}
 
-	/**
-	 * Shows a message with the result of the enemies shot
-	 * 
-	 * @param wasHit - if a ship was hit. Changes the output
-	 */
-	public void enemyShotEvaluation(boolean wasHit) {
-		if (wasHit) {
-			FrameGUI.print("Eines Deiner Schiffe wurde getroffen! Dein Gegner ist noch einmal am Zug!");
-		} else {
-			FrameGUI.print("Dein Gegner hat keines Deiner Schiffe getroffen! Du bist dran!");
-		}
+	public void showShotInstruction() {
+		// not needed in Swing GUI
+//		FrameGUI.print("Welche Position moechtest Du angreifen? (Bsp.: A4)", "highlight");
 	}
 
 }

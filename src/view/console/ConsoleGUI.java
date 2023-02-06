@@ -19,7 +19,8 @@ public class ConsoleGUI {
 	 * Shows a notification on the console
 	 * 
 	 * @param msg   - the message to appear
-	 * @param style - adds a suffix and prefix for the message
+	 * @param style - adds a suffix and prefix for the message (error, waiting,
+	 *              highlight)
 	 */
 	public static void print(String msg, String style) {
 		switch (style) {

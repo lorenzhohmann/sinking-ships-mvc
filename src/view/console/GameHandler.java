@@ -1,10 +1,8 @@
 package view.console;
 
-import model.Player;
-
 public interface GameHandler {
 
-	void initControl(Player player, Player enemy);
+	void initControl();
 
 	void startGame();
 
