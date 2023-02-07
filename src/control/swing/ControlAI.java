@@ -38,8 +38,6 @@ public class ControlAI {
 			}
 		}
 
-		System.out.println(chosenCoordinate.getX() + ":" + chosenCoordinate.getY());
-
 		return chosenCoordinate;
 	}
 

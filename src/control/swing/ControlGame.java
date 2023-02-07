@@ -69,15 +69,15 @@ public class ControlGame implements GameHandler {
 		// show enemys matchfield without ship positions (only hitted ships)
 		this.game.showEnemiesRound(this.shotsInARow);
 
+		// show players matchfield with all ships and states
+		this.game.showEnemiesMatchfield(shotsInARow);
+
 		// wait before shot
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// no action.
 		}
-
-		// show players matchfield with all ships and states
-		this.game.showEnemiesMatchfield(shotsInARow);
 
 		// check for KI win
 		if (this.actionController.isGameOver(this.player.getMatchfield())) {
@@ -206,12 +206,6 @@ public class ControlGame implements GameHandler {
 			this.messages.showNoShipHit();
 			this.shotsInARow = 1;
 
-			// wait on player change
-			try {
-				Thread.sleep(FrameGUI.GAME_INTERRUPTION);
-			} catch (InterruptedException e) {
-				// no action.
-			}
 			this.nextAIRound();
 		}
 	}

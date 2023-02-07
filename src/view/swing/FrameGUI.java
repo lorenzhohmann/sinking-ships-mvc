@@ -18,6 +18,7 @@ public class FrameGUI extends JFrame {
 	public static final int GAME_INTERRUPTION = 2000;
 
 	public FrameGUI() {
+		super();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Schiffe Versenken");
 		this.setSize(300, 200);
@@ -27,6 +28,7 @@ public class FrameGUI extends JFrame {
 		this.setResizable(false);
 	}
 
+	@Override
 	public void repaint() {
 		this.setVisible(true);
 	}

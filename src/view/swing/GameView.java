@@ -3,8 +3,6 @@ package view.swing;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,11 +10,14 @@ import javax.swing.JPanel;
 public class GameView extends JPanel {
 
 	/**
+	 * Unique ID to identify version of the class for the Serializable interface
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Difficulty level of the humans enemy (doesn't change while playing)
 	 */
-	private String enemyDifficulty;
 	private FrameGUI gui;
-	private JPanel playgroundPanel;
 	private JPanel bottomPanel;
 
 	/**
@@ -24,9 +25,10 @@ public class GameView extends JPanel {
 	 */
 	private GameHandler gameHandler;
 
-	public GameView(GameHandler gameHandler, String enemyDifficulty, FrameGUI gui) {
+	public GameView(GameHandler gameHandler, String enemyDifficulty, FrameGUI gui) { // NOPMD
+		super();
+
 		this.gameHandler = gameHandler;
-		this.enemyDifficulty = enemyDifficulty;
 		this.gui = gui;
 
 		this.setLayout(new BorderLayout(0, 0));
@@ -37,8 +39,8 @@ public class GameView extends JPanel {
 		this.bottomPanel.setPreferredSize(new Dimension(100, 80));
 		this.add(this.bottomPanel, BorderLayout.SOUTH);
 
-		this.playgroundPanel = new JPanel();
-		this.add(this.playgroundPanel, BorderLayout.CENTER);
+		JPanel playgroundPanel = new JPanel();
+		this.add(playgroundPanel, BorderLayout.CENTER);
 
 		this.gui.setSize(566, 700);
 		this.gui.setLocationRelativeTo(null);
@@ -67,22 +69,11 @@ public class GameView extends JPanel {
 
 		this.showEnemyHeadline(shotInARow);
 		this.gameHandler.showEnemiesMatchfield();
-		this.showShotInstruction();
 
-		for (Component c : this.gui.getContentPane().getComponents()) {
-			// TODO: remove mouse listener?
-			c.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					JPanel panel = (JPanel) c;
-					String alphIndex = panel.getName();
-					System.out.println(alphIndex);
-					gameHandler.doMove(alphIndex);
-				}
-			});
+		for (Component comp : this.gui.getContentPane().getComponents()) {
+			comp.addMouseListener(new FieldMouseAdapter(comp, this.gameHandler)); // NOPMD
 		}
 
-		this.gui.getContentPane().add(this);
 		this.gui.repaint();
 	}
 
@@ -97,7 +88,6 @@ public class GameView extends JPanel {
 		this.showEnemiesMatchfield(shotInARow);
 		this.showEnemiesTurn();
 
-		this.gui.getContentPane().add(this);
 		this.gui.repaint();
 	}
 
@@ -109,6 +99,8 @@ public class GameView extends JPanel {
 	public void showEnemiesMatchfield(int shotInARow) {
 		this.showPlayersHeadline(shotInARow);
 		this.gameHandler.showPlayersMatchfield();
+
+		this.gui.repaint();
 	}
 
 	/**
@@ -146,11 +138,6 @@ public class GameView extends JPanel {
 	private void showEnemiesTurn() {
 		// not needed in Swing GUI
 //		FrameGUI.print("Dein Gegner ist am Zug!", "waiting");
-	}
-
-	public void showShotInstruction() {
-		// not needed in Swing GUI
-//		FrameGUI.print("Welche Position moechtest Du angreifen? (Bsp.: A4)", "highlight");
 	}
 
 }

@@ -2,13 +2,8 @@ package view.swing;
 
 public class GameMessages {
 
-	/**
-	 * Difficulty level of the humans enemy (doesn't change while playing)
-	 */
-	private String enemyDifficulty;
-
-	public GameMessages(String enemyDifficulty) {
-		this.enemyDifficulty = enemyDifficulty;
+	public GameMessages(String enemyDifficulty) { // NOPMD
+		// no action needed in Swing GUI
 	}
 
 	public void printFieldAlreadyShot() {
@@ -22,11 +17,6 @@ public class GameMessages {
 	 */
 	public void showShotResultMessage(boolean fullShipDown) {
 		// not needed in Swing GUI
-//		if (fullShipDown) {
-//			FrameGUI.print("Du hast ein komplettes Schiff versenkt! Du darfst noch einmal schiessen!");
-//		} else {
-//			FrameGUI.print("Schiffsteil getroffen! Du darfst noch einmal schiessen!");
-//		}
 	}
 
 	public void showWaitingForSecondPlayer() {
@@ -51,20 +41,14 @@ public class GameMessages {
 	 * @param wasHit - if a ship was hit. Changes the output
 	 */
 	public void enemyShotEvaluation(boolean wasHit) {
-		if (wasHit) {
-			FrameGUI.print("Eines Deiner Schiffe wurde getroffen! Dein Gegner ist noch einmal am Zug!");
-		} else {
-			FrameGUI.print("Dein Gegner hat keines Deiner Schiffe getroffen! Du bist dran!");
-		}
+		// not needed in Swing GUI
 	}
 
 	/**
 	 * Prints global game information
 	 */
 	public void showHead() {
-		FrameGUI.print("");
-		FrameGUI.print("");
-		FrameGUI.print("//==============> SPIEL (Schwierigkeit: " + this.enemyDifficulty + ") <==============\\\\");
+		// not needed in Swing GUI
 	}
 
 }

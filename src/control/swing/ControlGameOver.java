@@ -19,7 +19,7 @@ public class ControlGameOver implements GameOverHandler {
 
 	@Override
 	public void initControl(boolean playerIsWinner) {
-		GameOver gameOver = new GameOver();
+		GameOver gameOver = new GameOver(this.gui);
 		gameOver.showEndScreen(playerIsWinner);
 
 		StatisticsWindow statistics = new StatisticsWindow();

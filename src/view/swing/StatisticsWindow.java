@@ -11,7 +11,7 @@ public class StatisticsWindow {
 	 * @param successRate - the calculated rate (ratio hits/no hits)
 	 */
 	public void showStatistic(int totalShots, int hits, int noHits, double successRate) {
-
+		// not implemented in Swing GUI yet
 	}
 
 }

@@ -16,14 +16,20 @@ import javax.swing.JPanel;
 public class ShipPositioning extends JPanel {
 
 	/**
+	 * Unique ID to identify version of the class for the Serializable interface
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Handler for all ship positioning actions
 	 */
 	private ShipPositioningHandler shipPosHandler;
 	private FrameGUI gui;
-	private JPanel playgroundPanel;
 	private JPanel bottomPanel;
 
 	public ShipPositioning(ShipPositioningHandler handler, FrameGUI gui) {
+		super();
+
 		this.shipPosHandler = handler;
 		this.gui = gui;
 
@@ -32,8 +38,8 @@ public class ShipPositioning extends JPanel {
 		this.bottomPanel = new JPanel();
 		this.add(this.bottomPanel, BorderLayout.SOUTH);
 
-		this.playgroundPanel = new JPanel();
-		this.add(this.playgroundPanel, BorderLayout.CENTER);
+		JPanel playgroundPanel = new JPanel();
+		this.add(playgroundPanel, BorderLayout.CENTER);
 
 		this.gui.setSize(566, 700);
 		this.gui.setLocationRelativeTo(null);
@@ -56,7 +62,7 @@ public class ShipPositioning extends JPanel {
 		random.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				shipPosHandler.handlePositioningInput("z");
 			}
 		});
@@ -65,7 +71,7 @@ public class ShipPositioning extends JPanel {
 		manual.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				shipPosHandler.handlePositioningInput("m");
 			}
 		});
@@ -74,7 +80,7 @@ public class ShipPositioning extends JPanel {
 		start.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				shipPosHandler.handlePositioningInput("s");
 
 			}
@@ -156,6 +162,7 @@ public class ShipPositioning extends JPanel {
 	 * Shows a message that all ships were set new
 	 */
 	public void showShipsNewSet() {
+		// not needed in Swing GUI
 	}
 
 }

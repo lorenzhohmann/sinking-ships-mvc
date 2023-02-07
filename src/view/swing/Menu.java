@@ -15,10 +15,17 @@ import model.Difficulty;
 
 public class Menu extends JPanel {
 
+	/**
+	 * Unique ID to identify version of the class for the Serializable interface
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private FrameGUI gui;
 	private MenuHandler handler;
 
 	public Menu(MenuHandler handler, FrameGUI gui) {
+		super();
+
 		this.handler = handler;
 		this.gui = gui;
 
@@ -35,7 +42,7 @@ public class Menu extends JPanel {
 		spButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				handler.chooseSinglePlayer();
 			}
 		});
@@ -44,7 +51,7 @@ public class Menu extends JPanel {
 		mpButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				System.out.println("MULTIPLAYER IS NOT WORKING");
 			}
 		});
@@ -79,7 +86,7 @@ public class Menu extends JPanel {
 		easyButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				handler.setDifficulty(Difficulty.EASY);
 			}
 		});
@@ -88,7 +95,7 @@ public class Menu extends JPanel {
 		hardButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				handler.setDifficulty(Difficulty.HARD);
 			}
 		});
@@ -97,7 +104,7 @@ public class Menu extends JPanel {
 		extremButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				handler.setDifficulty(Difficulty.EXTREM);
 			}
 		});
