@@ -26,7 +26,7 @@ public class ControlGame implements GameHandler {
 	private final Player player;
 
 	/**
-	 * The player object of the AI
+	 * The player object of the bot
 	 */
 	private final Player enemy;
 
@@ -49,12 +49,10 @@ public class ControlGame implements GameHandler {
 	}
 
 	private void nextPlayerRound() {
-		// show enemys matchfield without ship positions (only hitted ships)
 		this.gameView.showPlayerRound(this.player.getShotsInARow());
 	}
 
-	private void nextAIRound() {
-		// show enemys matchfield without ship positions (only hitted ships)
+	private void nextBotRound() {
 		this.gameView.showEnemiesRound(this.enemy.getShotsInARow());
 
 		// show players matchfield with all ships and states
@@ -67,22 +65,22 @@ public class ControlGame implements GameHandler {
 			// no action.
 		}
 
-		// check for KI win
+		// check for bot win
 		if (ControlGameActions.isGameOver(this.player.getMatchfield())) {
 			this.endGame(false);
 			return;
 		}
 
-		// do AI shot & hit evalutation
-		Matchfield matchfield = this.player.getMatchfield();
-		Coordinate kiCoordinate = ControlBot.chooseCoordinateByDifficulty(matchfield,
+		// do bot shot & hit evalutation
+		Matchfield playerMatchfield = this.player.getMatchfield();
+		Coordinate botCoordinate = ControlBot.chooseCoordinateByDifficulty(playerMatchfield,
 				((Bot) this.enemy).getDifficulty());
-		boolean hit = kiCoordinate.shoot(this.player.getMatchfield());
+		boolean shotWasHit = botCoordinate.shoot(this.player.getMatchfield());
 
 		this.gameView.showEnemiesMatchfield(this.enemy.getShotsInARow());
-		this.messages.enemyShotEvaluation(hit);
+		this.messages.enemyShotEvaluation(shotWasHit);
 
-		if (hit) {
+		if (shotWasHit) {
 			Toolkit.getDefaultToolkit().beep();
 			this.enemy.increaseShotsInARow();
 
@@ -93,7 +91,7 @@ public class ControlGame implements GameHandler {
 				// no action.
 			}
 
-			this.nextAIRound();
+			this.nextBotRound();
 		} else {
 			this.enemy.resetShotsInARow();
 
@@ -172,6 +170,12 @@ public class ControlGame implements GameHandler {
 		return success;
 	}
 
+	/**
+	 * Should be called after the player made a shot on the enemies matchfield.
+	 * Checks if the player has won the match. Furthermore it starts the next player
+	 * round if the last shot was a hit or starts a bot round if the last shot was
+	 * no hit.
+	 */
 	private void evaluatePlayerRound() {
 		Matchfield enemiesMatchfield = this.enemy.getMatchfield();
 
@@ -198,7 +202,7 @@ public class ControlGame implements GameHandler {
 			this.messages.showNoShipHit();
 			this.player.resetShotsInARow();
 
-			this.nextAIRound();
+			this.nextBotRound();
 		}
 	}
 

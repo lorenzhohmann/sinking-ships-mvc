@@ -20,6 +20,10 @@ public abstract class ControlShipRandomPositioning {
 		ControlShipRandomPositioning.placeRandomShipsVertical(matchfield, randShipsPerDir);
 	}
 
+	/**
+	 * @param matchfield      - the matchfield the ships should be placed on
+	 * @param vertShipsAmount - the amount of ships that should be placed
+	 */
 	private static void placeRandomShipsVertical(Matchfield matchfield, int vertShipsAmount) {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
@@ -66,6 +70,10 @@ public abstract class ControlShipRandomPositioning {
 		}
 	}
 
+	/**
+	 * @param matchfield       - the matchfield the ships should be placed on
+	 * @param horizShipsAmount - the amount of ships that should be placed
+	 */
 	private static void placeRandomShipsHorizontal(Matchfield matchfield, int horizShipsAmount) {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
@@ -104,6 +112,14 @@ public abstract class ControlShipRandomPositioning {
 		}
 	}
 
+	/**
+	 * Calculates a random number to use as index to get a random coordinate from a
+	 * matchfield
+	 * 
+	 * @param fieldsize - the fieldsize of the matchfield
+	 * @return a random index that can be passed in the .get() of the matchfield
+	 *         coordinates arraylist
+	 */
 	private static int getRandomIndexOfMatchfield(int fieldsize) {
 		double random = Math.random() * 100;
 		if (random > fieldsize * fieldsize) {

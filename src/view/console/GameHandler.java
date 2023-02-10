@@ -15,7 +15,7 @@ public interface GameHandler {
 	 * 
 	 * @param coordinateString - the human-readable coordinate the player has chosen
 	 *                         (e.g. B3)
-	 * @return Whether the move was successfull
+	 * @return Whether the move was successful
 	 */
 	boolean doMove(String coordinateString);
 

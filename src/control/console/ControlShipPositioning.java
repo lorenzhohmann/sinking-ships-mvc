@@ -106,6 +106,15 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		}
 	}
 
+	/**
+	 * Places ships by a position string (e.g. A1-F4-G1-H5)
+	 * 
+	 * @param matchfield        - the matchfield where the ships should be placed on
+	 * @param manualPositioning - the positioning string (e.g. A1 or C7). Range from
+	 *                          A-Z and 0-99 depends on the matchfield size.
+	 * @param maxShips          - the amount of ships that should be placed
+	 * @return whether all ships could be placed successfully
+	 */
 	private boolean positionShipsByString(Matchfield matchfield, String manualPositioning, int maxShips) {
 		String[] manualPositions = manualPositioning.split("-");
 		boolean positionSuccesful = false;
@@ -136,7 +145,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 			}
 
 			// place ships by choosen coordinate
-			boolean success = ControlShipNormalPositioning.placeShips(matchfield, choosenCoordinate.getX(),
+			boolean success = ControlShipNormalPositioning.placeShip(matchfield, choosenCoordinate.getX(),
 					choosenCoordinate.getY(), vertical);
 
 			// error handling

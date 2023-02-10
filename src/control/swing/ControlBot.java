@@ -207,6 +207,12 @@ public abstract class ControlBot {
 		return chosenCoordinate;
 	}
 
+	/**
+	 * Sets the lastHit to null if the sibling of the last hit (top, right, bottom,
+	 * left) is null or already hit
+	 * 
+	 * @param matchfield the matchfield of the bot
+	 */
 	private static void checkBotLastHitIsPossible(Matchfield matchfield) {
 		Coordinate top;
 		Coordinate right;

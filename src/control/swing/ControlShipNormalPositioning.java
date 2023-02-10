@@ -7,7 +7,15 @@ import model.Matchfield;
 
 public abstract class ControlShipNormalPositioning {
 
-	protected static boolean placeShips(Matchfield matchfield, int x, int y, boolean vertical) {
+	/**
+	 * @param matchfield - the matchfield where the ship should be placed
+	 * @param x          - the x coordinate of the ship begin
+	 * @param y          - the y coordinate of the ship begin
+	 * @param vertical   - whether the ship should be oriented vertical or
+	 *                   horizontal
+	 * @return whether the placement of the should could be executed
+	 */
+	protected static boolean placeShip(Matchfield matchfield, int x, int y, boolean vertical) {
 
 		boolean setSuccessful;
 
