@@ -29,17 +29,10 @@ public class ControlGame implements GameHandler {
 	 */
 	private Player enemy;
 
-	/**
-	 * The amount of shots in a row before it's the other players turn
-	 */
-	private int shotsInARow;
-
 	public ControlGame(Player player, Player enemy, FrameGUI gui) {
 		this.player = player;
 		this.enemy = enemy;
 		this.gui = gui;
-
-		this.shotsInARow = 1;
 	}
 
 	@Override
@@ -56,15 +49,15 @@ public class ControlGame implements GameHandler {
 
 	private void nextPlayerRound() {
 		// show enemys matchfield without ship positions (only hitted ships)
-		this.gameView.showPlayerRound(this.shotsInARow);
+		this.gameView.showPlayerRound(this.player.getShotsInARow());
 	}
 
 	private void nextAIRound() {
 		// show enemys matchfield without ship positions (only hitted ships)
-		this.gameView.showEnemiesRound(this.shotsInARow);
+		this.gameView.showEnemiesRound(this.enemy.getShotsInARow());
 
 		// show players matchfield with all ships and states
-		this.gameView.showEnemiesMatchfield(this.shotsInARow);
+		this.gameView.showEnemiesMatchfield(this.enemy.getShotsInARow());
 
 		// wait before shot
 		try {
@@ -85,12 +78,12 @@ public class ControlGame implements GameHandler {
 				((Bot) this.enemy).getDifficulty());
 		boolean hit = kiCoordinate.shoot(this.player.getMatchfield());
 
-		this.gameView.showEnemiesMatchfield(this.shotsInARow);
+		this.gameView.showEnemiesMatchfield(this.enemy.getShotsInARow());
 		this.messages.enemyShotEvaluation(hit);
 
 		if (hit) {
 			Toolkit.getDefaultToolkit().beep();
-			this.shotsInARow++;
+			this.enemy.increaseShotsInARow();
 
 			// wait after successfull shot
 			try {
@@ -101,7 +94,7 @@ public class ControlGame implements GameHandler {
 
 			this.nextAIRound();
 		} else {
-			this.shotsInARow = 1;
+			this.enemy.resetShotsInARow();
 
 			// wait on player change
 			try {
@@ -187,10 +180,10 @@ public class ControlGame implements GameHandler {
 		if (enemiesMatchfield.didLastShotHit()) {
 
 			// show enemys matchfield without ship positions (only hitted ships)
-			this.gameView.showPlayerShotEvaluation(this.shotsInARow);
+			this.gameView.showPlayerShotEvaluation(this.player.getShotsInARow());
 
 			Toolkit.getDefaultToolkit().beep();
-			this.shotsInARow++;
+			this.player.increaseShotsInARow();
 
 			boolean fullShipDown = enemiesMatchfield.getLastShot().isShipSunken(enemiesMatchfield);
 			this.messages.showShotResultMessage(fullShipDown);
@@ -198,7 +191,7 @@ public class ControlGame implements GameHandler {
 			this.nextPlayerRound();
 		} else {
 			this.messages.showNoShipHit();
-			this.shotsInARow = 1;
+			this.player.resetShotsInARow();
 
 			this.nextAIRound();
 		}
