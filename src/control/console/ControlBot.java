@@ -1,4 +1,4 @@
-package control.swing;
+package control.console;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import model.Coordinate;
 import model.Difficulty;
 import model.Matchfield;
 
-public class ControlAI {
+public class ControlBot {
 
 	/**
 	 * Main AI logic. Chooses a coordinate for the next hit depending the difficulty
@@ -37,6 +37,8 @@ public class ControlAI {
 				break;
 			}
 		}
+
+		System.out.println(chosenCoordinate.getX() + ":" + chosenCoordinate.getY());
 
 		return chosenCoordinate;
 	}
@@ -87,7 +89,10 @@ public class ControlAI {
 		Random random = new Random();
 		int randCoordIndex = random.nextInt(coordsWithoutHit.size());
 
-		Coordinate top, right, bottom, left;
+		Coordinate top;
+		Coordinate right;
+		Coordinate bottom;
+		Coordinate left;
 
 		// check if last hit is still possible?
 		this.checkAILastHitIsPossible(matchfield);

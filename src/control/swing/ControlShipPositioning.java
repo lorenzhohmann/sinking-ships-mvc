@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import model.Coordinate;
-import model.Game;
 import model.Matchfield;
+import model.Player;
 import view.swing.FrameGUI;
 import view.swing.GameHandler;
 import view.swing.Playground;
@@ -16,14 +16,16 @@ import view.swing.ShipPositioningHandler;
 public class ControlShipPositioning implements ShipPositioningHandler {
 
 	private ShipPositioning shipPositioning;
-	private Game game;
+	private Player human;
+	private Player enemy;
 	private FrameGUI gui;
 
 	private ControlShipRandomPositioning randPosController;
 	private ControlShipNormalPositioning posController;
 
-	public ControlShipPositioning(Game game, FrameGUI gui) {
-		this.game = game;
+	public ControlShipPositioning(Player enemy, FrameGUI gui) {
+		this.enemy = enemy;
+		this.human = new Player();
 		this.gui = gui;
 
 		this.randPosController = new ControlShipRandomPositioning();
@@ -39,34 +41,34 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void placeEnemiesShipsRandomly() {
-		this.randPosController.placeShipsOnRandomPositions(this.game.getPlayer().getMatchfield());
+		this.randPosController.placeShipsOnRandomPositions(this.human.getMatchfield());
 	}
 
 	@Override
 	public void placePlayersShipsRandomly() {
-		this.randPosController.placeShipsOnRandomPositions(this.game.getPlayer().getMatchfield());
+		this.randPosController.placeShipsOnRandomPositions(this.human.getMatchfield());
 	}
 
 	@Override
 	public void showPlayersMatchfield() {
 		Playground matchfield = new Playground(this.gui);
-		String[][] status = this.game.getPlayer().getMatchfield().getStatusArray(true);
+		String[][] status = this.human.getMatchfield().getStatusArray(true);
 		matchfield.print(status);
 	}
 
 	@Override
 	public void resetPlayersShips() {
-		this.resetShips(this.game.getPlayer().getMatchfield());
+		this.resetShips(this.human.getMatchfield());
 	}
 
 	@Override
 	public boolean positionShipManual(String positionString, int length) {
-		return this.positionShipsByString(this.game.getPlayer().getMatchfield(), positionString, length);
+		return this.positionShipsByString(this.human.getMatchfield(), positionString, length);
 	}
 
 	@Override
 	public void startGame() {
-		GameHandler gameHandler = new ControlGame(this.game, this.gui);
+		GameHandler gameHandler = new ControlGame(this.human, this.enemy, this.gui);
 		gameHandler.initControl();
 		gameHandler.startGame();
 	}

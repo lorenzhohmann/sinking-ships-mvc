@@ -1,7 +1,7 @@
 package control.swing;
 
+import model.Bot;
 import model.Difficulty;
-import model.Game;
 import view.swing.FrameGUI;
 import view.swing.Menu;
 import view.swing.MenuHandler;
@@ -33,10 +33,10 @@ public class ControlMenu implements MenuHandler {
 
 	@Override
 	public void setDifficulty(Difficulty difficulty) {
-		Game game = new Game();
-		game.getEnemy().setDifficulty(difficulty);
+		Bot enemy = new Bot();
+		enemy.setDifficulty(difficulty);
 
-		ShipPositioningHandler handler = new ControlShipPositioning(game, this.gui);
+		ShipPositioningHandler handler = new ControlShipPositioning(enemy, this.gui);
 		handler.initControl();
 	}
 
