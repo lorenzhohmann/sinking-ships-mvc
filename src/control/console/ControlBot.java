@@ -19,7 +19,7 @@ public class ControlBot {
 	 * @param difficulty - the difficulty of the AI
 	 * @return a coordinate that was chosen by the AI
 	 */
-	protected Coordinate chooseCoordinateByDifficulty(Matchfield matchfield, Difficulty difficulty) {
+	protected static Coordinate chooseCoordinateByDifficulty(Matchfield matchfield, Difficulty difficulty) {
 		Coordinate chosenCoordinate = null;
 
 		List<Coordinate> coordsWithoutHit = matchfield.getCoordinatesWithoutHits();
@@ -27,13 +27,13 @@ public class ControlBot {
 
 			switch (difficulty) {
 			case EASY:
-				chosenCoordinate = this.getEasyAICoordinate(coordsWithoutHit);
+				chosenCoordinate = ControlBot.getEasyAICoordinate(coordsWithoutHit);
 				break;
 			case HARD:
-				chosenCoordinate = this.getHardAICoordinate(matchfield, coordsWithoutHit);
+				chosenCoordinate = ControlBot.getHardAICoordinate(matchfield, coordsWithoutHit);
 				break;
 			case EXTREM:
-				chosenCoordinate = this.getExtremAICoordinate(coordsWithoutHit);
+				chosenCoordinate = ControlBot.getExtremAICoordinate(coordsWithoutHit);
 				break;
 			}
 		}
@@ -49,7 +49,7 @@ public class ControlBot {
 	 * @param coordWithoutHit - all coordinates that have no hits
 	 * @return the coordinate chosen by the AI
 	 */
-	protected Coordinate getExtremAICoordinate(List<Coordinate> coordWithoutHit) {
+	protected static Coordinate getExtremAICoordinate(List<Coordinate> coordWithoutHit) {
 		Random random = new Random();
 		Coordinate choosenCoordinate;
 
@@ -83,7 +83,7 @@ public class ControlBot {
 	 * @param coordsWithoutHit - all coordinates that have no hits
 	 * @return the coordinate chosen by the AI
 	 */
-	protected Coordinate getHardAICoordinate(Matchfield matchfield, List<Coordinate> coordsWithoutHit) {
+	protected static Coordinate getHardAICoordinate(Matchfield matchfield, List<Coordinate> coordsWithoutHit) {
 
 		Coordinate chosenCoordinate = null;
 		Random random = new Random();
@@ -95,7 +95,7 @@ public class ControlBot {
 		Coordinate left;
 
 		// check if last hit is still possible?
-		this.checkAILastHitIsPossible(matchfield);
+		ControlBot.checkAILastHitIsPossible(matchfield);
 
 		if (matchfield.getLastHit() != null) {
 
@@ -170,7 +170,7 @@ public class ControlBot {
 		return chosenCoordinate;
 	}
 
-	private void checkAILastHitIsPossible(Matchfield matchfield) {
+	private static void checkAILastHitIsPossible(Matchfield matchfield) {
 		Coordinate top;
 		Coordinate right;
 		Coordinate bottom;
@@ -201,7 +201,7 @@ public class ControlBot {
 	 * @param coordsWithoutHit - all coordinates that have no hits
 	 * @return the coordinate chosen by the AI
 	 */
-	protected Coordinate getEasyAICoordinate(List<Coordinate> coordsWithoutHit) {
+	protected static Coordinate getEasyAICoordinate(List<Coordinate> coordsWithoutHit) {
 		Random random = new Random();
 		int randCoordIndex = random.nextInt(coordsWithoutHit.size());
 		return coordsWithoutHit.get(randCoordIndex);

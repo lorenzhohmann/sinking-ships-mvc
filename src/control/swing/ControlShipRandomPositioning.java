@@ -12,22 +12,22 @@ public class ControlShipRandomPositioning {
 	 * 
 	 * @param matchfield - the matchfield where the ships set be set at
 	 */
-	protected void placeShipsOnRandomPositions(Matchfield matchfield) {
+	protected static void placeShipsOnRandomPositions(Matchfield matchfield) {
 		int totalShipsToPlace = 4;
 		int randShipsPerDir = totalShipsToPlace / 2; // / 2 because of two directions (horizontal and vertical)
 
-		this.placeRandomShipsHorizontal(matchfield, randShipsPerDir);
-		this.placeRandomShipsVertical(matchfield, randShipsPerDir);
+		ControlShipRandomPositioning.placeRandomShipsHorizontal(matchfield, randShipsPerDir);
+		ControlShipRandomPositioning.placeRandomShipsVertical(matchfield, randShipsPerDir);
 	}
 
-	private void placeRandomShipsVertical(Matchfield matchfield, int vertShipsAmount) {
+	private static void placeRandomShipsVertical(Matchfield matchfield, int vertShipsAmount) {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
 		List<Coordinate> coordinates = matchfield.getCoordinates();
 		int shipNumberCounter = matchfield.getShipNumberCounter();
 
 		while (count < vertShipsAmount) {
-			int random = this.getRandomIndexOfMatchfield(fieldsize);
+			int random = ControlShipRandomPositioning.getRandomIndexOfMatchfield(fieldsize);
 			Coordinate firstCoordinate = null;
 			Coordinate secondCoordinate = null;
 			Coordinate thirdCoordinate = null;
@@ -38,7 +38,7 @@ public class ControlShipRandomPositioning {
 				thirdCoordinate = coordinates.get(random + 20);
 				fourthCoordinate = coordinates.get(random + 30);
 			} catch (IndexOutOfBoundsException e) {
-				random = this.getRandomIndexOfMatchfield(fieldsize);
+				random = ControlShipRandomPositioning.getRandomIndexOfMatchfield(fieldsize);
 				continue;
 			}
 
@@ -61,19 +61,19 @@ public class ControlShipRandomPositioning {
 				count++;
 
 			} else {
-				random = this.getRandomIndexOfMatchfield(fieldsize);
+				random = ControlShipRandomPositioning.getRandomIndexOfMatchfield(fieldsize);
 			}
 		}
 	}
 
-	private void placeRandomShipsHorizontal(Matchfield matchfield, int horizShipsAmount) {
+	private static void placeRandomShipsHorizontal(Matchfield matchfield, int horizShipsAmount) {
 		int count = 0;
 		int fieldsize = matchfield.getFieldsize();
 		List<Coordinate> coordinates = matchfield.getCoordinates();
 		int shipNumberCounter = matchfield.getShipNumberCounter();
 
 		while (count < horizShipsAmount) {
-			int random = this.getRandomIndexOfMatchfield(fieldsize);
+			int random = ControlShipRandomPositioning.getRandomIndexOfMatchfield(fieldsize);
 			if (random % fieldsize >= 0 && random % fieldsize != fieldsize - 3 && random % fieldsize != fieldsize - 2
 					&& random % fieldsize != fieldsize - 1 && random + 4 <= 100 && !coordinates.get(random).isHasShip()
 					&& !coordinates.get(random + 1).isHasShip() && !coordinates.get(random + 2).isHasShip()
@@ -99,12 +99,12 @@ public class ControlShipRandomPositioning {
 
 				count++;
 			} else {
-				random = this.getRandomIndexOfMatchfield(fieldsize);
+				random = ControlShipRandomPositioning.getRandomIndexOfMatchfield(fieldsize);
 			}
 		}
 	}
 
-	private int getRandomIndexOfMatchfield(int fieldsize) {
+	private static int getRandomIndexOfMatchfield(int fieldsize) {
 		double random = Math.random() * 100;
 		if (random > fieldsize * fieldsize) {
 			random = Math.random() * 100;

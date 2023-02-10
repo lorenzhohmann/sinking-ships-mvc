@@ -19,15 +19,9 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 	private Player human;
 	private Player enemy;
 
-	private ControlShipRandomPositioning randPosController;
-	private ControlShipNormalPositioning posController;
-
 	public ControlShipPositioning(Bot enemy) {
 		this.enemy = enemy;
 		this.human = new Player();
-
-		this.randPosController = new ControlShipRandomPositioning();
-		this.posController = new ControlShipNormalPositioning();
 	}
 
 	@Override
@@ -39,12 +33,12 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void placeEnemiesShipsRandomly() {
-		this.randPosController.placeShipsOnRandomPositions(this.enemy.getMatchfield());
+		ControlShipRandomPositioning.placeShipsOnRandomPositions(this.enemy.getMatchfield());
 	}
 
 	@Override
 	public void placePlayersShipsRandomly() {
-		this.randPosController.placeShipsOnRandomPositions(this.human.getMatchfield());
+		ControlShipRandomPositioning.placeShipsOnRandomPositions(this.human.getMatchfield());
 	}
 
 	@Override
@@ -142,7 +136,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 			}
 
 			// place ships by choosen coordinate
-			boolean success = this.posController.placeShips(matchfield, choosenCoordinate.getX(),
+			boolean success = ControlShipNormalPositioning.placeShips(matchfield, choosenCoordinate.getX(),
 					choosenCoordinate.getY(), vertical);
 
 			// error handling

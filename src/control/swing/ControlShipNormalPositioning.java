@@ -7,14 +7,14 @@ import model.Matchfield;
 
 public class ControlShipNormalPositioning {
 
-	protected boolean placeShips(Matchfield matchfield, int x, int y, boolean vertical) {
+	protected static boolean placeShips(Matchfield matchfield, int x, int y, boolean vertical) {
 
 		boolean setSuccessful = false;
 
 		if (vertical) {
-			setSuccessful = this.placeShipVertical(matchfield, x, y);
+			setSuccessful = ControlShipNormalPositioning.placeShipVertical(matchfield, x, y);
 		} else {
-			setSuccessful = this.placeShipHorizontal(matchfield, x, y);
+			setSuccessful = ControlShipNormalPositioning.placeShipHorizontal(matchfield, x, y);
 		}
 
 		return setSuccessful;
@@ -28,7 +28,7 @@ public class ControlShipNormalPositioning {
 	 * @param x          - beginning x coord
 	 * @return whether the should could be set
 	 */
-	private boolean placeShipVertical(Matchfield matchfield, int y, int x) {
+	private static boolean placeShipVertical(Matchfield matchfield, int y, int x) {
 		int yMulFieldsize = y * matchfield.getFieldsize();
 		int coordIndex = yMulFieldsize + x;
 		boolean setSuccessful = false;
@@ -77,7 +77,7 @@ public class ControlShipNormalPositioning {
 	 * @param x          - beginning x coord
 	 * @return whether the should could be set
 	 */
-	private boolean placeShipHorizontal(Matchfield matchfield, int y, int x) {
+	private static boolean placeShipHorizontal(Matchfield matchfield, int y, int x) {
 		int yMulFieldsize = y * matchfield.getFieldsize();
 		int coordIndex = yMulFieldsize + x;
 		boolean setSuccessful;

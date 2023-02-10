@@ -13,7 +13,7 @@ public class ControlGameActions {
 	 * @param matchfield - the matchfield that should be checked
 	 * @return whether all ships on the matchfield were hit
 	 */
-	protected boolean isGameOver(Matchfield matchfield) {
+	protected static boolean isGameOver(Matchfield matchfield) {
 		int shipPosCounter = 0;
 		int totalShipsHit = 0;
 		List<Coordinate> coordinates = matchfield.getCoordinates();

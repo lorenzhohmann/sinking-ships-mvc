@@ -34,17 +34,12 @@ public class ControlGame implements GameHandler {
 	 */
 	private int shotsInARow;
 
-	private ControlBot aiController;
-	private ControlGameActions actionController;
-
 	public ControlGame(Player player, Player enemy, FrameGUI gui) {
 		this.player = player;
 		this.enemy = enemy;
 		this.gui = gui;
 
 		this.shotsInARow = 1;
-		this.aiController = new ControlBot();
-		this.actionController = new ControlGameActions();
 	}
 
 	@Override
@@ -79,14 +74,14 @@ public class ControlGame implements GameHandler {
 		}
 
 		// check for KI win
-		if (this.actionController.isGameOver(this.player.getMatchfield())) {
+		if (ControlGameActions.isGameOver(this.player.getMatchfield())) {
 			this.endGame(false);
 			return;
 		}
 
 		// do AI shot & hit evalutation
 		Matchfield matchfield = this.player.getMatchfield();
-		Coordinate kiCoordinate = aiController.chooseCoordinateByDifficulty(matchfield,
+		Coordinate kiCoordinate = ControlBot.chooseCoordinateByDifficulty(matchfield,
 				((Bot) this.enemy).getDifficulty());
 		boolean hit = kiCoordinate.shoot(this.player.getMatchfield());
 
@@ -183,7 +178,7 @@ public class ControlGame implements GameHandler {
 		Matchfield enemiesMatchfield = this.enemy.getMatchfield();
 
 		// check for win
-		if (this.actionController.isGameOver(enemiesMatchfield)) {
+		if (ControlGameActions.isGameOver(enemiesMatchfield)) {
 			this.endGame(true);
 			return;
 		}
