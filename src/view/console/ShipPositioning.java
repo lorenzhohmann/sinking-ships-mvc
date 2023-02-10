@@ -7,7 +7,7 @@ public class ShipPositioning {
 	/**
 	 * Handler for all ship positioning actions
 	 */
-	private ShipPositioningHandler shipPosHandler;
+	private final ShipPositioningHandler shipPosHandler;
 
 	public ShipPositioning(ShipPositioningHandler handler) {
 		this.shipPosHandler = handler;

@@ -5,7 +5,7 @@ import java.util.List;
 import model.Coordinate;
 import model.Matchfield;
 
-public class ControlShipRandomPositioning {
+public abstract class ControlShipRandomPositioning {
 
 	/**
 	 * Places ships on random positions (2 horizontal, 2 vertical)

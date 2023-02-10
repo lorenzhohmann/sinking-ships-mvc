@@ -9,8 +9,8 @@ import view.swing.StatisticsWindow;
 
 public class ControlGameOver implements GameOverHandler {
 
-	private Player enemy;
-	private FrameGUI gui;
+	private final Player enemy;
+	private final FrameGUI gui;
 
 	public ControlGameOver(Player enemy, FrameGUI gui) {
 		this.enemy = enemy;

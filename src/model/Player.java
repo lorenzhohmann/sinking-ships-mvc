@@ -2,7 +2,7 @@ package model;
 
 public class Player {
 
-	private Matchfield matchfield;
+	private final Matchfield matchfield;
 
 	/**
 	 * The amount of shots in a row before it's the other players turn

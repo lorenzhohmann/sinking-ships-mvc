@@ -16,9 +16,9 @@ import view.swing.ShipPositioningHandler;
 public class ControlShipPositioning implements ShipPositioningHandler {
 
 	private ShipPositioning shipPositioning;
-	private Player human;
-	private Player enemy;
-	private FrameGUI gui;
+	private final Player human;
+	private final Player enemy;
+	private final FrameGUI gui;
 
 	public ControlShipPositioning(Player enemy, FrameGUI gui) {
 		this.enemy = enemy;
@@ -35,7 +35,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void placeEnemiesShipsRandomly() {
-		ControlShipRandomPositioning.placeShipsOnRandomPositions(this.human.getMatchfield());
+		ControlShipRandomPositioning.placeShipsOnRandomPositions(this.enemy.getMatchfield());
 	}
 
 	@Override

@@ -10,8 +10,17 @@
     <exclude name="UseAssertTrueInsteadOfAssertEquals"/>
     <exclude name="PositionLiteralsFirstInComparisons"/>
 
-    <!-- custom exlusions -->
+    <!-- necessary for console gui -->
     <exclude name="SystemPrintln"/>
+
+    <!-- Static Helper classes like ControlBot said "make it abstract", so its needed -->
+    <exclude name="AbstractClassWithoutAbstractMethod"/>
+
+    <!-- wrong recognized by PMD, e.g. ControlShipRandomPositioning:64 -->
+    <exclude name="UnusedAssignment"/>
+
+    <!-- necessary for Status[][] of the matchfield -->
+    <exclude name="UseVarargs"/>
     
   </rule>
   <rule ref="category/java/codestyle.xml">
@@ -30,11 +39,19 @@
     <exclude name="VariableNamingConventions"/>
     <exclude name="WhileLoopsMustUseBraces"/>
 
-    <!-- custom exlusions -->
+    <!-- for what? -->
     <exclude name="MethodArgumentCouldBeFinal"/>
+    
+    <!-- for what? -->
     <exclude name="LocalVariableCouldBeFinal"/>
+
+    <!-- Bot, Main is ok for me -->
     <exclude name="ShortClassName"/>
+    
+    <!-- x, y needed as variable name -->
     <exclude name="ShortVariable"/>
+    
+    <!-- Some "Helper classes" like ControlBot needs no constructor -->
     <exclude name="AtLeastOneConstructor"/>
   </rule>
   <rule ref="category/java/design.xml">
@@ -49,8 +66,16 @@
     <exclude name="StdCyclomaticComplexity"/>
 
     <!-- custom exlusions -->
-    <exclude name="ImmutableField"/>
-    <!-- <exclude name="LawOfDemeter"/> -->
+    <!-- <exclude name="ImmutableField"/> -->
+
+    <!-- often in use to get the matchfield of a player or bot object -->
+    <exclude name="LawOfDemeter"/>
+
+    <!-- Using CognitiveComplexity instead -->
+    <exclude name="CyclomaticComplexity"/>
+
+    <!-- necessary for console GUI, e.g. Animation:15 -->
+    <exclude name="NcssCount"/>
   </rule>
   <rule ref="category/java/errorprone.xml">
     <!--  Deprecated rules  -->
@@ -74,8 +99,10 @@
     <exclude name="MissingBreakInSwitch"/>
     <exclude name="ReturnEmptyArrayRatherThanNull"/>
 
-    <!-- custom exlusions -->
+    <!-- needed for Thread.sleep() in console GUI -->
     <exclude name="EmptyCatchBlock"/>
+    
+    <!-- necessary for console GUI, e.g. Animation:17 -->
     <exclude name="AvoidDuplicateLiterals"/>
   </rule>
 </ruleset>

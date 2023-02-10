@@ -10,7 +10,7 @@ public class Menu {
 	/**
 	 * Handler for all menu actions
 	 */
-	private MenuHandler menuHandler;
+	private final MenuHandler menuHandler;
 
 	public Menu(MenuHandler handler) {
 		this.menuHandler = handler;

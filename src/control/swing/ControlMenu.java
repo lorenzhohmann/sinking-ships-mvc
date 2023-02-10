@@ -10,7 +10,7 @@ import view.swing.ShipPositioningHandler;
 public class ControlMenu implements MenuHandler {
 
 	private Menu menu;
-	private FrameGUI gui;
+	private final FrameGUI gui;
 
 	public ControlMenu(FrameGUI gui) {
 		this.gui = gui;

@@ -5,11 +5,11 @@ import java.util.List;
 import model.Coordinate;
 import model.Matchfield;
 
-public class ControlShipNormalPositioning {
+public abstract class ControlShipNormalPositioning {
 
 	protected static boolean placeShips(Matchfield matchfield, int x, int y, boolean vertical) {
 
-		boolean setSuccessful = false;
+		boolean setSuccessful;
 
 		if (vertical) {
 			setSuccessful = ControlShipNormalPositioning.placeShipVertical(matchfield, x, y);

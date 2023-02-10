@@ -17,13 +17,13 @@ public class GameView extends JPanel {
 	/**
 	 * Difficulty level of the humans enemy (doesn't change while playing)
 	 */
-	private FrameGUI gui;
-	private JPanel bottomPanel;
+	private final FrameGUI gui;
+	private final JPanel bottomPanel;
 
 	/**
 	 * The game controller of this view
 	 */
-	private GameHandler gameHandler;
+	private final GameHandler gameHandler;
 
 	public GameView(GameHandler gameHandler, FrameGUI gui) {
 		super();

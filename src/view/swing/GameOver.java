@@ -14,7 +14,7 @@ public class GameOver extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private FrameGUI gui;
+	private final FrameGUI gui;
 
 	public GameOver(FrameGUI gui) {
 		super();

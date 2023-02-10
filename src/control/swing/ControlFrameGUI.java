@@ -6,7 +6,7 @@ import view.swing.MenuHandler;
 
 public class ControlFrameGUI implements FrameGUIHandler {
 
-	private FrameGUI gui;
+	private final FrameGUI gui;
 
 	public ControlFrameGUI() {
 		this.gui = new FrameGUI();

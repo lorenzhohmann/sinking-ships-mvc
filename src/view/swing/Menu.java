@@ -20,8 +20,8 @@ public class Menu extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private FrameGUI gui;
-	private MenuHandler handler;
+	private final FrameGUI gui;
+	private final MenuHandler handler;
 
 	public Menu(MenuHandler handler, FrameGUI gui) {
 		super();

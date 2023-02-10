@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Matchfield implements Serializable {
+public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all methods needed in this class
 
 	/**
 	 * Unique ID to identify version of the class for the Serializable interface
@@ -15,12 +15,12 @@ public class Matchfield implements Serializable {
 	/**
 	 * The size of the matchfield in one direction (horizontal or vertical)
 	 */
-	private int fieldsize;
+	private final int fieldsize;
 
 	/**
 	 * Contains all coordinate objects of the matchfield
 	 */
-	private List<Coordinate> coordinates;
+	private final List<Coordinate> coordinates;
 
 	/**
 	 * The coordinate that was fires at last
@@ -66,47 +66,60 @@ public class Matchfield implements Serializable {
 	 */
 	public String[][] getStatusArray(boolean showShips) {
 		String[][] status = new String[this.fieldsize][this.fieldsize]; // Test für Feld mit der Größe 3x
+		this.fillEmptyStatus(status);
+		// Game Logic for Output of certain Characters
+		if (showShips) {
+			this.buildStatusWithShips(status);
+		} else {
+			this.buildStatusWithoutShips(status);
+		}
+
+		return status;
+	}
+
+	private void buildStatusWithShips(String[][] status) { // NOPMD (CognitiveComplexity) makes no sense to rewrite this
+															// method
+		for (Coordinate c : this.coordinates) {
+			if (c.isHasShip()) {
+				if (c.hasHit()) {
+					if (c.isShipSunken(this)) {
+						status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
+					} else {
+						status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
+					}
+				} else {
+					status[c.getX()][c.getY()] = FieldSymbol.SHIP.getSymbol();
+				}
+			} else {
+				if (c.hasHit()) {
+					status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
+				}
+			}
+		}
+	}
+
+	private void buildStatusWithoutShips(String[][] status) {
+		for (Coordinate c : coordinates) {
+			if (c.hasHit()) {
+				if (c.isHasShip()) {
+					if (c.isShipSunken(this)) {
+						status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
+					} else {
+						status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
+					}
+				} else {
+					status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
+				}
+			}
+		}
+	}
+
+	private void fillEmptyStatus(String[][] status) {
 		for (int i = 0; i < status.length; i++) {
 			for (int j = 0; j < status.length; j++) {
 				status[i][j] = " ";
 			}
 		}
-		// Game Logic for Output of certain Characters
-		if (showShips) {
-			for (Coordinate c : this.coordinates) {
-				if (c.isHasShip()) {
-					if (c.hasHit()) {
-						if (c.isShipSunken(this)) {
-							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
-						} else {
-							status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
-						}
-					} else {
-						status[c.getX()][c.getY()] = FieldSymbol.SHIP.getSymbol();
-					}
-				} else {
-					if (c.hasHit()) {
-						status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
-					}
-				}
-			}
-		} else {
-			for (Coordinate c : coordinates) {
-				if (c.hasHit()) {
-					if (c.isHasShip()) {
-						if (c.isShipSunken(this)) {
-							status[c.getX()][c.getY()] = FieldSymbol.FULL_SHIP_HIT.getSymbol();
-						} else {
-							status[c.getX()][c.getY()] = FieldSymbol.SHIP_HIT.getSymbol();
-						}
-					} else {
-						status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
-					}
-				}
-			}
-		}
-
-		return status;
 	}
 
 	public Coordinate getLastHit() {

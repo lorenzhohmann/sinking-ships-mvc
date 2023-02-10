@@ -16,8 +16,8 @@ public class Playground extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private FrameGUI gui;
-	private List<JPanel> fields;
+	private final FrameGUI gui;
+	private final List<JPanel> fields;
 
 	public Playground(FrameGUI gui) {
 		super();
@@ -35,7 +35,7 @@ public class Playground extends JPanel {
 	 * @param fieldsize - the size of the match
 	 * @param status
 	 */
-	public void print(String[][] status) {
+	public void print(String[][] status) { // NOPMD (CognitiveComplexity) makes no sense to rewrite this method
 
 		int width = status[0].length;
 		int height = width;
@@ -67,7 +67,7 @@ public class Playground extends JPanel {
 				} else {
 					naming = status[x - 1][y - 1];
 					border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY);
-					panelName = String.valueOf("ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(y - 1) + x);
+					panelName = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(y - 1) + String.valueOf(x);
 				}
 
 				// create fields

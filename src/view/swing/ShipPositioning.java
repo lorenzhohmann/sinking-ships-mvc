@@ -23,9 +23,9 @@ public class ShipPositioning extends JPanel {
 	/**
 	 * Handler for all ship positioning actions
 	 */
-	private ShipPositioningHandler shipPosHandler;
-	private FrameGUI gui;
-	private JPanel bottomPanel;
+	private final ShipPositioningHandler shipPosHandler;
+	private final FrameGUI gui;
+	private final JPanel bottomPanel;
 
 	public ShipPositioning(ShipPositioningHandler handler, FrameGUI gui) {
 		super();

@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 public class FieldMouseAdapter extends MouseAdapter {
 
-	private Component panel;
-	private GameHandler gameHandler;
+	private final Component panel;
+	private final GameHandler gameHandler;
 
 	public FieldMouseAdapter(Component panel, GameHandler gameHandler) {
 		super();

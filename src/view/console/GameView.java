@@ -2,7 +2,7 @@ package view.console;
 
 public class GameView {
 
-	private GameHandler gameHandler;
+	private final GameHandler gameHandler;
 
 	public GameView(GameHandler gameHandler) {
 		this.gameHandler = gameHandler;

@@ -8,7 +8,7 @@ import view.console.StatisticsWindow;
 
 public class ControlGameOver implements GameOverHandler {
 
-	private Player enemy;
+	private final Player enemy;
 
 	public ControlGameOver(Player enemy) {
 		this.enemy = enemy;

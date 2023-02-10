@@ -5,7 +5,7 @@ public class GameMessages {
 	/**
 	 * Difficulty level of the humans enemy (doesn't change while playing)
 	 */
-	private String enemyDifficulty;
+	private final String enemyDifficulty;
 
 	public GameMessages(String enemyDifficulty) {
 		this.enemyDifficulty = enemyDifficulty;

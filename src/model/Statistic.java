@@ -2,8 +2,8 @@ package model;
 
 public class Statistic {
 
-	private int totalShots;
-	private int hits;
+	private final int totalShots;
+	private final int hits;
 
 	public Statistic(int totalShots, int hits) {
 		this.totalShots = totalShots;

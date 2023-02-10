@@ -9,8 +9,8 @@ public class Coordinate implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int x;
-	private int y;
+	private final int x;
+	private final int y;
 
 	/**
 	 * Whether the coordinate is shot (NOT depending of the ship state of the
@@ -137,6 +137,17 @@ public class Coordinate implements Serializable {
 			equals = false;
 		}
 		return equals;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 42;
+
+		result += x * 23;
+		result += y * 23;
+		result += shipNumber * 23;
+
+		return result;
 	}
 
 }

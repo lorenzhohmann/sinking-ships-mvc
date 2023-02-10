@@ -5,7 +5,7 @@ import java.util.List;
 import model.Coordinate;
 import model.Matchfield;
 
-public class ControlGameActions {
+public abstract class ControlGameActions {
 
 	/**
 	 * Checks if a game is over by checking if all ship positions were hit

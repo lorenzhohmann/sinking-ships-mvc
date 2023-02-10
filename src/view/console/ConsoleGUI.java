@@ -2,7 +2,7 @@ package view.console;
 
 import java.util.Scanner;
 
-public class ConsoleGUI {
+public abstract class ConsoleGUI {
 
 	/**
 	 * The console reader object (needs to be global) Java can't handle multiple

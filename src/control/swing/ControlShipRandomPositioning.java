@@ -5,7 +5,7 @@ import java.util.List;
 import model.Coordinate;
 import model.Matchfield;
 
-public class ControlShipRandomPositioning {
+public abstract class ControlShipRandomPositioning {
 
 	/**
 	 * Places ships on random positions (2 horizontal, 2 vertical)
@@ -28,10 +28,10 @@ public class ControlShipRandomPositioning {
 
 		while (count < vertShipsAmount) {
 			int random = ControlShipRandomPositioning.getRandomIndexOfMatchfield(fieldsize);
-			Coordinate firstCoordinate = null;
-			Coordinate secondCoordinate = null;
-			Coordinate thirdCoordinate = null;
-			Coordinate fourthCoordinate = null;
+			Coordinate firstCoordinate;
+			Coordinate secondCoordinate;
+			Coordinate thirdCoordinate;
+			Coordinate fourthCoordinate;
 			try {
 				firstCoordinate = coordinates.get(random);
 				secondCoordinate = coordinates.get(random + 10);

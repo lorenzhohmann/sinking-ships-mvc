@@ -6,6 +6,7 @@ import model.Bot;
 import model.Coordinate;
 import model.Matchfield;
 import model.Player;
+import view.console.ConsoleGUI;
 import view.swing.FrameGUI;
 import view.swing.GameHandler;
 import view.swing.GameMessages;
@@ -17,17 +18,17 @@ public class ControlGame implements GameHandler {
 
 	private GameView gameView;
 	private GameMessages messages;
-	private FrameGUI gui;
+	private final FrameGUI gui;
 
 	/**
 	 * The player object of the human player
 	 */
-	private Player player;
+	private final Player player;
 
 	/**
 	 * The player object of the AI
 	 */
-	private Player enemy;
+	private final Player enemy;
 
 	public ControlGame(Player player, Player enemy, FrameGUI gui) {
 		this.player = player;
@@ -144,6 +145,10 @@ public class ControlGame implements GameHandler {
 	public boolean doMove(String coordinateString) {
 		boolean success = false;
 
+		String helpCMDWithDash = "--help";
+		String helpCMD = "help";
+		String questionCMD = "?";
+
 		// check if coordinate has correct syntax => shoot on this position
 		if (coordinateString.matches("[a-jA-J](1|2|3|4|5|6|7|8|9|10)")) {
 			Matchfield enemiesMatchfield = this.enemy.getMatchfield();
@@ -157,9 +162,9 @@ public class ControlGame implements GameHandler {
 				this.evaluatePlayerRound();
 				success = true;
 			}
-		} else if ("--help".equalsIgnoreCase(coordinateString) || "help".equalsIgnoreCase(coordinateString)
-				|| "?".equalsIgnoreCase(coordinateString)) {
-			FrameGUI.showHelp();
+		} else if (helpCMDWithDash.equalsIgnoreCase(coordinateString) || helpCMD.equalsIgnoreCase(coordinateString)
+				|| questionCMD.equalsIgnoreCase(coordinateString)) {
+			ConsoleGUI.showHelp();
 		} else {
 			this.messages.showInvalidInput();
 		}

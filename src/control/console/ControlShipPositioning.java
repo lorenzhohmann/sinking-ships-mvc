@@ -16,8 +16,8 @@ import view.console.ShipPositioningHandler;
 public class ControlShipPositioning implements ShipPositioningHandler {
 
 	private ShipPositioning shipPositioning;
-	private Player human;
-	private Player enemy;
+	private final Player human;
+	private final Player enemy;
 
 	public ControlShipPositioning(Bot enemy) {
 		this.enemy = enemy;
