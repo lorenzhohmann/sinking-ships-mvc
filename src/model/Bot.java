@@ -1,6 +1,6 @@
 package model;
 
-public class AI extends Player {
+public class Bot extends Player {
 
 	private Difficulty difficulty;
 

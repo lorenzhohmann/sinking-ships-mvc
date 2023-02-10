@@ -56,9 +56,9 @@ public class ShipPositioning {
 		// position of ships page
 		this.showShipPositioningMenu();
 
-		while (ConsoleGUI.scanner.hasNext()) {
+		while (ConsoleGUI.SCANNER.hasNext()) {
 
-			String input = ConsoleGUI.scanner.next();
+			String input = ConsoleGUI.SCANNER.next();
 			ShipPosReturnCode handlerResponse = this.shipPosHandler.handlePositioningInput(input);
 
 			if (handlerResponse == ShipPosReturnCode.CONTINUE) {
@@ -84,8 +84,8 @@ public class ShipPositioning {
 
 		this.showManualShipPositioningInstruction();
 
-		while (ConsoleGUI.scanner.hasNext()) {
-			String manualPosString = ConsoleGUI.scanner.next();
+		while (ConsoleGUI.SCANNER.hasNext()) {
+			String manualPosString = ConsoleGUI.SCANNER.next();
 
 			boolean success = this.shipPosHandler.positionShipManual(manualPosString, 4);
 			if (success) {

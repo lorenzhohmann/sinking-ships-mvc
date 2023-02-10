@@ -8,7 +8,7 @@ public class ConsoleGUI {
 	 * The console reader object (needs to be global) Java can't handle multiple
 	 * scanners in one program, so it needs to be global
 	 */
-	public static final Scanner scanner = new Scanner(System.in);
+	public static final Scanner SCANNER = new Scanner(System.in);
 
 	/**
 	 * Time between a game instruction and the following action (in ms)

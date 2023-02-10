@@ -30,10 +30,10 @@ public class ControlAI {
 				chosenCoordinate = this.getEasyAICoordinate(coordsWithoutHit);
 				break;
 			case HARD:
-				chosenCoordinate = getHardAICoordinate(matchfield, coordsWithoutHit);
+				chosenCoordinate = this.getHardAICoordinate(matchfield, coordsWithoutHit);
 				break;
 			case EXTREM:
-				chosenCoordinate = getExtremAICoordinate(coordsWithoutHit);
+				chosenCoordinate = this.getExtremAICoordinate(coordsWithoutHit);
 				break;
 			}
 		}
@@ -89,7 +89,10 @@ public class ControlAI {
 		Random random = new Random();
 		int randCoordIndex = random.nextInt(coordsWithoutHit.size());
 
-		Coordinate top, right, bottom, left;
+		Coordinate top;
+		Coordinate right;
+		Coordinate bottom;
+		Coordinate left;
 
 		// check if last hit is still possible?
 		this.checkAILastHitIsPossible(matchfield);

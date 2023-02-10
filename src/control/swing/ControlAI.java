@@ -30,10 +30,10 @@ public class ControlAI {
 				chosenCoordinate = this.getEasyAICoordinate(coordsWithoutHit);
 				break;
 			case HARD:
-				chosenCoordinate = getHardAICoordinate(matchfield, coordsWithoutHit);
+				chosenCoordinate = this.getHardAICoordinate(matchfield, coordsWithoutHit);
 				break;
 			case EXTREM:
-				chosenCoordinate = getExtremAICoordinate(coordsWithoutHit);
+				chosenCoordinate = this.getExtremAICoordinate(coordsWithoutHit);
 				break;
 			}
 		}

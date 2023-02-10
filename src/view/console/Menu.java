@@ -30,9 +30,9 @@ public class Menu {
 		System.out.println("||                                                             ||");
 		System.out.println("\\\\=============================================================//");
 
-		while (ConsoleGUI.scanner.hasNext()) {
+		while (ConsoleGUI.SCANNER.hasNext()) {
 
-			String input = ConsoleGUI.scanner.next();
+			String input = ConsoleGUI.SCANNER.next();
 
 			if ("e".equalsIgnoreCase(input)) { // start singleplayer session
 
@@ -67,8 +67,8 @@ public class Menu {
 		System.out.println("\\\\=============================================================//");
 
 		String chosenDifficulty;
-		while (ConsoleGUI.scanner.hasNext()) {
-			chosenDifficulty = ConsoleGUI.scanner.next().toLowerCase(Locale.GERMAN);
+		while (ConsoleGUI.SCANNER.hasNext()) {
+			chosenDifficulty = ConsoleGUI.SCANNER.next().toLowerCase(Locale.GERMAN);
 
 			if ("e".equalsIgnoreCase(chosenDifficulty)) {
 				menuHandler.setDifficulty(Difficulty.EASY);

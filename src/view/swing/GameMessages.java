@@ -2,7 +2,7 @@ package view.swing;
 
 public class GameMessages {
 
-	public GameMessages(String enemyDifficulty) { // NOPMD
+	public GameMessages(String enemyDifficulty) {
 		// no action needed in Swing GUI
 	}
 

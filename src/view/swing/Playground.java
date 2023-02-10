@@ -54,9 +54,9 @@ public class Playground extends JPanel {
 
 				Color background;
 				if (y == 0 || x == 0) {
-					background = new Color(0f, 0f, 0f, 0.1f); // NOPMD
+					background = new Color(0f, 0f, 0f, 0.1f);
 				} else {
-					background = new Color(0, 0, 0, 0); // NOPMD
+					background = new Color(0, 0, 0, 0);
 				}
 
 				// horizontal naming
@@ -71,9 +71,9 @@ public class Playground extends JPanel {
 				}
 
 				// create fields
-				JLabel label = new JLabel(naming); // NOPMD
+				JLabel label = new JLabel(naming);
 				label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				JPanel panel = new JPanel(); // NOPMD
+				JPanel panel = new JPanel();
 				panel.setName(panelName);
 				panel.setBorder(border);
 				panel.setBackground(background);

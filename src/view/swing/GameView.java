@@ -25,7 +25,7 @@ public class GameView extends JPanel {
 	 */
 	private GameHandler gameHandler;
 
-	public GameView(GameHandler gameHandler, String enemyDifficulty, FrameGUI gui) { // NOPMD
+	public GameView(GameHandler gameHandler, FrameGUI gui) {
 		super();
 
 		this.gameHandler = gameHandler;
@@ -71,7 +71,7 @@ public class GameView extends JPanel {
 		this.gameHandler.showEnemiesMatchfield();
 
 		for (Component comp : this.gui.getContentPane().getComponents()) {
-			comp.addMouseListener(new FieldMouseAdapter(comp, this.gameHandler)); // NOPMD
+			comp.addMouseListener(new FieldMouseAdapter(comp, this.gameHandler));
 		}
 
 		this.gui.repaint();

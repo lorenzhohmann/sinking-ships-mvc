@@ -1,7 +1,7 @@
 package control.swing;
 
-import model.AI;
 import model.Difficulty;
+import model.Game;
 import view.swing.FrameGUI;
 import view.swing.Menu;
 import view.swing.MenuHandler;
@@ -10,7 +10,6 @@ import view.swing.ShipPositioningHandler;
 public class ControlMenu implements MenuHandler {
 
 	private Menu menu;
-	private AI enemy;
 	private FrameGUI gui;
 
 	public ControlMenu(FrameGUI gui) {
@@ -21,7 +20,6 @@ public class ControlMenu implements MenuHandler {
 	public void initControl() {
 		this.menu = new Menu(this, this.gui);
 
-		this.enemy = new AI();
 		this.showGameModeMenu();
 	}
 
@@ -35,9 +33,10 @@ public class ControlMenu implements MenuHandler {
 
 	@Override
 	public void setDifficulty(Difficulty difficulty) {
-		this.enemy.setDifficulty(difficulty);
+		Game game = new Game();
+		game.getEnemy().setDifficulty(difficulty);
 
-		ShipPositioningHandler handler = new ControlShipPositioning(enemy, this.gui);
+		ShipPositioningHandler handler = new ControlShipPositioning(game, this.gui);
 		handler.initControl();
 	}
 

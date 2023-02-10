@@ -195,7 +195,7 @@ public class Matchfield implements Serializable {
 	 * @return the found coordinate object or null when x and y positions not in
 	 *         matchfield
 	 */
-	public Coordinate getCoordinate(int x, int y) { // NOPMD
+	public Coordinate getCoordinate(int x, int y) {
 		Coordinate coord = null;
 		for (int i = 0; i < this.coordinates.size(); i++) {
 			if (this.coordinates.get(i).getX() == x && this.coordinates.get(i).getY() == y) {

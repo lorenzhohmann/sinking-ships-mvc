@@ -30,9 +30,9 @@ public class GameView {
 		this.showShotInstruction();
 
 		// loops for own shot
-		while (ConsoleGUI.scanner.hasNext()) {
+		while (ConsoleGUI.SCANNER.hasNext()) {
 
-			String input = ConsoleGUI.scanner.next();
+			String input = ConsoleGUI.SCANNER.next();
 			boolean moveSuccessfull = this.gameHandler.doMove(input);
 
 			if (moveSuccessfull) {

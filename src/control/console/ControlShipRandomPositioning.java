@@ -28,17 +28,17 @@ public class ControlShipRandomPositioning {
 
 		while (count < vertShipsAmount) {
 			int random = this.getRandomIndexOfMatchfield(fieldsize);
-			Coordinate firstCoordinate = null; // NOPMD
-			Coordinate secondCoordinate = null; // NOPMD
-			Coordinate thirdCoordinate = null; // NOPMD
-			Coordinate fourthCoordinate = null; // NOPMD
+			Coordinate firstCoordinate;
+			Coordinate secondCoordinate;
+			Coordinate thirdCoordinate;
+			Coordinate fourthCoordinate;
 			try {
 				firstCoordinate = coordinates.get(random);
 				secondCoordinate = coordinates.get(random + 10);
 				thirdCoordinate = coordinates.get(random + 20);
 				fourthCoordinate = coordinates.get(random + 30);
 			} catch (IndexOutOfBoundsException e) {
-				random = this.getRandomIndexOfMatchfield(fieldsize); // NOPMD
+				random = this.getRandomIndexOfMatchfield(fieldsize);
 				continue;
 			}
 
@@ -61,7 +61,7 @@ public class ControlShipRandomPositioning {
 				count++;
 
 			} else {
-				random = this.getRandomIndexOfMatchfield(fieldsize); // NOPMD
+				random = this.getRandomIndexOfMatchfield(fieldsize);
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public class ControlShipRandomPositioning {
 
 				count++;
 			} else {
-				random = this.getRandomIndexOfMatchfield(fieldsize); // NOPMD
+				random = this.getRandomIndexOfMatchfield(fieldsize);
 			}
 		}
 	}

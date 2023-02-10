@@ -31,7 +31,7 @@ public class Statistic {
 	public float getHitRate() {
 		float hitRate = 0;
 		if (totalShots > 0) {
-			hitRate = (100 * this.hits / this.totalShots);
+			hitRate = 100 * this.hits / this.totalShots;
 		}
 		return hitRate;
 	}
