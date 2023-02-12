@@ -1,5 +1,7 @@
 package model;
 
+import view.console.Difficulty;
+
 public class Bot extends Player {
 
 	private Difficulty difficulty;

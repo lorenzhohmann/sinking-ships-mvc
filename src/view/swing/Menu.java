@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.Difficulty;
-
 public class Menu extends JPanel {
 
 	/**
@@ -78,7 +76,7 @@ public class Menu extends JPanel {
 	 * Shows the options to choose the AIs difficulty. It also reads the users
 	 * console input
 	 */
-	public void showAIDifficultyMenu() {
+	public void showBotDifficultyMenu() {
 		this.remove(1);
 		this.remove(1);
 

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import model.Coordinate;
-import model.Difficulty;
 import model.Matchfield;
+import view.console.Difficulty;
 
 public abstract class ControlBot {
 

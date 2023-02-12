@@ -3,8 +3,6 @@ package view.console;
 import java.io.IOException;
 import java.util.Locale;
 
-import model.Difficulty;
-
 public class Menu {
 
 	/**
@@ -51,7 +49,7 @@ public class Menu {
 	 * Shows the options to choose the AIs difficulty. It also reads the users
 	 * console input
 	 */
-	public void showAIDifficultyMenu() {
+	public void showBotDifficultyMenu() {
 		try {
 			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		} catch (InterruptedException | IOException e) {
@@ -82,7 +80,7 @@ public class Menu {
 			}
 
 			ConsoleGUI.print("Ungueltige Eingabe!", "error");
-			this.showAIDifficultyMenu();
+			this.showBotDifficultyMenu();
 		}
 	}
 }

@@ -1,7 +1,7 @@
 package control.console;
 
 import model.Bot;
-import model.Difficulty;
+import view.console.Difficulty;
 import view.console.Menu;
 import view.console.MenuHandler;
 import view.console.ShipPositioningHandler;
@@ -22,7 +22,7 @@ public class ControlMenu implements MenuHandler {
 	}
 
 	private void showSettingsMenu() {
-		menu.showAIDifficultyMenu();
+		menu.showBotDifficultyMenu();
 	}
 
 	@Override

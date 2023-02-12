@@ -1,7 +1,7 @@
 package control.swing;
 
 import model.Bot;
-import model.Difficulty;
+import view.swing.Difficulty;
 import view.swing.FrameGUI;
 import view.swing.Menu;
 import view.swing.MenuHandler;
@@ -28,13 +28,15 @@ public class ControlMenu implements MenuHandler {
 	}
 
 	private void showSettingsMenu() {
-		menu.showAIDifficultyMenu();
+		menu.showBotDifficultyMenu();
 	}
 
 	@Override
 	public void setDifficulty(Difficulty difficulty) {
 		Bot enemy = new Bot();
-		enemy.setDifficulty(difficulty);
+		// needs this strange cast only because of multiple GUIs in this project.
+		// Doesn't appear in real
+		enemy.setDifficulty(view.console.Difficulty.valueOf(difficulty.toString()));
 
 		ShipPositioningHandler handler = new ControlShipPositioning(enemy, this.gui);
 		handler.initControl();

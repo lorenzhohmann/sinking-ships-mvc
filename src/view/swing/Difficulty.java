@@ -1,4 +1,4 @@
-package model;
+package view.swing;
 
 public enum Difficulty {
 	EASY("Einfach"), HARD("Schwer"), EXTREM("Extrem");
