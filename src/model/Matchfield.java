@@ -8,11 +8,6 @@ import java.util.Locale;
 public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all methods needed in this class
 
 	/**
-	 * Unique ID to identify version of the class for the Serializable interface
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The size of the matchfield in one direction (horizontal or vertical)
 	 */
 	private final int fieldsize;

@@ -10,7 +10,6 @@ import view.console.ConsoleGUI;
 import view.swing.FrameGUI;
 import view.swing.GameHandler;
 import view.swing.GameMessages;
-import view.swing.GameOverHandler;
 import view.swing.GameView;
 import view.swing.Playground;
 
@@ -113,8 +112,7 @@ public class ControlGame implements GameHandler {
 	 * @param playerIsWinner - Whether the human player has won the game
 	 */
 	private void endGame(boolean playerIsWinner) {
-		GameOverHandler gameOverHandler = new ControlGameOver(this.enemy, this.gui);
-		gameOverHandler.initControl(playerIsWinner);
+		new ControlGameOver(this.enemy, playerIsWinner, this.gui);
 	}
 
 	@Override

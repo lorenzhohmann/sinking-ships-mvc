@@ -9,7 +9,6 @@ import model.Player;
 import view.console.ConsoleGUI;
 import view.console.GameHandler;
 import view.console.GameMessages;
-import view.console.GameOverHandler;
 import view.console.GameView;
 import view.console.Playground;
 
@@ -110,8 +109,7 @@ public class ControlGame implements GameHandler {
 	 * @param playerIsWinner - Whether the human player has won the game
 	 */
 	private void endGame(boolean playerIsWinner) {
-		GameOverHandler gameOverHandler = new ControlGameOver(this.enemy);
-		gameOverHandler.initControl(playerIsWinner);
+		new ControlGameOver(this.enemy, playerIsWinner);
 	}
 
 	@Override
