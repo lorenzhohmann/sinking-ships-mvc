@@ -1,7 +1,6 @@
 package control.swing;
 
 import java.io.IOException;
-import java.util.List;
 
 import model.Coordinate;
 import model.Matchfield;
@@ -52,7 +51,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 
 	@Override
 	public void resetPlayersShips() {
-		this.resetShips(this.human.getMatchfield());
+		this.human.getMatchfield().resetShips();
 	}
 
 	@Override
@@ -99,15 +98,6 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		return returnCode;
 	}
 
-	private void resetShips(Matchfield matchfield) {
-		matchfield.resetShipNumberCounter();
-		List<Coordinate> coordinates = matchfield.getCoordinates();
-
-		for (Coordinate c : coordinates) {
-			c.setHasShip(false);
-		}
-	}
-
 	/**
 	 * Places ships by a position string (e.g. A1-F4-G1-H5)
 	 * 
@@ -122,7 +112,7 @@ public class ControlShipPositioning implements ShipPositioningHandler {
 		boolean positionSuccesful = false;
 
 		// clear matchfield
-		this.resetShips(matchfield);
+		matchfield.resetShips();
 
 		// get coordinates by string and place ships
 		int shipCounter = 1;

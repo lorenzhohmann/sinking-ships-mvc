@@ -3,10 +3,10 @@ package view.console;
 public class Playground {
 
 	/**
-	 * Shows a matchfield in the console
+	 * Shows a matchfield with all field states
 	 * 
-	 * @param fieldsize - the size of the match
-	 * @param status
+	 * @param status - the status array containg all informations about the
+	 *               matchfield. (from Matchfield.getStatusArray())
 	 */
 	public void print(String[][] status) {
 

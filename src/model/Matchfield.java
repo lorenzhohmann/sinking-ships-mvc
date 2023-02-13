@@ -61,7 +61,14 @@ public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all 
 	 */
 	public String[][] getStatusArray(boolean showShips) {
 		String[][] status = new String[this.fieldsize][this.fieldsize]; // Test für Feld mit der Größe 3x
-		this.fillEmptyStatus(status);
+
+		// fill with empty fields
+		for (int i = 0; i < status.length; i++) {
+			for (int j = 0; j < status.length; j++) {
+				status[i][j] = " ";
+			}
+		}
+
 		// Game Logic for Output of certain Characters
 		if (showShips) {
 			this.buildStatusWithShips(status);
@@ -72,6 +79,12 @@ public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all 
 		return status;
 	}
 
+	/**
+	 * Builds an array with the field information of all ships. Ships are visible on
+	 * the output
+	 * 
+	 * @param status - the status reference where the result should be written at
+	 */
 	private void buildStatusWithShips(String[][] status) { // NOPMD (CognitiveComplexity) makes no sense to rewrite this
 															// method
 		for (Coordinate c : this.coordinates) {
@@ -93,6 +106,12 @@ public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all 
 		}
 	}
 
+	/**
+	 * Builds an array with the field information of all ships. Ships are NOT
+	 * visible on the output
+	 * 
+	 * @param status - the status reference where the result should be written at
+	 */
 	private void buildStatusWithoutShips(String[][] status) {
 		for (Coordinate c : coordinates) {
 			if (c.hasHit()) {
@@ -105,14 +124,6 @@ public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all 
 				} else {
 					status[c.getX()][c.getY()] = FieldSymbol.WATER.getSymbol();
 				}
-			}
-		}
-	}
-
-	private void fillEmptyStatus(String[][] status) {
-		for (int i = 0; i < status.length; i++) {
-			for (int j = 0; j < status.length; j++) {
-				status[i][j] = " ";
 			}
 		}
 	}
@@ -249,6 +260,17 @@ public class Matchfield implements Serializable { // NOPMD (TooManyMethods) all 
 	 */
 	public void resetShipNumberCounter() {
 		this.shipNumberCounter = 1;
+	}
+
+	/**
+	 * Removes all ships from the matchfield
+	 */
+	public void resetShips() {
+		this.resetShipNumberCounter();
+
+		for (Coordinate c : this.coordinates) {
+			c.setHasShip(false);
+		}
 	}
 
 }

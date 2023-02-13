@@ -37,8 +37,7 @@ public class Menu {
 				this.menuHandler.chooseSinglePlayer();
 				return;
 			} else if ("m".equalsIgnoreCase(input)) { // start multiplayer session
-				System.out.println("MULTIPLAYER IS NOT WORKING");
-				// TODO multiplayer
+				System.out.println("MULTIPLAYER IS NOT REFACTORED");
 			}
 
 			ConsoleGUI.print("Ungueltige Eingabe!", "error");

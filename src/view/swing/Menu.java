@@ -50,7 +50,7 @@ public class Menu extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				System.out.println("MULTIPLAYER IS NOT WORKING");
+				System.out.println("MULTIPLAYER IS NOT REFACTORED");
 			}
 		});
 
